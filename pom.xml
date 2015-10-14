@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.semanticwb</groupId>
-    <artifactId>SWBForms2</artifactId>
+    <artifactId>SWBFormsNano</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>SWBForms2</name>
+    <name>SWBFormsNano</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
