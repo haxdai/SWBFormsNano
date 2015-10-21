@@ -43,9 +43,10 @@ eng.routes["global"]={
     routeList:[
         { routePath: "login", forwardTo: "/work/config/login.jsp", isRestricted: "false", zindex:1 },
         { routePath: "register", forwardTo: "/work/config/register.jsp", isRestricted: "false" },
-        { routePath: "", forwardTo: "/index.jsp", isRestricted: "false"},
         { routePath: "work", isRestricted: "true"},
         { routePath: "work/*", jspMapTo: "/work/jsp/", isRestricted: "true" },
+        { routePath: "public/*", jspMapTo: "/public/", isRestricted: "false" },
         { routePath: "ds", forwardTo: "/swbforms/jsp/datasource.jsp", isRestricted: "false" },
+        { routePath: "*", forwardTo: "/index.jsp", isRestricted: "false"}
     ],
 };

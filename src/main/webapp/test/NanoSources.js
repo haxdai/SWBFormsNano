@@ -92,3 +92,14 @@ eng.dataSources["Art_Search"] = {
         {name: "status", title: "Estatus", type: "int"}/*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado*/
     ]
 };
+
+eng.dataSources["Gene_Cancer"] = {
+    scls: "Gene_Cancer",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",    
+    displayField: "gene",
+    fields: [
+        {name: "gene", title: "Gen", stype: "select", dataSource:"Gene"},,
+        {name: "cancerName", title: "Cancer", stype: "select", dataSource:"CancerType"}
+    ]
+};

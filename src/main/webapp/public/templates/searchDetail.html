@@ -1,0 +1,17 @@
+
+<a>Gene info</a>
+<a>Results</a>
+<a>Report</a>
+<div class="gen-info-container">
+    <p>Symbol: {{gene.symbol}}</p>
+    <p>Official Name:  {{gene.officialName}}</p>
+    <p>Gene Id (MIM): {{gene.mimId}}</p>
+    <p>Organism:       {{gene.organism}}</p>
+    <p>Other Aliases:   {{gene.aliases}}</p>
+    <p>Map Location:  {{gene.mapLocation}}</p>
+</div> 
+<a href="/{{searchId}}">Sumamary</a>
+<a href="/{{searchId}}/cancer-type">Cancer type</a>
+<div ui-view>
+    {{gene.summary}}
+</div>
