@@ -7,7 +7,6 @@ angular.module('controller.searchDetail', [])
             Search.byId($scope.searchId).then(function (search) {
                 Gene.byId(search.gene).then(function(gene){
                   $scope.gene = gene;  
-                  console.log(gene)
                 })
             },function(error){
                 console.log(error)

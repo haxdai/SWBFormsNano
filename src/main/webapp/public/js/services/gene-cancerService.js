@@ -7,7 +7,6 @@ angular.module('service.gene-cancer', [])
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Gene_Cancer");
                 var response = ds.fetchObj({gene:geneId})
-                
                 if (response) {
                     deferred.resolve(response);
                 } else {
@@ -15,13 +14,13 @@ angular.module('service.gene-cancer', [])
                 }
                 return deferred.promise;
             };
-
+            /*
             this.listByCancerId = function (cancerId) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Gene");
                 deferred.resolve(ds.fetch({}));
                 return deferred.promise;
-            };
+            };*/
 
 
 

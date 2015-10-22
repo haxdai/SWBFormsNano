@@ -25,6 +25,9 @@
     <script src="/public/js/services/searchService.js"></script>
     <script src="/public/js/services/geneService.js"></script>
     <script src="/public/js/services/alterationService.js"></script>
+    <script src="/public/js/services/cancerTypeService.js"></script>
+    <script src="/public/js/services/gene-cancerService.js"></script>
+    
     <script src="/public/js/controllers/appController.js"></script>
     <script src="/public/js/controllers/menuController.js"></script>
     <script src="/public/js/controllers/galeryController.js"></script>

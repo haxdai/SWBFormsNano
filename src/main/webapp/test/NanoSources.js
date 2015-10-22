@@ -32,6 +32,7 @@ eng.dataSources["AlterationMolecular"] = {
     ]
 };
 
+
 eng.dataSources["CancerType"] = {
     scls: "CancerType",
     modelid: "NanoPharmacy",
@@ -97,9 +98,39 @@ eng.dataSources["Gene_Cancer"] = {
     scls: "Gene_Cancer",
     modelid: "NanoPharmacy",
     dataStore: "mongodb",    
-    displayField: "gene",
     fields: [
-        {name: "gene", title: "Gen", stype: "select", dataSource:"Gene"},,
-        {name: "cancerName", title: "Cancer", stype: "select", dataSource:"CancerType"}
+        {name: "gene", title: "Gen", stype: "select", dataSource:"Gene"},
+        {name: "cancer", title: "Cancer", stype: "select", dataSource:"CancerType"},
     ]
+};
+
+eng.dataProcessors["GeneProcessor"] = {
+    dataSources: ["Gene"],
+    actions: ["add"],
+    request: function(request, dataSource, action)
+    {
+       var xmlHttp = new XMLHttpRequest();
+        print("Anted de guardar")
+        print("request1:" + request);
+        print("action:" + dataSource);
+        print("action:" + action);
+        //if(request.data.name)request.data.name=request.data.name+"_jei";
+       
+        return request;
+    }
+};
+
+eng.dataServices["GeneService"] = {
+    dataSources: ["Gene"],
+    actions: ["add"],
+    service: function(request, response, dataSource, action)
+    {
+       print("Despues de guardar")
+        print("request:" + request);
+        print("response:" + response);
+        print("dataSource:" + dataSource);
+        print("action:" + action);
+ 
+        return response;
+    }
 };
