@@ -1,0 +1,15 @@
+<a href="/{{searchId}}">Gene info</a>
+<a href="/{{searchId}}/results">Results</a>
+<a href="/{{searchId}}/report">Report</a>
+
+
+<p>Result</p>
+<div ng-repeat="article in articleList">
+    <p>{{$index+1}}</p>
+    <p>{{article.article.title}}</p>
+    <p>{{article.ranking}}</p>
+    <p>{{article.article.abstract}}</p>
+    <p>{{article.article.reference}}</p>
+    <p>{{article.article.link}}</p>
+    <a ng-click="discard()">Discard</a><a ng-click="accept()">Accept</a>
+</div>

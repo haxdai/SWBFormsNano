@@ -27,12 +27,15 @@
     <script src="/public/js/services/alterationService.js"></script>
     <script src="/public/js/services/cancerTypeService.js"></script>
     <script src="/public/js/services/gene-cancerService.js"></script>
+    <script src="/public/js/services/art-searchService.js"></script>
+    <script src="/public/js/services/articleService.js"></script>
     
     <script src="/public/js/controllers/appController.js"></script>
     <script src="/public/js/controllers/menuController.js"></script>
     <script src="/public/js/controllers/galeryController.js"></script>
     <script src="/public/js/controllers/searchDetailController.js"></script>
-    <script src="/public/js/controllers/cancerTypeController.js"></script>
+    <script src="/public/js/controllers/resultsController.js"></script>
     <script src="/public/js/controllers/newSearchController.js"></script>
+    
     
 </html>
