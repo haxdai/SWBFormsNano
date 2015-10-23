@@ -11,7 +11,6 @@ angular.module('controller.searchDetail', [])
                     $scope.gene = gene;
                     CancerType.listByGenId($scope.gene._id).then(function (cancerList) {
                         $scope.cancerList = cancerList;
-                        console.log($scope.cancerList)
                     },
                             function (error) {
                                 console.log(error)

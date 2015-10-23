@@ -13,3 +13,8 @@
     <p>{{article.article.link}}</p>
     <a ng-click="discard()">Discard</a><a ng-click="accept()">Accept</a>
 </div>
+<div ng-if="(maxPage> 1)">
+    <span ng-if="pag > 1" ng-click="prev()"> < </span>
+    <span>{{pag}}</span> 
+    <span ng-if="pag < ((maxPage))" ng-click="next()"> > </span>
+</div>

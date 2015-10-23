@@ -6,7 +6,6 @@ angular.module('controller.menu', [])
 
         Search.list().then(function(searchList){
             searchList.forEach(function(search, i){
-                console.log(i)
                 $scope.searchList.push(search);
                 Gene.byId(search.gene).then(function(gene){
                     $scope.searchList[i].geneSymbol = gene.symbol;
