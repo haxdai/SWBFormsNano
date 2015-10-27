@@ -14,4 +14,16 @@ angular.module('service.article', [])
                 }
                 return deferred.promise;
             };
+            
+            this.update = function (article) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("Article");
+                var response = ds.updateObj(article);
+                if (response) {
+                    deferred.resolve(response);
+                } else {
+                    deferred.reject("No data");
+                }
+                return deferred.promise;
+            };
         })

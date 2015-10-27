@@ -1,17 +1,34 @@
 <a href="/{{searchId}}">Gene info</a>
 <a href="/{{searchId}}/results">Results</a>
+
 <a href="/{{searchId}}/report">Report</a>
 
 
-<p>Result</p>
+<p>Result</p> 
+<select ng-model="statusSelected" ng-change="statusChange(statusSelected)">
+    <option ng-selected="true"  value="0">Unclassified</option>
+    <option value="1">New</option>
+    <option value="2">Acepted</option>
+    <option value="3">Rejected</option>
+</select>
+<select>
+    <option>Title</option>
+    <option>Author</option>
+    <option>Prognosis</option>
+    <option>Prediction</option>
+    <option>Treatment</option>
+    <option>Best rated</option>
+    <option>Index</option>
+</select>
 <div ng-repeat="article in articleList">
     <p>{{$index+1}}</p>
     <p>{{article.article.title}}</p>
-    <p>{{article.ranking}}</p>
+    <p>{{article.artSearch.ranking}}</p>
     <p>{{article.article.abstract}}</p>
     <p>{{article.article.reference}}</p>
     <p>{{article.article.link}}</p>
-    <a ng-click="discard()">Discard</a><a ng-click="accept()">Accept</a>
+    <a ng-if="status!=3"  ng-click="discard(article.artSearch,$index)">Discard</a>
+    <a ng-if="status!=2" ng-click="accept(article.artSearch,$index)">Accept</a>
 </div>
 <div ng-if="(maxPage> 1)">
     <span ng-if="pag > 1" ng-click="prev()"> < </span>
