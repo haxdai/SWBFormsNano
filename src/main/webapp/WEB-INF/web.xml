@@ -14,7 +14,14 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <!--servlet>
+    <servlet> 
+        <servlet-name>default</servlet-name> 
+        <init-param> 
+            <param-name>useFileMappedBuffer</param-name> 
+            <param-value>false</param-value> 
+        </init-param> 
+    </servlet> 
+    <servlet>
         <servlet-name>Servlet SearchResource</servlet-name>
         <servlet-class>org.nanopharmacy.resources.SearchResource</servlet-class>
     </servlet>
@@ -22,5 +29,5 @@
     <servlet-mapping>
         <servlet-name>Servlet SearchResource</servlet-name>
         <url-pattern>/SearchResource</url-pattern>
-    </servlet-mapping-->
+    </servlet-mapping>
 </web-app>

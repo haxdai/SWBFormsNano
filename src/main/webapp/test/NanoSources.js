@@ -76,7 +76,8 @@ eng.dataSources["Search"] = {
         {name: "altMolecular", title: "Alteración Molecular", stype: "select", dataSource:"AlterationMolecular"},
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
-        {name: "notificaction", title: "Número de notificaciones", type: "int"}
+        {name: "notificaction", title: "Número de notificaciones", type: "int"},
+        {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
     ]
 };
 
@@ -91,6 +92,19 @@ eng.dataSources["Art_Search"] = {
         {name: "ranking", title: "Clasificación", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "status", title: "Estatus", type: "int"}/*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado*/
+        
+    ]
+};
+
+eng.dataSources["Report"] = {
+    scls: "Report",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",    
+    displayField: "search",
+    fields: [
+        {name: "search", title: "Búsqueda", stype: "select", dataSource:"Search"},
+        {name: "comment", title: "Observaciones", type: "string"},
+        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
     ]
 };
 
@@ -109,28 +123,111 @@ eng.dataProcessors["GeneProcessor"] = {
     actions: ["add"],
     request: function(request, dataSource, action)
     {
-       var xmlHttp = new XMLHttpRequest();
-        print("Anted de guardar")
-        print("request1:" + request);
-        print("action:" + dataSource);
-        print("action:" + action);
-        //if(request.data.name)request.data.name=request.data.name+"_jei";
-       
+        var gen = request.data.symbol;
+        
+        if(gen != null && gen !== "") {
+            var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
+            var search = new esearch();
+
+            var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+            var isValid = utils.isValidGen(gen);
+
+            if(isValid === true) {
+                var text = search.getGeneInfo(gen);
+                if (text !== null) {
+                    var obj = JSON.parse(text);
+                    if (request.data.symbol)
+                        request.data.symbol = gen;
+                    if (obj.gene.nomName)
+                        request.data.officialName = obj.gene.nomName;
+                    if (obj.gene.id)
+                        request.data.mimId = obj.gene.id;
+                    if (obj.gene.sciName)
+                        request.data.organism = obj.gene.sciName;
+                    if (obj.gene.altNames)
+                        request.data.aliases = obj.gene.altNames;
+                    if (obj.gene.loc)
+                        request.data.mapLocation = obj.gene.loc;
+                    if (obj.gene.summary)
+                        request.data.summary = obj.gene.summary;
+                } else {
+                    request.data.symbol = null;
+                    request=null;
+                    dataSource = null;
+                    action = null;
+                    return;
+                }
+            } else {
+                request.data.symbol = null;
+                request=null;
+                dataSource = null;
+                action = null;
+                return;
+            }
+        } else {
+                request.data.symbol = null;
+                request=null;
+                dataSource = null;
+                action = null;
+                return;
+            }
         return request;
     }
 };
 
-eng.dataServices["GeneService"] = {
-    dataSources: ["Gene"],
+/*eng.dataProcessors["CancerTypeProcessor"] = {
+    dataSources: ["CancerType"],
+    actions: ["add"],
+    request: function(request, dataSource, action)
+    {
+        print(request);
+        return request;
+    }
+};*/
+
+/*eng.dataServices["ArticleService"] = {
+    dataSources: ["Article"],
+    actions:["add"],
+    service: function(request, response, dataSource, action)
+    {
+        //print(this.getDataSource("Article").fetch(""));
+        //print(this.getDataSource("Article").fetchObjById("_suri:NanoPharmacy:Article:562ec8edb81d24310efb2c17"));
+        
+
+    }
+};*/
+/*eng.dataProcessors["ArticleProcessor"] = {
+    dataSources: ["Article"],
+    actions: ["add"],
+    request: function(request, dataSource, action)
+    {
+        //print("-------------------" + request.data.pmid)
+        //print(request.data.abstract);
+        print("All articles: " + this.getDataSource("Article").fetch());
+        return request;
+    }
+};*/
+
+eng.dataServices["SearchService"] = {
+    dataSources: ["Search"],
     actions: ["add"],
     service: function(request, response, dataSource, action)
     {
-       print("Despues de guardar")
-        print("request:" + request);
-        print("response:" + response);
-        print("dataSource:" + dataSource);
-        print("action:" + action);
- 
-        return response;
+        if(response.data._id !== null && response.data._id !== "" && response.data.gene !== null &&
+            response.data.gene !== "" && response.data.altMolecular !== null &&
+            response.data.altMolecular !== "") {
+                var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
+                var search = new esearch();
+                var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
+                var altMolecular = this.getDataSource("AlterationMolecular").
+                        fetchObjById(response.data.altMolecular).name;
+                
+                var dataArt = search.getPublicationsInfo(gene, altMolecular, response.data.artYearsOld);
+                if(dataArt != null) {
+                    var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                    utils.saveNewArticles(dataArt,response.data._id);
+                }
+            }
+        return request;
     }
 };
