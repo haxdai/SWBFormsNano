@@ -17,7 +17,12 @@ angular.module('service.search', [])
             this.list = function () {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Search");
-                deferred.resolve( ds.fetch({}) );
+                var result = ds.fetch({});
+                if(result && result.status == 0){
+                    deferred.resolve( result.data );
+                }else{
+                     deferred.reject("Server error");
+                }
                 return deferred.promise;
             };
             

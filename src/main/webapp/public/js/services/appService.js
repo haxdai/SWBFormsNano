@@ -5,5 +5,8 @@ angular.module('services',
                'service.gene',
                'service.alteration',
                'service.cancerType',
-               'service.gene-cancer'
+               'service.gene-cancer',
+               'service.art-search',
+               'service.art-search',
+                'service.article'
             ])

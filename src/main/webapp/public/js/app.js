@@ -40,10 +40,16 @@ angular.module('NanoApp', ['controllers','services','ui.router'])
                             controller: 'SearchDetailController'
                         }
             }
-        }).state('genInfo.cancerType', {  
-            url: '/cancer-type',
-            templateUrl: "/public/templates/cancerType.html",
-            controller: 'CancerTypeController'
+        }).state('results', {  
+           url: '/:id/results',
+            views: {
+                "menu": {   templateUrl: "/public/templates/menu.html",
+                            controller: 'MenuController'
+                        },
+                "content": { templateUrl: "/public/templates/results.html",
+                            controller: 'ResultsController'
+                        }
+            }
         });   
     $urlRouterProvider.otherwise("/");
     

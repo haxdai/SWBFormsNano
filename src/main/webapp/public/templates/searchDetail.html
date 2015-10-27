@@ -1,7 +1,7 @@
 
-<a>Gene info</a>
-<a>Results</a>
-<a>Report</a>
+<a href="/{{searchId}}">Gene info</a>
+<a href="/{{searchId}}/results">Results</a>
+<a href="/{{searchId}}/report">Report</a>
 <div class="gen-info-container">
     <p>Symbol: {{gene.symbol}}</p>
     <p>Official Name:  {{gene.officialName}}</p>
@@ -10,8 +10,17 @@
     <p>Other Aliases:   {{gene.aliases}}</p>
     <p>Map Location:  {{gene.mapLocation}}</p>
 </div> 
-<a href="/{{searchId}}">Sumamary</a>
-<a href="/{{searchId}}/cancer-type">Cancer type</a>
-<div ui-view>
+<a href="#">Sumamary</a>
+<a href="#">Cancer type</a>
+<div>
     {{gene.summary}}
+</div>
+<div ng-if="(cancerList.length > 0)">
+    <div ng-if="$index == position" ng-repeat="cancer in cancerList">
+        <p>Title: {{cancer.name}}</p>
+        <p>Definition {{cancer.summary}}</p>
+    </div>
+    <span ng-if="position > 0" ng-click="prev()"> < </span>
+    <span>{{position + 1}}</span> 
+    <span ng-if="(position < ((cancerList.length) - 1))" ng-click="next()"> > </span>
 </div>
