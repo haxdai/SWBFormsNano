@@ -21,7 +21,7 @@
             <param-value>false</param-value> 
         </init-param> 
     </servlet> 
-    <servlet>
+    <!--servlet>
         <servlet-name>Servlet SearchResource</servlet-name>
         <servlet-class>org.nanopharmacy.resources.SearchResource</servlet-class>
     </servlet>
@@ -29,5 +29,5 @@
     <servlet-mapping>
         <servlet-name>Servlet SearchResource</servlet-name>
         <url-pattern>/SearchResource</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping-->
 </web-app>
