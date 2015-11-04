@@ -22,6 +22,16 @@ angular.module('service.gene-cancer', [])
                 return deferred.promise;
             };*/
 
-
+            this.save = function (geneCancer) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("Gene_Cancer");
+                var response = ds.addObj(geneCancer);
+                if (response) {
+                    deferred.resolve(response);
+                } else {
+                    deferred.reject("No data");
+                }
+                return deferred.promise;
+            };
 
         })

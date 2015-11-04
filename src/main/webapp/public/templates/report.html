@@ -1,0 +1,12 @@
+<textarea ng-model="report.comment"></textarea>
+<a ng-click="save(report)">Save</a>
+<a>Print</a>
+<div ng-repeat="article in articleList">
+    <p>{{$index+1}}</p>
+    <p>{{article.article.title}}</p>
+    <!--span ng-if="article.artSearch.ranking>5"> R</span-->
+    <p>{{article.artSearch.ranking}}</p>
+    <p>{{article.article.abstract}}</p>
+    <p>{{article.article.reference}}</p>
+    <p>{{article.article.link}}</p>
+</div>

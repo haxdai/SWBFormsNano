@@ -28,7 +28,8 @@ eng.dataSources["AlterationMolecular"] = {
     fields: [
         {name: "name", title: "Nombre de la alteración molecular", type: "string"},
         {name: "aliases", title: "Nombres alternos", type: "string"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"}
+        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+        {name: "gene", title: "Gen", stype: "select", dataSource:"Gene"},
     ]
 };
 
@@ -76,7 +77,8 @@ eng.dataSources["Search"] = {
         {name: "altMolecular", title: "Alteración Molecular", stype: "select", dataSource:"AlterationMolecular"},
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
-        {name: "notificaction", title: "Número de notificaciones", type: "int"}
+        {name: "notificaction", title: "Número de notificaciones", type: "int"},
+          {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
     ]
 };
 
@@ -91,6 +93,7 @@ eng.dataSources["Art_Search"] = {
         {name: "ranking", title: "Clasificación", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "status", title: "Estatus", type: "int"}/*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado*/
+        
     ]
 };
 
@@ -104,12 +107,24 @@ eng.dataSources["Gene_Cancer"] = {
     ]
 };
 
+eng.dataSources["Report"] = {
+    scls: "Report",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",    
+    displayField: "search",
+    fields: [
+        {name: "search", title: "Búsqueda", stype: "select", dataSource:"Search"},
+        {name: "comment", title: "Observaciones", type: "string"},
+        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+    ]
+};
+
 eng.dataProcessors["GeneProcessor"] = {
     dataSources: ["Gene"],
     actions: ["add"],
     request: function(request, dataSource, action)
     {
-       var xmlHttp = new XMLHttpRequest();
+        
         print("Anted de guardar")
         print("request1:" + request);
         print("action:" + dataSource);
@@ -119,6 +134,15 @@ eng.dataProcessors["GeneProcessor"] = {
         return request;
     }
 };
+
+eng.dataSources["Configuration"] = {
+    scls: "Configuration",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",
+    fields: [
+        {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "string"}
+    ]
+}; 
 
 eng.dataServices["GeneService"] = {
     dataSources: ["Gene"],

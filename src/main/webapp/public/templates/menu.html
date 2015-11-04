@@ -1,5 +1,9 @@
 <ul>
-    <li ng-repeat="search  in searchList"><a href="/{{search._id}}" >{{search.geneSymbol }} ; {{search.alteName }}</a></li>  
+    <li ng-repeat="search  in searchList">
+        <a href="/{{search._id}}" >{{search.geneSymbol }} ; {{search.alteName }}</a>
+        <span ng-if="search.notificaction>0">N {{search.notificaction }}</span>
+        <span ng-if="search.recommended>0">R {{search.recommended }}</span>
+    </li>  
     
 </ul>
 <a href="/new-search">New search</a>

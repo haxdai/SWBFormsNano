@@ -16,9 +16,8 @@ angular.module('controller.newSearch', [])
             })
             
             $scope.addSearch = function(geneSelected,altSelected){
-                console.log(geneSelected)
-                console.log(altSelected)
-                Search.add({gene:geneSelected._id,altMolecular:altSelected._id}).then(function(){
+                Search.add({gene:geneSelected._id,altMolecular:altSelected._id}).then(function(reponse){
+                    
                     $state.go('index');
                 });
             }

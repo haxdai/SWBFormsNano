@@ -33,4 +33,16 @@ angular.module('service.search', [])
                 return deferred.promise;
                 
             }
+            
+             this.update = function (search) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("Search");
+                var response = ds.updateObj(search);
+                if (response) {
+                    deferred.resolve(response);
+                } else {
+                    deferred.reject("No data");
+                }
+                return deferred.promise;
+            };
         })

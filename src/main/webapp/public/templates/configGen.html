@@ -1,0 +1,39 @@
+<div>
+    <h2>Gene</h2>
+    <ul>
+        <li ng-repeat="gene in geneList"><a ng-click="setGenId(gene._id)">{{gene.symbol}}</a></li>
+    </ul>
+    <a>New gene</a>
+    <label>Gene symbol:</label>
+    <input type="text" ng-model="geneSymbol"/>
+    <a href="#" ng-click="addGene(geneSymbol)">Add to list</a>
+    <a href="#">Cancel</a>
+</div>
+<div ng-if="geneSelected">
+    <h2>Molecular Alteration</h2>
+   <ul>
+        <li ng-repeat="alt in  altList">{{alt.name}}</li>
+    </ul>
+    <a>New molecular alteration</a>
+    <label>Alteration name:</label>
+    <input type="text" ng-model="alterationName"/>
+    <label>Aliases:</label>
+    <input type="text" ng-model="aliase"/>
+    
+    <a href="#" ng-click="addAlteration(alterationName,aliase)">Add to list</a>
+    <a href="#">Cancel</a>
+</div>
+<div ng-if="geneSelected">
+    <h2>Diseases</h2>
+   <ul>
+               <li ng-repeat="cancer  in cancerList">{{cancer.name}}</li>
+    </ul>
+    <a>New disease</a>
+    <label>Disease name:</label>
+    <input type="text" ng-model="dideaseName"/>
+    <label>Summary</label>
+    <input type="text" ng-model="diseaseSummary"/>
+    
+    <a href="#" ng-click="addDisease(dideaseName,diseaseSummary)">Add to list</a>
+    <a href="#">Cancel</a>
+</div>

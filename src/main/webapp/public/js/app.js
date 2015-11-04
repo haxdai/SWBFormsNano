@@ -29,6 +29,28 @@ angular.module('NanoApp', ['controllers','services','ui.router'])
                             controller: 'NewSearchController'
                         }
             }
+        }).state('configGen', {  
+            url: '/config',
+            views: {
+                "menu": {   templateUrl: "/public/templates/menuConfig.html",
+                            controller: 'MenuConfigController'
+                        },
+                "content": {
+                            templateUrl: "/public/templates/configGen.html",
+                            controller: 'ConfigGenController'
+                        }
+            }
+        }).state('configUpdatingTime ', {  
+            url: '/config-time',
+            views: {
+                "menu": {   templateUrl: "/public/templates/menuConfig.html",
+                            controller: 'MenuConfigController'
+                        },
+                "content": {
+                            templateUrl: "/public/templates/configUpdatingTime.html",
+                            controller: 'ConfigUpdatingTimeController'
+                        }
+            }
         })
         .state('genInfo', {  
             url: '/:id',
@@ -48,6 +70,16 @@ angular.module('NanoApp', ['controllers','services','ui.router'])
                         },
                 "content": { templateUrl: "/public/templates/results.html",
                             controller: 'ResultsController'
+                        }
+            }
+        }).state('report', {  
+           url: '/:id/report',
+            views: {
+                "menu": {   templateUrl: "/public/templates/menu.html",
+                            controller: 'MenuController'
+                        },
+                "content": { templateUrl: "/public/templates/report.html",
+                            controller: 'ReportController'
                         }
             }
         });   

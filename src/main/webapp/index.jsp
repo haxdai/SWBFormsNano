@@ -8,6 +8,8 @@
         <link href="/public/css/nano.css" rel="stylesheet" type="text/css" />
     </head>
     <body ng-app="NanoApp">
+        <a href="/">Home</a>
+        <a href="/config">Configure</a>
         <div ui-view="menu"></div>
         <div ui-view="content"></div>
     </body>    
@@ -29,6 +31,9 @@
     <script src="/public/js/services/gene-cancerService.js"></script>
     <script src="/public/js/services/art-searchService.js"></script>
     <script src="/public/js/services/articleService.js"></script>
+    <script src="/public/js/services/reportService.js"></script>
+    <script src="/public/js/services/configService.js"></script>
+
     
     <script src="/public/js/controllers/appController.js"></script>
     <script src="/public/js/controllers/menuController.js"></script>
@@ -36,6 +41,10 @@
     <script src="/public/js/controllers/searchDetailController.js"></script>
     <script src="/public/js/controllers/resultsController.js"></script>
     <script src="/public/js/controllers/newSearchController.js"></script>
+    <script src="/public/js/controllers/reportController.js"></script>
+    <script src="/public/js/controllers/configGenController.js"></script>
+    <script src="/public/js/controllers/menuConfigController.js"></script>
+    <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
     
     
 </html>

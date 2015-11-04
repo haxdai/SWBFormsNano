@@ -4,12 +4,12 @@
 <a href="/{{searchId}}/report">Report</a>
 
 
-<p>Result</p> 
 <select ng-model="statusSelected" ng-change="statusChange(statusSelected)">
-    <option ng-selected="true"  value="0">Unclassified</option>
+    <option value="0">Unclassified</option>
     <option value="1">New</option>
     <option value="2">Acepted</option>
     <option value="3">Rejected</option>
+    <option value="4">Recommended</option>
 </select>
 <select>
     <option>Title</option>
@@ -23,6 +23,7 @@
 <div ng-repeat="article in articleList">
     <p>{{$index+1}}</p>
     <p>{{article.article.title}}</p>
+    <!--span ng-if="article.artSearch.ranking>5"> R</span-->
     <p>{{article.artSearch.ranking}}</p>
     <p>{{article.article.abstract}}</p>
     <p>{{article.article.reference}}</p>
@@ -32,6 +33,6 @@
 </div>
 <div ng-if="(maxPage> 1)">
     <span ng-if="pag > 1" ng-click="prev()"> < </span>
-    <span>{{pag}}</span> 
+    <span ng-if="pag > 0" >{{pag}}</span> 
     <span ng-if="pag < ((maxPage))" ng-click="next()"> > </span>
 </div>

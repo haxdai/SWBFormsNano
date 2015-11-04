@@ -27,6 +27,16 @@ angular.module('service.gene', [])
                 return deferred.promise;
             };
 
-
+             this.save = function (gene) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("Gene");
+                var response = ds.addObj(gene);
+                if (response && response.status == 0 ) {
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject("No data");
+                }
+                return deferred.promise;
+            };
 
         })

@@ -15,10 +15,14 @@ angular.module('service.alteration', [])
                 return deferred.promise;
             };
 
-            this.list = function () {
+            this.list = function (geneId) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("AlterationMolecular");
-                var result = ds.fetch({});
+                var query = {};
+                if(geneId){
+                    query.gene = geneId;
+                }
+                var result = ds.fetchObj(query);
                 if(result.status == 0 ){
                     deferred.resolve(result.data);
                 }else{
@@ -26,7 +30,18 @@ angular.module('service.alteration', [])
                 }
                 return deferred.promise;
             };
-
+            
+            this.save = function (alt) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("AlterationMolecular");
+                var response = ds.addObj(alt);
+                if (response && response.status == 0 ) {
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject("No data");
+                }
+                return deferred.promise;
+            };
 
 
         })
