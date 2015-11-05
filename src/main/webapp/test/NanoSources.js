@@ -9,7 +9,29 @@ eng.dataSources["Gene"] = {
     dataStore: "mongodb",
     displayField: "symbol",
     fields: [
-        {name: "symbol", title: "Simbolo Oficial", required: true, type: "string"},
+        {name: "symbol", title: "Simbolo Oficial", required: true, type: "string", 
+            /*validators:[{type:"integerRange", min:5, max:15}]*/
+            validators: [
+            {
+                type:"serverCustom",                                    //serverCustom del lado del servidor
+                serverCondition:function(name,value,request){                    
+                    print("name: " + name)
+                    print("value: " + value);
+                    print("request: " + request);
+                    return false;
+                },
+                errorMessage:"Duplicado"
+            }, {
+                type:"serverCustom",                                    //serverCustom del lado del servidor
+                serverCondition:function(name,value,request){                    
+                    print("name: " + name)
+                    print("value: " + value);
+                    print("request: " + request);
+                    return true;
+                },
+                errorMessage:"Gen no encontrado"
+            }
+        ]},
         {name: "officialName", title: "Nombre oficial", type: "string"},
         {name: "mimId", title: "Número identificador", type: "int"},
         {name: "organism", title: "Organismo", type: "string"},
@@ -28,7 +50,8 @@ eng.dataSources["AlterationMolecular"] = {
     fields: [
         {name: "name", title: "Nombre de la alteración molecular", type: "string"},
         {name: "aliases", title: "Nombres alternos", type: "string"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"}
+        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+        {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"}
     ]
 };
 
@@ -51,6 +74,7 @@ eng.dataSources["Article"] = {
     modelid: "NanoPharmacy",
     dataStore: "mongodb",
     displayField: "title",
+    /*methodsAvalaible: ["add","update"],*/
     fields: [
         {name: "title", title: "Título del artículo", type: "string"},
         {name: "abstract", title: "Resumen del artículo", type: "string"},
@@ -118,22 +142,13 @@ eng.dataSources["Gene_Cancer"] = {
     ]
 };
 
-eng.dataSources["Gene_AltMol"] = {
-    scls: "Gene_AltMol",
-    modelid: "NanoPharmacy",
-    dataStore: "mongodb",
-    fields: [
-        {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"},
-        {name: "altMol", title: "Alteración Molecular", stype: "select", dataSource: "AlterationMolecular"},
-    ]
-};
 
 eng.dataSources["Configuration"] = {
     scls: "Configuration",
     modelid: "NanoPharmacy",
     dataStore: "mongodb",
     fields: [
-        {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "string"}
+        {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "int"}
     ]
 };
 
@@ -190,7 +205,7 @@ eng.dataProcessors["GeneProcessor"] = {
             action = null;
             return;
         }
-        return request;
+        return request;//
     }
 };
 
@@ -205,16 +220,8 @@ eng.dataServices["GeneService"] = {
 
             var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
             var defDiseases = search.getDiseasesInfo(response.data.symbol);
-            var dise = JSON.parse(defDiseases);
-            var counter = 0;
-            for (var val in dise) {
-                if (dise.hasOwnProperty(val)) {
-                    var title = dise[counter].title;
-                    var definition = dise[counter].definition;
-                    var conceptId = dise[counter].conceptId;
-                    utils.setNewDisease(response.data._id, title, definition, conceptId);
-                }
-                counter++;
+            if(defDiseases != null) {
+                utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:5639598afcfbfa9096d3e756");
             }
         }
 
@@ -239,7 +246,7 @@ eng.dataServices["SearchService"] = {
             if (dataArt != null) {
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                 utils.saveNewArticles(dataArt,response.data._id);
-                //utils.saveUpdateArticles(dataArt, response.data._id);
+                //utils.saveUpdateArticles(dataArt, "_suri:NanoPharmacy:Search:5632a99e3831a3e77b9ec2b3");//response.data._id
             }
         }
         return request;
