@@ -1,9 +1,31 @@
 <ul>
     <li ng-repeat="search  in searchList">
-        <a href="/{{search._id}}" >{{search.geneSymbol }} ; {{search.alteName }}</a>
-        <span ng-if="search.notificaction>0">N {{search.notificaction }}</span>
-        <span ng-if="search.recommended>0">R {{search.recommended }}</span>
+        <a href="/{{search._id}}" >{{search.geneSymbol}} ; {{search.alteName}}</a>
+        <span ng-if="search.notificaction > 0">N {{search.notificaction}}</span>
+        <span ng-if="search.recommended > 0">R {{search.recommended}}</span>
     </li>  
-    
+
 </ul>
-<a href="/new-search">New search</a>
+<a ng-click="newSearch = true" href="#">New search</a>
+<div ng-show="newSearch">
+    <h3>New scheme search:</h3>
+    <p>Select Gene: 
+        <select ng-model="geneSelected" ng-change="geneChange(geneSelected)" ng-options="gene.symbol for gene in geneList track by gene._id">
+            <!--option selected="true" value="{{gene._id}}"  ng-repeat="gene in geneList">{{gene.symbol}}</option-->
+            <option style="display:none" value="">Select a gene</option>
+        </select>
+    </p>
+    <p>Select molecular alteration
+        <select ng-model="altSelected"  ng-options="alt.name for alt in altList track by alt._id">
+            <option style="display:none" value="">Select a alteration</option>
+        </select>
+    </p>
+    <p>Set publication dates
+         <select ng-model="dateSelected"  ng-options="date.text for date in datesList track by date.year">
+            <option style="display:none" value="">Select time</option>
+        </select>
+        {{datePublication}}
+    </p>
+    <a ng-click="addSearch(geneSelected, altSelected,dateSelected)">Search</a>
+    <a ng-click="newSearch = false">Cancel</a>
+</div>

@@ -4,11 +4,11 @@ angular.module('service.config', [])
         .service('Config', function ($http, $q) {
 
             this.publicationDates = function () {
-                return [1, 3, 5, 10];
+                return [{year:1,text:"1 year"}, {year:3,text:"3 Years"}, {year:5,text:"5 Years"}, {year:10,text:"10 Years"}];
             };
 
             this.rateUpdate = function () {
-                return ["Daily", "Every week", "Every other week", "Every month"];
+                return [{day:1,text:"Daily"}, {day:7,text:"Every week"}, {day:15,text:"Every other week"}, {day:30,text:"Every month"}];
             };
 
             this.getRateUpdate = function () {

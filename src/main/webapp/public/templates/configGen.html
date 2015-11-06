@@ -1,39 +1,46 @@
 <div>
     <h2>Gene</h2>
+    <a href="#" ng-click="addingGen = true">Add gene</a>
+    
     <ul>
         <li ng-repeat="gene in geneList"><a ng-click="setGenId(gene._id)">{{gene.symbol}}</a></li>
     </ul>
-    <a>New gene</a>
-    <label>Gene symbol:</label>
-    <input type="text" ng-model="geneSymbol"/>
-    <a href="#" ng-click="addGene(geneSymbol)">Add to list</a>
-    <a href="#">Cancel</a>
+    <a ng-show="addingGen">New gene</a>
+    <label ng-show="addingGen">Gene symbol:</label>
+    <input ng-show="addingGen" type="text" ng-model="geneSymbol"/>
+    <a ng-show="addingGen" href="#" ng-click="addGene(geneSymbol)">Add to list</a>
+    <a ng-click="cancelGen()" ng-show="addingGen"   href="#">Cancel</a>
 </div>
-<div ng-if="geneSelected">
+<div ng-show="geneSelected">
     <h2>Molecular Alteration</h2>
-   <ul>
-        <li ng-repeat="alt in  altList">{{alt.name}}</li>
+    <a href="#" ng-click="addAlt()">Add molecular alteration</a>
+    <ul>
+        <li ng-repeat="alt in  altList">{{alt.name}} <a href="#"  ng-click="editAlt(alt)">Edit</a></li>
     </ul>
-    <a>New molecular alteration</a>
-    <label>Alteration name:</label>
-    <input type="text" ng-model="alterationName"/>
-    <label>Aliases:</label>
-    <input type="text" ng-model="aliase"/>
-    
-    <a href="#" ng-click="addAlteration(alterationName,aliase)">Add to list</a>
-    <a href="#">Cancel</a>
+    <p ng-show="addingAlt">New molecular alteration</p>
+    <p ng-show=" editingAlt">Update molecular alteration</p>
+    <label ng-show="addingAlt || editingAlt">Alteration name:</label>
+    <input ng-show="addingAlt || editingAlt" type="text" ng-model="alterationName"/>
+    <label ng-show="addingAlt || editingAlt" >Aliases:</label>
+    <input ng-show="addingAlt || editingAlt" type="text" ng-model="aliase"/>
+    <a ng-show="addingAlt " href="#" ng-click="addAlteration(alterationName, aliase)">Add to list</a>
+    <a ng-show=" editingAlt" href="#" ng-click="updateAlteration(alterationName, aliase)">Update molecular alteration </a>
+    <a  ng-show="addingAlt || editingAlt" href="#" ng-click="cancelAlt()">Cancel</a>
 </div>
-<div ng-if="geneSelected">
+<div ng-show="geneSelected">
     <h2>Diseases</h2>
-   <ul>
-               <li ng-repeat="cancer  in cancerList">{{cancer.name}}</li>
+    <a href="#" ng-click="addDis()">Add disease</a>
+    <ul>
+        <li ng-repeat="didease  in cancerList">{{didease.name}} <span  ng-click="editDisease(didease)">Edit</span></li>
     </ul>
-    <a>New disease</a>
-    <label>Disease name:</label>
-    <input type="text" ng-model="dideaseName"/>
-    <label>Summary</label>
-    <input type="text" ng-model="diseaseSummary"/>
-    
-    <a href="#" ng-click="addDisease(dideaseName,diseaseSummary)">Add to list</a>
-    <a href="#">Cancel</a>
+    <p  ng-show="addingDisease">New disease</p>
+    <p ng-show="editingDisease">Update disease</p>
+    <label  ng-show="addingDisease || editingDisease">Disease name:</label>
+    <input ng-show="addingDisease || editingDisease" type="text" ng-model="dideaseName"/>
+    <label ng-show="addingDisease || editingDisease">Summary</label>
+    <input ng-show="addingDisease || editingDisease" type="text" ng-model="diseaseSummary"/>
+
+    <a ng-show="addingDisease " href="#" ng-click="addDisease(dideaseName, diseaseSummary)">Add to list</a>
+    <a ng-show=" editingDisease" href="#" ng-click="updateDisease(dideaseName, diseaseSummary)">Update disease</a>
+    <a  ng-show="addingDisease || editingDisease" href="#" ng-click="cancerDis()">Cancel</a>
 </div>

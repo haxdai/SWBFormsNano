@@ -11,14 +11,15 @@
     <option value="3">Rejected</option>
     <option value="4">Recommended</option>
 </select>
-<select>
-    <option>Title</option>
-    <option>Author</option>
-    <option>Prognosis</option>
-    <option>Prediction</option>
-    <option>Treatment</option>
-    <option>Best rated</option>
-    <option>Index</option>
+<select ng-model="filterSelected" ng-change="filterChange(filterSelected)">
+
+    <option value="title">Title</option>
+    <option value="autor">Author</option>
+    <option value="prognosis">Prognosis</option>
+    <option value="prediction">Prediction</option>
+    <option value="treatment">Treatment</option>
+    <option value="ranking">Best rated</option>
+    <option value="ranking">Index</option>
 </select>
 <div ng-repeat="article in articleList">
     <p>{{$index+1}}</p>

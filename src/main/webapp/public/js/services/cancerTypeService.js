@@ -58,6 +58,18 @@ angular.module('service.cancerType', [])
                 }
                 return deferred.promise;
             };
+            
+             this.update = function (cancer) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("CancerType");
+                var response = ds.updateObj(cancer);
+                if (response && response.status == 0) {
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject("No data");
+                }
+                return deferred.promise;
+            };
 
 
         })

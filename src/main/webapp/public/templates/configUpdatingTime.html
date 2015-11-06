@@ -1,4 +1,4 @@
 <p>This option enables to set the rate of update publications</p>
 <label  data-ng-repeat="rate in rates">
-    <input ng-model="optionValue.rateUpdPubl" ng-change="saveConfig(optionValue.rateUpdPubl)" name="config"  type="radio"  value="{{rate}}">{{rate}}
+    <input ng-model="optionValue.rateUpdPubl" ng-change="saveConfig(optionValue.rateUpdPubl)" name="config"  type="radio"  value="{{rate.day}}">{{rate.text}}
 </label>

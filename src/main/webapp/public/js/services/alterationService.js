@@ -42,6 +42,18 @@ angular.module('service.alteration', [])
                 }
                 return deferred.promise;
             };
+            
+               this.update = function (alt) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("AlterationMolecular");
+                var response = ds.updateObj(alt);
+                if (response && response.status == 0 ) {
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject("No data");
+                }
+                return deferred.promise;
+            };
 
 
         })
