@@ -221,7 +221,8 @@ eng.dataServices["GeneService"] = {
             var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
             var defDiseases = search.getDiseasesInfo(response.data.symbol);
             if(defDiseases != null) {
-                utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:5639598afcfbfa9096d3e756");
+                utils.setNewDisease(defDiseases, response.data._id);
+                //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:5639598afcfbfa9096d3e756");
             }
         }
 
