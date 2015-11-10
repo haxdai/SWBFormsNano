@@ -84,6 +84,16 @@ and open the template in the editor.
                 canEdit:true, 
                 canAdd:true,
                 canRemove:true,
+                /*fields:[
+                    /*{name: "title"},
+                    {name: "link"},*/
+                    //{name: "pmid"},
+                    /*{name: "pmcid"},
+                    /*{name: "autor"},*/
+                    //{name: "prognosis"},
+                    /*{name: "prediction"},
+                    {name: "treatment"}*/
+                //]
             },"Article");
             </script>
             
@@ -95,6 +105,7 @@ and open the template in the editor.
                 canEdit:true, 
                 canAdd:true,
                 canRemove:true,
+                
             },"Gene_Cancer");
             
             /*var altSearch=eng.createGrid({
@@ -106,5 +117,25 @@ and open the template in the editor.
             },"User");*/
             
         </script>
+            <h1>Tipo de cáncer(enfermedad)</h1>
+            <script type="text/javascript">
+            var altSearch=eng.createGrid({
+                width:"100%",
+                height:"300",
+                canEdit:true, 
+                canAdd:true,
+                canRemove:true,
+                
+            },"CancerType");
+            
+            /*var altSearch=eng.createGrid({
+                width:"100%",
+                height:"300",
+                canEdit:true, 
+                canAdd:true,
+                canRemove:true,
+            },"User");*/
+            
+        </script>        
     </body>
 </html>
