@@ -47,6 +47,9 @@ eng.routes["global"]={
         { routePath: "work/*", jspMapTo: "/work/jsp/", isRestricted: "true" },
         { routePath: "public/*", jspMapTo: "/public/", isRestricted: "false" },
         { routePath: "ds", forwardTo: "/swbforms/jsp/datasource.jsp", isRestricted: "false" },
-        { routePath: "*", forwardTo: "/index.jsp", isRestricted: "false"}
+        { routePath: "search/*", forwardTo: "/index.jsp", isRestricted: "false"},
+        { routePath: "search/results/*", forwardTo: "/index.jsp", isRestricted: "false"},
+        { routePath: "search/report/*", forwardTo: "/index.jsp", isRestricted: "false"},
+        { routePath: "config", forwardTo: "/index.jsp", isRestricted: "false"}
     ],
 };

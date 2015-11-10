@@ -1,26 +1,62 @@
+<a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>{{gene.symbol}}</h2>
+            <h3> {{gene.officialName}}</h3>
+        </div>      
+    </div>    
+    <nav class="navbar navbar-default nav-nanopharma" role="navigation">
+        <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"> <a href="/search/{{searchId}}">Gene Info</a></li>
+                 <li class="active dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Results<strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
+                        <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
+                        <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
+                        <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
+                        <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
+                    </ul>
+                </li>
+                <li><a href="/search/report/{{searchId}}">Report</a> </li>
+            </ul>
+        </div>
+    </nav>
 
-<a href="/{{searchId}}">Gene info</a>
-<a href="/{{searchId}}/results">Results</a>
-<a href="/{{searchId}}/report">Report</a>
-<div class="gen-info-container">
-    <p>Symbol: {{gene.symbol}}</p>
-    <p>Official Name:  {{gene.officialName}}</p>
-    <p>Gene Id (MIM): {{gene.mimId}}</p>
-    <p>Organism:       {{gene.organism}}</p>
-    <p>Other Aliases:   {{gene.aliases}}</p>
-    <p>Map Location:  {{gene.mapLocation}}</p>
-</div> 
-<a href="#">Sumamary</a>
-<a href="#">Cancer type</a>
-<div>
-    {{gene.summary}}
-</div>
-<div ng-if="(cancerList.length > 0)">
-    <div ng-if="$index == position" ng-repeat="cancer in cancerList">
-        <p>Title: {{cancer.name}}</p>
-        <p>Definition {{cancer.summary}}</p>
-    </div>
-    <span ng-if="position > 0" ng-click="prev()"> < </span>
-    <span>{{position + 1}}</span> 
-    <span ng-if="(position < ((cancerList.length) - 1))" ng-click="next()"> > </span>
+    <div class="row contenido">
+        <div class="col-lg-12">
+            <ul class="gene-info">
+
+                <li><span>Symbol:</span> {{gene.symbol}}</li>
+                <li><span>Official Name:</span>  {{gene.officialName}}</li>
+                <li><span>Gene Id (MIM):</span> {{gene.mimId}}</li>
+                <li><span>Organism:</span>       {{gene.organism}}</li>
+                <li><span>Other Aliases:</span>   {{gene.aliases}}</li>
+                <li><span>Map Location:</span>  {{gene.mapLocation}}</li>
+            </ul>
+            <div class="tabbable" id="tabs-geninfo">
+                <ul class="nav nav-tabs">
+                    <li class="active"> <a href="#panel-summar" data-toggle="tab">Summar</a> </li>
+                    <li> <a href="#panel-type" data-toggle="tab">Cancer type</a> </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="panel-summar">
+                        <p> {{gene.summary}}</p>
+                    </div>
+                    <div class="tab-pane" id="panel-type">
+                        <ul  ng-if="(cancerList.length > 0)" class="pagination clearfix">
+                            <li><a ng-if="position > 0" ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
+                            <li><a href="#">{{position + 1}}</a></li>
+                            <li><a ng-if="(position < ((cancerList.length) - 1))" ng-click="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                        <p><span>Title:</span> {{cancerList[position].name}}</p>
+                        <p><span>Definition:</span> {{cancerList[position].summary}} </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>      
+    </div> 
 </div>

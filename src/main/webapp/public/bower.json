@@ -16,6 +16,9 @@
   "dependencies": {
     "angular": "~1.4.7",
     "angular-ui-router": "~0.2.15",
-    "angular-carousel": "~1.0.1"
+    "angular-carousel": "~1.0.1",
+    "jquery": "~2.1.4",
+    "font-awesome": "~4.4.0",
+    "bootstrap": "*"
   }
 }

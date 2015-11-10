@@ -1,23 +1,41 @@
 'use strict';
 
 angular.module('controller.results', [])
-        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article) {
+        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene) {
             $scope.searchId = $stateParams.id;
-            $scope.status = 0; /*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado, 4 Recomendado*/
+            console.log($stateParams)
+            var status = parseInt($stateParams.status);
+            if($stateParams.status>=0 && $stateParams.status<=4 ){
+                $scope.status = status;
+            }else{
+                $scope.status = 4; /*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado, 4 Recomendado*/
+            }
+            
+            $scope.statuslist = ["Unclassified","New","Accepted","Rejected","Recommended"];
+
             $scope.pag = 1;
             $scope.maxPage;
             $scope.totalRows;
             $scope.sortBy;
             $scope.limit;
-
+            $scope.gene;
 
             $scope.articleList = [];
+
+
+            Search.byId($scope.searchId).then(function (search) {
+                Gene.byId(search.gene).then(function (gene) {
+                    $scope.gene = gene;
+                })
+            }, function (error) {
+                console.log(error)
+            })
 
             $scope.prev = function () {
                 if ($scope.pag > 1)
                     $scope.pag--;
                 $scope.articleList = [];
-                $scope.updateResults($scope.searchId, $scope.status,$scope.sortBy, $scope.pag);
+                $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             }
 
             $scope.next = function () {
@@ -25,7 +43,7 @@ angular.module('controller.results', [])
                     $scope.pag++;
                 }
                 $scope.articleList = [];
-                $scope.updateResults($scope.searchId, $scope.status,$scope.sortBy, $scope.pag);
+                $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             }
 
             $scope.discard = function (art_search, i) {
@@ -36,10 +54,10 @@ angular.module('controller.results', [])
                     //$scope.articleList = [];
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     if (art_search.ranking > 5) {
-                        $rootScope.$emit('articleRecommended', $scope.searchId, -1);
+                        $rootScope.$emit('articleRecommended', $scope.searchId);
                     }
                     if (statusPrev == 1) {
-                        $scope.updateResults($scope.searchId, $scope.status,$scope.sortBy, -1);
+                        $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);
                     } else {
                         if ($scope.maxPage < $scope.pag) {
                             $scope.pag = $scope.maxPage;
@@ -62,14 +80,14 @@ angular.module('controller.results', [])
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
                     if (statusPrev == 1) {
-                        $scope.updateResults($scope.searchId, $scope.status,$scope.sortBy, -1);
+                        $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);
                     } else {
 
                         if ($scope.maxPage < $scope.pag) {
                             $scope.pag = $scope.maxPage;
-                            $scope.updateResults($scope.searchId, $scope.status,$scope.sortBy, $scope.pag);
+                            $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
                         } else {
-                            $scope.updateResults($scope.searchId, $scope.status,$scope.sortBy, $scope.pag, 1);
+                            $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag, 1);
 
                         }
                     }
@@ -81,9 +99,9 @@ angular.module('controller.results', [])
                 $scope.status = parseInt(status);
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             }
-            
+
             $scope.filterChange = function (filter) {
-                console.log("filtrando : "+ filter)
+                console.log("filtrando : " + filter)
                 $scope.articleList = [];
                 $scope.pag = 1;
                 $scope.sortBy = filter;
@@ -99,6 +117,7 @@ angular.module('controller.results', [])
                     }
                 }
                 Article.listBySearchId(searchId, status, orderBy, pag, ele).then(function (artSearchList) {
+                    
                     $scope.totalRows = artSearchList.totalRows;
                     $scope.limit = artSearchList.limit;
                     $scope.maxPage = Math.ceil($scope.totalRows / $scope.limit);
@@ -116,13 +135,21 @@ angular.module('controller.results', [])
                             Art_Search.update(art.artSearch)
                             art.artSearch.status = 1;
                         }
-                        $scope.articleList.push({article: art,artSearch:art.artSearch})
+                        $scope.articleList.push({article: art, artSearch: art.artSearch})
                     });
+                },function(error){
+                    if(error == "No data"){
+                        $scope.maxPage = 0;
+                    }
                 });
 
             }
 
 
             $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
-
+            
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
         })

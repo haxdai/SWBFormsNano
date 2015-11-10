@@ -1,17 +1,83 @@
-<a href="/{{searchId}}">Gene info</a>
-<a href="/{{searchId}}/results">Results</a>
+<a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
 
-<a href="/{{searchId}}/report">Report</a>
 
-<textarea ng-model="report.comment"></textarea>
-<a ng-click="save(report)">Save</a>
-<a>Print</a>
-<div ng-repeat="article in articleList">
-    <p>{{$index+1}}</p>
-    <p>{{article.article.title}}</p>
-    <!--span ng-if="article.artSearch.ranking>5"> R</span-->
-    <p>{{article.artSearch.ranking}}</p>
-    <p>{{article.article.abstract}}</p>
-    <p>{{article.article.reference}}</p>
-    <p>{{article.article.link}}</p>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>{{gene.symbol}}</h2>
+            <h3> {{gene.officialName}}</h3>
+        </div>      
+    </div>      
+
+    <nav class="navbar navbar-default nav-nanopharma" role="navigation">
+        <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li> <a href="/search/{{searchId}}">Gene Info</a></li>
+                <li class="active dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Results<strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
+                        <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
+                        <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
+                        <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
+                        <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
+                    </ul>
+                </li>
+                <li  class="active"><a href="/search/report/{{searchId}}">Report</a> </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="row contenido">
+        <div class="col-lg-12">
+
+            <textarea  ng-model="report.comment" class="result-notes">Add notes here:</textarea>
+            <div class="panel-buttons">
+                <button  ng-click="save(report)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                <button  onClick="window.print();
+                        return false" type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+            </div>
+
+            <div class="panel-group" id="panel-results">
+                <div class="panel panel-default" ng-repeat="article in articleList">
+                    <div class="panel-heading">
+                        <ol start="{{$index + 1}}">
+                            <li>
+                                <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-00{{$index + 1}}">
+                                    <span class="glyphicon glyphicon-menu-up"></span>
+                                    <span class="glyphicon glyphicon-menu-down"></span>
+                                    {{article.article.title}}</a>
+                            </li>
+                        </ol>
+                    </div>
+                    <div id="panel-element-00{{$index + 1}}" class="panel-collapse collapse">
+
+                        <div class="panel-body">
+                            <div class="panel-rel clearfix">
+                                <p>Rated</p>
+                                <div class="rel01 full"></div>
+                                <div class="rel02 full"></div>
+                                <div class="rel03 full"></div>
+                                <div class="rel04 full"></div>
+                                <div class="rel05"></div>
+                            </div>   
+                            <p>{{article.article.abstract}}</p>
+                            <p class="reference"><strong>Reference:</strong>{{article.article.reference}}</p>
+                        </div>
+                        <div class="panel-pie clearfix">
+                            <a href="{{article.article.link}}" class="panel-pie-more">
+                                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> More
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
 </div>
