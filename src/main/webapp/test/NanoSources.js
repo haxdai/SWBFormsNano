@@ -275,7 +275,7 @@ eng.dataServices["SearchService"] = {
             var altMolecular = this.getDataSource("AlterationMolecular").
                     fetchObjById(response.data.altMolecular).name;
 
-            var dataArt = search.getPublicationsInfo(gene, altMolecular, response.data.artYearsOld);
+            var dataArt = search.getPublicationsInfo(gene, altMolecular, response.data.artYearsOld, 0);//
             if (dataArt != null) {
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                 utils.saveNewArticles(dataArt, response.data._id);
