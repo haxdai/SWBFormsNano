@@ -60,7 +60,7 @@ angular.module('service.article', [])
                 }
                 Art_Search.list(searchId, status, sortArtSearch).then(function (articleIds) {
                     Article.list(articleIds, sortBy, pag, ele).then(function (articleList) {
-                        if (articleList) {
+                        if (articleList && articleList.data.length>0) {
                             articleList.limit = limit
                             var artCount = 0;
                             articleList.data.forEach(function (a, i) {
@@ -77,8 +77,12 @@ angular.module('service.article', [])
                             deferred.reject("No data");
                         }
 
+                    },function(error){
+                         deferred.reject(error);
                     })
-                })
+                },function(error){
+                         deferred.reject(error);
+                    })
                 return deferred.promise;
             }
 

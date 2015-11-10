@@ -8,4 +8,8 @@ angular.module('controller.galery', ['angular-carousel'])
                 {url: "http://lorempixel.com/400/300/sports/3", descripcion: ""},
                 {url: "http://lorempixel.com/400/300/sports/5", descripcion: ""},
             ]
+               $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
         })

@@ -50,6 +50,9 @@ eng.routes["global"]={
         { routePath: "ds", forwardTo: "/swbforms/jsp/datasource.jsp", isRestricted: "true" },
         { routePath: "dslogin", forwardTo: "/swbforms/jsp/dataSourceLogin.jsp", isRestricted: "false" },
         { routePath:"nanoDs/*", jspMapTo:"/nanoPharmacia/jsp/", isRestricted:"false"},
-        { routePath: "*", forwardTo: "/index.jsp", isRestricted: "true"},
+        { routePath: "search/*", forwardTo: "/index.jsp", isRestricted: "true"},
+        { routePath: "search/results/*", forwardTo: "/index.jsp", isRestricted: "true"},
+        { routePath: "search/report/*", forwardTo: "/index.jsp", isRestricted: "true"},
+        { routePath: "config", forwardTo: "/index.jsp", isRestricted: "true"}
     ],
 };
