@@ -9,7 +9,7 @@ eng.dataSources["Direccion"] = {
         {name: "numero", title: "Numero", type: "string"},
         {name: "colonia", title: "Colonia", type: "string"},
         {name: "municipio", title: "Municipio", type: "string"},
-        {name: "cp", title: "CP", type: "int", validators_:[{stype:"zipcode"}]},
+        {name: "cp", title: "CP", type: "int", validators:[{stype:"zipcode"}]},
         {name: "pais", title: "Pais", required: true, stype: "select", dataSource:"Pais", dependentSelect:"estado", dependentSelect_: {filterProp:"pais", dependentField:"estado"}},
         {name: "estado", title: "Estado", required: true, stype: "select", dataSource:"Estado", canFilter:false, initialCriteria_ : {} },
     ]
@@ -37,3 +37,4 @@ eng.dataSources["Estado"] = {
     ]
 };
 
+eng.validators["zipcode"] = {type:"regexp", expression:"^\\d{5}(-\\d{4})?$", errorMessage:"El codigo postal debe tener el formato ##### o #####-####."};

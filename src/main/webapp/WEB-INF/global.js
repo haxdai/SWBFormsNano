@@ -14,7 +14,7 @@ eng.dataStores["mongodb"]={
 //******* DataSorices ************
 eng.dataSources["User"]={
     scls: "User",
-    modelid: "Cloudino",
+    modelid: "NanoPharmacy",
     dataStore: "mongodb",   
     fields:[
         {name:"fullname",title:"Nombre",type:"string"},
@@ -47,6 +47,7 @@ eng.routes["global"]={
         { routePath: "work/*", jspMapTo: "/work/jsp/", isRestricted: "true" },
         { routePath: "public/*", jspMapTo: "/public/", isRestricted: "false" },
         { routePath: "ds", forwardTo: "/swbforms/jsp/datasource.jsp", isRestricted: "false" },
+        { routePath:"nanoDs/*", jspMapTo:"/nanoPharmacia/jsp/", isRestricted:"false"},
         { routePath: "*", forwardTo: "/index.jsp", isRestricted: "false"}
     ],
 };

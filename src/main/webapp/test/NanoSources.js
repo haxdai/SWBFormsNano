@@ -9,7 +9,24 @@ eng.dataSources["Gene"] = {
     dataStore: "mongodb",
     displayField: "symbol",
     fields: [
-        {name: "symbol", title: "Simbolo Oficial", required: true, type: "string"},
+        {name: "symbol", title: "Simbolo Oficial", required: true, type: "string",
+            validators: [
+                {
+                    type: "serverCustom", //serverCustom del lado del servidor
+                    serverCondition: function (name, value, request) {
+                        var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
+                        var search = new esearch();
+                        var isValid = search.hasGeneBD(value);
+                        if (!isValid)
+                            return false;
+                    },
+                    errorMessage: "Gen no encontrado en BD de NCBI"
+                },
+                {type: "isUnique", //serverCustom del lado del servidor
+                    errorMessage: "El gen proporcionado oficial ya existe"
+                }
+            ]
+        },
         {name: "officialName", title: "Nombre oficial", type: "string"},
         {name: "mimId", title: "Número identificador", type: "int"},
         {name: "organism", title: "Organismo", type: "string"},
@@ -26,9 +43,10 @@ eng.dataSources["AlterationMolecular"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre de la alteración molecular", type: "string"},
+        {name: "name", title: "Nombre de la alteración molecular", type: "string", validators: [{type: "isUnique", errorMessage: "La alteración molecular proporcionado ya existe"}]},
         {name: "aliases", title: "Nombres alternos", type: "string"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"}
+        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+        {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"}
     ]
 };
 
@@ -39,7 +57,7 @@ eng.dataSources["CancerType"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre del tipo de cáncer", type: "string"},
+        {name: "name", title: "Nombre del tipo de cáncer", type: "string", validators: [{type: "isUnique", errorMessage: "El tipo de cáncer proporcionado oficial ya existe"}]},
         {name: "summary", title: "Definición del cáncer", type: "string"},
         {name: "conceptId", title: "Id", type: "String"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"}
@@ -51,6 +69,7 @@ eng.dataSources["Article"] = {
     modelid: "NanoPharmacy",
     dataStore: "mongodb",
     displayField: "title",
+    /*methodsAvalaible: ["add","update"],*/
     fields: [
         {name: "title", title: "Título del artículo", type: "string"},
         {name: "abstract", title: "Resumen del artículo", type: "string"},
@@ -72,7 +91,35 @@ eng.dataSources["Search"] = {
     dataStore: "mongodb",
     displayField: "gene",
     fields: [
-        {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"},
+        {name: "gene", title: "Gen", stype: "select", dataSource: "Gene", validators: [{
+                    type: "serverCustom", //serverCustom del lado del servidor
+                    serverCondition: function (name, value, request) {
+                        var StringArrayType = Java.type("java.lang.String[]");
+                        var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                        var IntegerArrayType = Java.type("int[]");
+
+                        var a = new StringArrayType(2);
+                        var b = new StringArrayType(2);
+                        a[0] = "gene";
+                        a[1] = "altMolecular";
+
+                        var c = new StringArrayType(1);
+                        var d = new IntegerArrayType(1);
+                        c[0] = "artYearsOld";
+                        d[0] = request.data.artYearsOld;
+
+                        var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
+                        var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteración molecular
+                        b[0] = idGene;
+                        b[1] = idAltMolecular;
+                        var isValid = utils.isValidObject("Search", a, b, c, d);
+                        if (isValid)
+                            return true;
+                        else
+                            return false;
+                    },
+                    errorMessage: "Búsqueda de Gen, Alteración Molecular y año ya realizada"
+                }]},
         {name: "altMolecular", title: "Alteración Molecular", stype: "select", dataSource: "AlterationMolecular"},
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
@@ -118,22 +165,13 @@ eng.dataSources["Gene_Cancer"] = {
     ]
 };
 
-eng.dataSources["Gene_AltMol"] = {
-    scls: "Gene_AltMol",
-    modelid: "NanoPharmacy",
-    dataStore: "mongodb",
-    fields: [
-        {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"},
-        {name: "altMol", title: "Alteración Molecular", stype: "select", dataSource: "AlterationMolecular"},
-    ]
-};
 
 eng.dataSources["Configuration"] = {
     scls: "Configuration",
     modelid: "NanoPharmacy",
     dataStore: "mongodb",
     fields: [
-        {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "string"}
+        {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "int"}
     ]
 };
 
@@ -148,8 +186,14 @@ eng.dataProcessors["GeneProcessor"] = {
             var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
             var search = new esearch();
 
+            var StringArrayType = Java.type("java.lang.String[]");
+            var a = new StringArrayType(1);
+            var b = new StringArrayType(1);
+            a[0] = "symbol";
+            b[0] = gen;
+
             var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-            var isValid = utils.isValidObject("Gene", "symbol", gen);
+            var isValid = utils.isValidObject("Gene", a, b, null, null);
 
             if (isValid === true) {
                 var defGen = search.getGeneInfo(gen);
@@ -169,6 +213,8 @@ eng.dataProcessors["GeneProcessor"] = {
                         request.data.mapLocation = obj.gene.loc;
                     if (obj.gene.summary)
                         request.data.summary = obj.gene.summary;
+                    var today = new Date();
+                    request.data.lastUpdate = today.toISOString();
                 } else {
                     request.data.symbol = null;
                     request = null;
@@ -176,7 +222,8 @@ eng.dataProcessors["GeneProcessor"] = {
                     action = null;
                     return;
                 }
-            } else {
+            }
+            else {
                 request.data.symbol = null;
                 request = null;
                 dataSource = null;
@@ -190,7 +237,7 @@ eng.dataProcessors["GeneProcessor"] = {
             action = null;
             return;
         }
-        return request;
+        return request;//
     }
 };
 
@@ -205,16 +252,9 @@ eng.dataServices["GeneService"] = {
 
             var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
             var defDiseases = search.getDiseasesInfo(response.data.symbol);
-            var dise = JSON.parse(defDiseases);
-            var counter = 0;
-            for (var val in dise) {
-                if (dise.hasOwnProperty(val)) {
-                    var title = dise[counter].title;
-                    var definition = dise[counter].definition;
-                    var conceptId = dise[counter].conceptId;
-                    utils.setNewDisease(response.data._id, title, definition, conceptId);
-                }
-                counter++;
+            if (defDiseases != null) {
+                utils.setNewDisease(defDiseases, response.data._id);
+                //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:5639598afcfbfa9096d3e756");
             }
         }
 
@@ -238,8 +278,8 @@ eng.dataServices["SearchService"] = {
             var dataArt = search.getPublicationsInfo(gene, altMolecular, response.data.artYearsOld);
             if (dataArt != null) {
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-                utils.saveNewArticles(dataArt,response.data._id);
-                //utils.saveUpdateArticles(dataArt, response.data._id);
+                utils.saveNewArticles(dataArt, response.data._id);
+                //utils.saveUpdateArticles(dataArt, "_suri:NanoPharmacy:Search:5632a99e3831a3e77b9ec2b3");//response.data._id
             }
         }
         return request;
