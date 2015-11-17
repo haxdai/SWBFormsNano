@@ -29,8 +29,8 @@
 
     DataObject getOperation(DataObject json, SWBScriptEngine engine, String dataSource, HttpSession session) throws IOException {
         DataObject ret = null;
-        System.out.println(json);
-        System.out.println(dataSource);
+        //System.out.println(json);
+        //System.out.println(dataSource);
 
         String operationType = json.getString("operationType");
 
@@ -43,7 +43,7 @@
                 q.put("data", d);
                 d.put("email", json.getString("username"));
                 d.put("password", password);
-                System.out.println(q);
+                //System.out.println(q);
                 DataObject r = users.fetch(q);
                 //TODO:Eliminar response del fetch
                 DataObject resp = (DataObject) r.get("response");

@@ -254,7 +254,7 @@ eng.dataServices["GeneService"] = {
             var defDiseases = search.getDiseasesInfo(response.data.symbol);
             if (defDiseases != null) {
                 utils.setNewDisease(defDiseases, response.data._id);
-                //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:5639598afcfbfa9096d3e756");
+                //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:56453514d501e2ac6ccea32c");
             }
         }
 
