@@ -13,11 +13,12 @@
         <!--    Nano css     -->
         <link href="/public/css/nano.css" rel="stylesheet" type="text/css" />
         <link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
-         <script type="text/javascript">
+        <script type="text/javascript">
 
         </script>
     </head>
     <body ng-app="NanoApp">
+        <div class="query-check"></div>
         <div class="top">
             <a class="navbar-brand col-xs-7 col-xs-9 col-md-9 col-lg-7" href="/"><h1>Aurora Nanopharm</h1><img src="/public/img/aurora.png" class="img-responsive" alt="Nanopharmacia Diagnóstica"></a>
             <a href="#" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
@@ -35,8 +36,8 @@
         <!--a href="/">Home</a>
         <a href="/config">Configure</a-->
         <div id="wrapper" class="toggled">
-        <div id="sidebar-wrapper" ui-view="menu"></div>
-        <div id="page-content-wrapper"  ui-view="content"></div>
+            <div id="sidebar-wrapper" ui-view="menu"></div>
+            <div id="page-content-wrapper"  ui-view="content"></div>
         </div>
         <div class="container-fluid">
             <div id="x"></div> 
@@ -49,7 +50,8 @@
     </body>    
     <script src="/swbforms/js/eng.js" type="text/javascript"></script>
     <script type="text/javascript">
-        eng.initPlatform("/test/NanoSources.js");
+            eng.initPlatform("/test/NanoSources.js");
+
     </script>  
     <!--    Lib js     -->
     <script src="/public/libs/jquery/dist/jquery.min.js" ></script>
@@ -81,5 +83,24 @@
     <script src="/public/js/controllers/configGenController.js"></script>
     <script src="/public/js/controllers/menuConfigController.js"></script>
     <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
-    
+    <script type="text/javascript">
+         function checkRezise() {
+                    console.log($(".query-check").width())
+                    if (parseInt($(".query-check").width()) === 1) { //Escritorio
+                        $("#wrapper").addClass("toggled");
+                        $("#menu-toggle").removeClass("menu-toggle-off");
+                    }else{
+                        $("#wrapper").removeClass("toggled");
+                        $("#menu-toggle").addClass("menu-toggle-off-fixed");
+                        $("#menu-toggle").addClass("menu-toggle-off");
+                        
+                    }
+            }
+            $(document).on("ready", function () {
+                
+               
+                $(window).resize(function(){checkRezise()})
+           
+            })
+    </script>
 </html>

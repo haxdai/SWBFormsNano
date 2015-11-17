@@ -20,6 +20,8 @@ angular.module('controller.configGen', [])
 
             $scope.cancelGen = function () {
                 $scope.addingGen = false;
+                $scope.geneForm.$setPristine();
+                $scope.geneSymbol = ""
             }
 
             $scope.addAlt = function () {
@@ -45,7 +47,7 @@ angular.module('controller.configGen', [])
             }
 
             $scope.addDis = function () {
-                   $scope.cancerDis();
+                $scope.cancerDis();
                 $scope.addingDisease = true;
 
 
@@ -69,10 +71,12 @@ angular.module('controller.configGen', [])
             }
 
             $scope.addGene = function (geneSymbol) {
-                Gene.save({symbol: geneSymbol}).then(function (newGene) {
+                var q = {symbol: geneSymbol};
+                Gene.validate()
+                Gene.save(q).then(function (newGene) {
                     $scope.geneList.push(newGene);
+                    $scope.cancelGen()
                 }, function (error) {
-                    console.log(error);
                 })
             }
 
@@ -108,8 +112,8 @@ angular.module('controller.configGen', [])
             $scope.updateDisease = function (dideaseName, diseaseSummary) {
                 $scope.cancerList[disIndex].name = dideaseName;
                 $scope.cancerList[disIndex].summary = diseaseSummary;
-                CancerType.update( $scope.cancerList[disIndex] ).then(function (newCancer) {
-                        $scope.cancerDis();
+                CancerType.update($scope.cancerList[disIndex]).then(function (newCancer) {
+                    $scope.cancerDis();
                 })
             }
 
@@ -134,5 +138,11 @@ angular.module('controller.configGen', [])
                 $scope.geneList = geneList;
                 console.log($scope.geneList)
             })
-
+            $("#menu-toggle").click(function (e) {
+                $("#menu-toggle").removeClass("menu-toggle-off-fixed");
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+                   $(this).toggleClass("menu-toggle-off");
+            });
+            checkRezise()
         })

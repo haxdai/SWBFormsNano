@@ -42,14 +42,23 @@ eng.routes["global"]={
     loginFallback: "login",
     routeList:[
         { routePath: "login", forwardTo: "/work/config/login.jsp", isRestricted: "false", zindex:1 },
+        
         { routePath: "register", forwardTo: "/work/config/register.jsp", isRestricted: "false" },
         { routePath: "work", isRestricted: "true"},
         { routePath: "work/*", jspMapTo: "/work/jsp/", isRestricted: "true" },
+        
+        { routePath: "public/libs/*", jspMapTo: "/public/libs/", isRestricted: "false" },
         { routePath: "public/*", jspMapTo: "/public/", isRestricted: "false" },
         { routePath: "ds", forwardTo: "/swbforms/jsp/datasource.jsp", isRestricted: "false" },
+        { routePath: "dslogin", forwardTo: "/swbforms/jsp/dataSourceLogin.jsp", isRestricted: "false" },
+        
+        { routePath:"nanoDs/*", jspMapTo:"/nanoPharmacia/jsp/", isRestricted:"false"},
         { routePath: "search/*", forwardTo: "/index.jsp", isRestricted: "false"},
         { routePath: "search/results/*", forwardTo: "/index.jsp", isRestricted: "false"},
         { routePath: "search/report/*", forwardTo: "/index.jsp", isRestricted: "false"},
-        { routePath: "config", forwardTo: "/index.jsp", isRestricted: "false"}
+        { routePath: "config", forwardTo: "/index.jsp", isRestricted: "false"},
+        { routePath: "config-time", forwardTo: "/index.jsp", isRestricted: "false"},
+        
+        { routePath: "/", forwardTo: "/index.jsp", isRestricted: "false"}
     ],
 };

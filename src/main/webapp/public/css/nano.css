@@ -15,3 +15,53 @@ ul[rn-carousel] {
     width: 400px;
     position: relative;
 }
+
+.config-gene div.list-group-item{
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.config-list li a{
+    width: 100%;
+    text-decoration: none;
+    cursor:pointer;
+}
+.config-list li a:hover span{
+  color: white;
+}
+.config-list li a span{
+    color:#3b6b85;
+    margin: 5px;
+    display: inline-block;
+}
+
+.contenido input[type=text] {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.menu-toggle-off{
+     webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    left:0px!important;
+}
+
+.menu-toggle-off-fixed{
+    webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: all 0s ease!important;
+    transition: none!important;
+}
+.query-check{
+ height: 0px;
+ width: 1px;
+}
+@media (max-width:767px){
+    .query-check{
+         width: 0px;
+    }
+
+
+}

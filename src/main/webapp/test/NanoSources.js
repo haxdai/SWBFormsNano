@@ -77,7 +77,7 @@ eng.dataSources["Search"] = {
         {name: "altMolecular", title: "Alteración Molecular", stype: "select", dataSource:"AlterationMolecular"},
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
-        {name: "notificaction", title: "Número de notificaciones", type: "int"},
+        {name: "notification", title: "Número de notificaciones", type: "int"},
           {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
     ]
 };

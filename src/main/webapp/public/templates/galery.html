@@ -1,8 +1,24 @@
 <a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+<div class="container-fluid">
 
-<ul rn-carousel rn-carousel-controls class="image">
-    <li ng-repeat="image in galleryImages">
-        <div ng-style="{'background-image': 'url(' + image.url + ')'}"  class="bgimage">
-        </div>
-    </li>
-</ul>
+
+    <div class="carousel slide" id="carousel-993590">
+        <ol class="carousel-indicators">
+            <!--li ng-repeat="image in galleryImages"data-slide-to="{{$index}}" data-target="#carousel-993590" ng-class="{active:$index==0}">
+            </li-->
+
+        </ol>
+        <div class="carousel-inner">
+            <div ng-repeat="image in galleryImages" class="item" ng-class="{active:$index==0}">
+                <img  ng-src="{{image.url}}" />
+                <div class="carousel-caption">
+                    <h4>{{image.title}}</h4>
+                    <p>{{image.text}}</p>
+                </div>
+            </div>
+        </div> 
+        <a class="left carousel-control" href="#carousel-993590" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-993590" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
+
+    </div>
+</div>
