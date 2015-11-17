@@ -53,7 +53,10 @@ angular.module('controller.report', ['angular-carousel'])
 
             updateResults($scope.searchId, $scope.status);
             $("#menu-toggle").click(function (e) {
+                  $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
+                   $(this).toggleClass("menu-toggle-off");
             });
+             checkRezise()
         })

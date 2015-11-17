@@ -7,10 +7,20 @@ angular.module('controller.menu', [])
             $scope.altList;
             $scope.datesList = Config.publicationDates();
             
+            $scope.searchListFunction = function (list){
+                var filterList = $scope.filterPattern || "";
+                return list.filter(function(e){
+                    return filterList.split(",").every(function(f){
+                        var s = e.geneSymbol + " ; " + e.alteName
+                        return new RegExp(f.toLowerCase().trim()).test(s.toLowerCase());
+                    })
+                });
+            }
+            
             $rootScope.$on('articleRead', function (event, searchId) {
                 $scope.searchList.forEach(function (search, i) {
                     if (search._id === searchId) {
-                        $scope.searchList[i].notificaction--;
+                        $scope.searchList[i].notification--;
                         Search.update($scope.searchList[i]);
                     }
 
@@ -68,4 +78,5 @@ angular.module('controller.menu', [])
                     $scope.newSearch = false;
                 });
             }
+            
         })

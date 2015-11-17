@@ -14,7 +14,7 @@
         <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li> <a href="/search/{{searchId}}">Gene Info</a></li>
-               <li class="active dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Results<strong class="caret"></strong></a>
+                <li class="active dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Results<strong class="caret"></strong></a>
                     <ul class="dropdown-menu">
                         <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
                         <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
@@ -32,6 +32,7 @@
     <div class="row contenido">
         <div class="col-lg-12">
             <p ng-bind="statuslist[status]"></p>
+            
             <div class="sort">
                 <p>Sort by:
                     <select ng-model="filterSelected" ng-change="filterChange(filterSelected)">
@@ -45,8 +46,8 @@
                     </select>
                 </p>
             </div>
-              <ul  ng-if="(maxPage > 1)" class ="pagination clearfix">
-                 <li><a ng-if="pag > 1" ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
+            <ul  ng-if="(maxPage > 1)" class ="pagination clearfix">
+                <li><a ng-if="pag > 1" ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
                 <li><a ng-if="pag > 0" href="#">{{pag}}</a></li>
                 <li><a ng-if="pag < ((maxPage))" ng-click="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
             </ul>
@@ -56,25 +57,27 @@
                         <ol start="{{$index + 1}}">
                             <li>
                                 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-00{{$index + 1}}">
-                                    <span class="glyphicon glyphicon-menu-up"></span>
-                                    <span class="glyphicon glyphicon-menu-down"></span>
-                                    <i class="fa fa-thumbs-up"></i>
-                                    <i class="fa fa-certificate"></i>
-                                    {{article.article.title}}</a>
+                                    <div class="panel-califica">
+                                        <span class="glyphicon glyphicon-menu-up"></span>
+                                        <span class="glyphicon glyphicon-menu-down"></span>
+                                        <div class="star">
+                                           
+                                            <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=10 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                           
+
+                                        </div>
+                                    </div>
+                                    {{article.article.title}}}</a>
                             </li>
                         </ol>
                     </div>
                     <div id="panel-element-00{{$index + 1}}" class="panel-collapse collapse">
 
                         <div class="panel-body">
-                            <div class="panel-rel clearfix">
-                                <p>Rated</p>
-                                <div class="rel01 full"></div>
-                                <div class="rel02 full"></div>
-                                <div class="rel03 full"></div>
-                                <div class="rel04 full"></div>
-                                <div class="rel05"></div>
-                            </div>   
                             <p>{{article.article.abstract}}</p>
                             <p class="reference"><strong>Reference:</strong>{{article.article.reference}}</p>
                         </div>
@@ -92,7 +95,7 @@
                 </div>
             </div>
 
-          
+
 
 
         </div>

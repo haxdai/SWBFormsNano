@@ -21,6 +21,7 @@ angular.module('controller.results', [])
             $scope.gene;
 
             $scope.articleList = [];
+            
 
 
             Search.byId($scope.searchId).then(function (search) {
@@ -124,7 +125,7 @@ angular.module('controller.results', [])
                     artSearchList.data.forEach(function (art) {
                         if (art.artSearch.status == 1) {
                             if (art.artSearch.ranking > 5) {
-                                $rootScope.$emit('articleRecommended', $scope.searchId, 1);
+                                $rootScope.$emit('articleRecommended', $scope.searchId);
                                 art.artSearch.status = 4;
                             } else {
                                 art.artSearch.status = 0;
@@ -149,7 +150,10 @@ angular.module('controller.results', [])
             $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             
             $("#menu-toggle").click(function (e) {
+                $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
+                   $(this).toggleClass("menu-toggle-off");
             });
+             checkRezise()
         })

@@ -1,5 +1,8 @@
 
+<div class="schemes-title">
     <p>Your schemes:</p>
+    <p>   <input ng-model="filterPattern" ng-change="searchListFunction(searchList)" type="text" class="form-control" placeholder="Search"></p>
+</div>
         <div class="panel-group" id="panel-busca">
         <div class="panel panel-default">
             <div class="panel-heading"> <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-busca" href="#panel-element-busca">New  search scheme<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a> </div>
@@ -22,9 +25,9 @@
         </div>
     </div>
     <ul class="mis-esquemas">
-        <li ng-repeat="search  in searchList">
-            <a ng-if="search.notificaction > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notificaction}} new">
-                <i class="fa fa-certificate"></i>{{search.notificaction}}
+        <li ng-repeat="search  in searchListFunction(searchList)">
+            <a ng-if="search.notification > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notification}} new">
+                <i class="fa fa-certificate"></i>{{search.notification}}
             </a>
             <a  ng-if="search.recommended > 0" href="/search/results/{{search._id}}?status=4" class="alert rank" title="{{search.recommended}} recommended">
                 <i class="fa fa-thumbs-up"></i>{{search.recommended}}

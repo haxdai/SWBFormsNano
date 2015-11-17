@@ -36,7 +36,10 @@ angular.module('controller.searchDetail', [])
             }
             
              $("#menu-toggle").click(function (e) {
+                $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
+                   $(this).toggleClass("menu-toggle-off");
             });
+             checkRezise()
         })

@@ -1,31 +1,135 @@
-<div>
-    <h2>Gene</h2>
-    <a href="#" ng-click="addingGen = true">Add gene</a>
+<a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+
     
-    <ul>
-        <li ng-repeat="gene in geneList"><a ng-click="setGenId(gene._id)">{{gene.symbol}}</a></li>
-    </ul>
-    <a ng-show="addingGen">New gene</a>
-    <label ng-show="addingGen">Gene symbol:</label>
-    <input ng-show="addingGen" type="text" ng-model="geneSymbol"/>
-    <a ng-show="addingGen" href="#" ng-click="addGene(geneSymbol)">Add to list</a>
-    <a ng-click="cancelGen()" ng-show="addingGen"   href="#">Cancel</a>
+<div class="container-fluid config-gene">
+    <!--div class="alert alert-danger">
+        <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+    </div>
+    <div class="alert alert-success">
+        <strong>Success!</strong> Indicates a successful or positive action.
+    </div-->
+
+    <div class="row">
+        <!--Gene -->
+        <div class="col-lg-4">
+            <h2>Configure Gene</h2>
+
+            <div class="row contenido">
+                <div class="col-lg-12">
+                    <form name="geneForm">   
+                        <a href="#"  ng-hide="addingGen" ng-click="addingGen = true">Add gene</a>
+                        <div ng-class="{'has-error':geneForm.geneSymbol.$invalid && geneForm.geneSymbol.$dirty}"   ng-show="addingGen" class="form-group ">
+                            <label  class="control-label" >Gene symbol</label>
+                            <input name="geneSymbol" required type="text"  ng-model="geneSymbol" class="form-control">
+                        </div>
+
+
+                        <button ng-disabled="geneForm.geneSymbol.$invalid" ng-show="addingGen"  ng-click="addGene(geneSymbol)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                        </button>
+                        <button ng-click="cancelGen()"  ng-show="addingGen" class="btn"   href="#">Cancel</button>
+                    </form>
+
+                    <div class="list-group config-list">
+                        <p class="list-group-item">Gene list <span class="badge">{{geneList.length}}</span></p>
+                        <div class="list-group-item">
+                            <ul class="list-group-item-text">
+                                <li ng-repeat="gene in geneList"><a ng-click="setGenId(gene._id)">{{gene.symbol}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>   
+            </div> 
+        </div>  
+        <!--Disease -->
+        <div ng-show="geneSelected" class="col-lg-4">
+            <h2>Configure Disease</h2>
+
+            <div class="row contenido">
+                <div class="col-lg-12">
+                    <a href="#" ng-hide="addingDisease || editingDisease" ng-click="addDis()">Add disease</a>
+
+                    <p  ng-show="addingDisease || editingDisease">Disease name:</p>
+                    <input ng-show="addingDisease || editingDisease" type="text" ng-model="dideaseName"/>
+                    <p ng-show="addingDisease || editingDisease">Summary</p>
+                    <input ng-show="addingDisease || editingDisease" type="text" ng-model="diseaseSummary"/>
+
+
+
+                    <button ng-show="addingDisease" ng-click="addDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
+                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                    </button>
+                    <button ng-show="editingDisease"  ng-click="updateDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
+                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update disease
+                    </button>
+                    <a  ng-show="addingDisease || editingDisease" href="#" ng-click="cancerDis()">Cancel</a>
+
+
+                    <div class="list-group config-list">
+                        <p class="list-group-item">Gene list <span class="badge">{{altList.length}}</span></p>
+                        <div class="list-group-item">
+                            <ul class="list-group-item-text">
+                                <li ng-repeat="disease  in cancerList">
+                                    <a> 
+                                        <span  class="glyphicon glyphicon-pencil" ng-click="editDisease(disease)"></span>  
+                                        {{disease.name}}</a> 
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>   
+            </div> 
+        </div>  
+        <!--Alteration Molecular -->
+        <div ng-show="geneSelected" class="col-lg-4">
+            <h2>Configure Alteration</h2>
+
+            <div class="row contenido">
+                <div class="col-lg-12">
+                    <a href="#"  ng-hide="addingAlt || editingAlt" ng-click="addAlt()">Add molecular alteration</a>
+
+                    <p ng-show="addingAlt || editingAlt">Alteration name:</p>
+                    <input ng-show="addingAlt || editingAlt" type="text" ng-model="alterationName"/>
+                    <p ng-show="addingAlt || editingAlt" >Aliases:</p>
+                    <input ng-show="addingAlt || editingAlt" type="text" ng-model="aliase"/>
+                    <button ng-show="addingAlt"  ng-click="addAlteration(alterationName, aliase)" class="btn btn-default" type="button">
+                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                    </button>
+                    <button ng-show="editingAlt"  ng-click="updateAlteration(alterationName, aliase)" class="btn btn-default" type="button">
+                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update molecular alteration
+                    </button>
+                    <a  ng-show="addingAlt || editingAlt" href="#" ng-click="cancelAlt()">Cancel</a>
+
+
+                    <div class="list-group config-list">
+                        <p class="list-group-item">Gene list <span class="badge">{{altList.length}}</span></p>
+                        <div class="list-group-item">
+                            <ul class="list-group-item-text">
+                                <li ng-repeat="alt in  altList"> 
+                                    <a>
+                                        <span  class="glyphicon glyphicon-pencil" ng-click="editAlt(alt)"></span>  
+                                        {{alt.name}}</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>   
+            </div> 
+        </div>   
+    </div> 
 </div>
-<div ng-show="geneSelected">
+
+<!--div ng-show="geneSelected">
     <h2>Molecular Alteration</h2>
-    <a href="#" ng-click="addAlt()">Add molecular alteration</a>
+   
     <ul>
         <li ng-repeat="alt in  altList">{{alt.name}} <a href="#"  ng-click="editAlt(alt)">Edit</a></li>
     </ul>
-    <p ng-show="addingAlt">New molecular alteration</p>
-    <p ng-show=" editingAlt">Update molecular alteration</p>
-    <label ng-show="addingAlt || editingAlt">Alteration name:</label>
-    <input ng-show="addingAlt || editingAlt" type="text" ng-model="alterationName"/>
-    <label ng-show="addingAlt || editingAlt" >Aliases:</label>
-    <input ng-show="addingAlt || editingAlt" type="text" ng-model="aliase"/>
-    <a ng-show="addingAlt " href="#" ng-click="addAlteration(alterationName, aliase)">Add to list</a>
-    <a ng-show=" editingAlt" href="#" ng-click="updateAlteration(alterationName, aliase)">Update molecular alteration </a>
-    <a  ng-show="addingAlt || editingAlt" href="#" ng-click="cancelAlt()">Cancel</a>
+  
 </div>
 <div ng-show="geneSelected">
     <h2>Diseases</h2>
@@ -40,7 +144,7 @@
     <label ng-show="addingDisease || editingDisease">Summary</label>
     <input ng-show="addingDisease || editingDisease" type="text" ng-model="diseaseSummary"/>
 
-    <a ng-show="addingDisease " href="#" ng-click="addDisease(dideaseName, diseaseSummary)">Add to list</a>
+    <a ng-show="addingDisease" href="#" ng-click="addDisease(dideaseName, diseaseSummary)">Add to list</a>
     <a ng-show=" editingDisease" href="#" ng-click="updateDisease(dideaseName, diseaseSummary)">Update disease</a>
     <a  ng-show="addingDisease || editingDisease" href="#" ng-click="cancerDis()">Cancel</a>
-</div>
+</div-->
