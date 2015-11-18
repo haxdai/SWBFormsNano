@@ -8,6 +8,10 @@ angular.module('controller.configGen', [])
             $scope.geneId;
             $scope.altList = [];
             $scope.cancerList = [];
+            
+            var MSG_GENE_ADDED = "MSG_GENE_ADDED"
+            var MSG_ALT_ADDED  = "MSG_ALT_ADDED"
+            var MSG_DISEASE_ADDED = "MSG_DISEASE_ADDED"
 
             var altIndex;
             var disIndex;
@@ -33,6 +37,7 @@ angular.module('controller.configGen', [])
                 $scope.editingAlt = false;
                 $scope.alterationName = ""
                 $scope.aliase = "";
+                $scope.altForm.$setPristine();
             }
             $scope.editAlt = function (alt) {
                 $scope.editingAlt = true;
@@ -57,6 +62,7 @@ angular.module('controller.configGen', [])
                 $scope.editingDisease = false;
                 $scope.dideaseName = ""
                 $scope.diseaseSummary = "";
+                $scope.diseaseForm.$setPristine();
             }
             $scope.editDisease = function (dis) {
                 $scope.editingDisease = true;
@@ -72,21 +78,38 @@ angular.module('controller.configGen', [])
 
             $scope.addGene = function (geneSymbol) {
                 var q = {symbol: geneSymbol};
-                Gene.validate()
-                Gene.save(q).then(function (newGene) {
-                    $scope.geneList.push(newGene);
-                    $scope.cancelGen()
+                Gene.validate(q).then(function () {
+                    Gene.save(q).then(function (newGene) {
+                        $scope.geneList.push(newGene);
+                        $scope.cancelGen()
+                        showMessage("ok",MSG_GENE_ADDED)
+                    }, function (error) {
+
+                    })
                 }, function (error) {
-                })
+                    showMessage("error", error.symbol)
+                    $scope.cancelGen()
+                });
+
             }
 
             $scope.addAlteration = function (alterationName, aliase) {
-                Alteration.save({gene: $scope.geneId, name: alterationName, aliases: aliase}).then(function (newAlt) {
-                    $scope.altList.push(newAlt);
-                    $scope.cancelAlt();
+                var q = {gene: $scope.geneId, name: alterationName, aliases: aliase};
+                Alteration.validate().then(function () {
+                    Alteration.save({gene: $scope.geneId, name: alterationName, aliases: aliase}).then(function (newAlt) {
+                        $scope.altList.push(newAlt);
+                        console.log("Agregado")
+                        showMessage("ok",MSG_ALT_ADDED)
+                        $scope.cancelAlt()
+                    }, function (error) {
+                        console.log(error);
+                    })
                 }, function (error) {
                     console.log(error);
-                })
+                    showMessage("error", error.symbol)
+                    $scope.cancelAlt()
+                });
+
 
             }
             $scope.updateAlteration = function (alterationName, aliase) {
@@ -101,12 +124,18 @@ angular.module('controller.configGen', [])
             }
 
             $scope.addDisease = function (dideaseName, diseaseSummary) {
-                CancerType.save({name: dideaseName, summary: diseaseSummary}).then(function (newCancer) {
-                    Gene_Cancer.save({gene: $scope.geneId, cancer: newCancer._id}).then(function (newGeneCancer) {
-                        $scope.cancerList.push(newCancer);
-                        $scope.cancerDis();
+                CancerType.validate().then(function () {
+                    CancerType.save({name: dideaseName, summary: diseaseSummary}).then(function (newCancer) {
+                        Gene_Cancer.save({gene: $scope.geneId, cancer: newCancer._id}).then(function (newGeneCancer) {
+                            $scope.cancerList.push(newCancer);
+                            showMessage("ok", MSG_DISEASE_ADDED)
+                            $scope.cancerDis();
+                        })
                     })
+                }, function (error) {
+                    
                 })
+
             }
 
             $scope.updateDisease = function (dideaseName, diseaseSummary) {
@@ -142,7 +171,7 @@ angular.module('controller.configGen', [])
                 $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
-                   $(this).toggleClass("menu-toggle-off");
+                $(this).toggleClass("menu-toggle-off");
             });
             checkRezise()
         })

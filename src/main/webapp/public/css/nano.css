@@ -58,6 +58,14 @@ ul[rn-carousel] {
  height: 0px;
  width: 1px;
 }
+#message-box{
+    position: fixed;
+    bottom: 66px;
+    right: 0;
+    left: 0;
+    z-index: 2000;
+}
+
 @media (max-width:767px){
     .query-check{
          width: 0px;

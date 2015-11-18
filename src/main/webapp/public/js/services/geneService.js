@@ -3,6 +3,18 @@
 angular.module('service.gene', [])
         .service('Gene', function ($http, $q) {
             
+            this.validate =function(query){
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("Gene");
+                var response = ds.validateObj(query);
+                if (response && response.status == 0 ) {
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject(response.errors);
+                }
+                return deferred.promise;
+            }
+            
             this.byId = function (id) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Gene");

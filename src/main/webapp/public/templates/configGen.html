@@ -1,6 +1,6 @@
 <a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
 
-    
+
 <div class="container-fluid config-gene">
     <!--div class="alert alert-danger">
         <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
@@ -22,8 +22,6 @@
                             <label  class="control-label" >Gene symbol</label>
                             <input name="geneSymbol" required type="text"  ng-model="geneSymbol" class="form-control">
                         </div>
-
-
                         <button ng-disabled="geneForm.geneSymbol.$invalid" ng-show="addingGen"  ng-click="addGene(geneSymbol)" class="btn btn-default" type="button">
                             <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
                         </button>
@@ -48,26 +46,30 @@
 
             <div class="row contenido">
                 <div class="col-lg-12">
-                    <a href="#" ng-hide="addingDisease || editingDisease" ng-click="addDis()">Add disease</a>
+                    <form name="diseaseForm">   
+                        <a href="#" ng-hide="addingDisease || editingDisease" ng-click="addDis()">Add disease</a>
+                        <div ng-class="{'has-error':diseaseForm.dideaseName.$invalid && diseaseForm.dideaseName.$dirty}"  
+                             ng-show="addingDisease || editingDisease" class="form-group ">
+                            <label  class="control-label" >Disease name:</label>
+                            <input  name="dideaseName" type="text"  required="required"  class="form-control" ng-model="dideaseName"/>
+                        </div>
+                        <div  ng-show="addingDisease || editingDisease"  
+                              ng-class="{'has-error':diseaseForm.diseaseSummary.$invalid && diseaseForm.diseaseSummary.$dirty}" class="form-group " >
+                            <label  class="control-label"  >Summary</label>
+                            <input name="diseaseSummary" type="text"    class="form-control"  ng-model="diseaseSummary"/>
+                        </div>
 
-                    <p  ng-show="addingDisease || editingDisease">Disease name:</p>
-                    <input ng-show="addingDisease || editingDisease" type="text" ng-model="dideaseName"/>
-                    <p ng-show="addingDisease || editingDisease">Summary</p>
-                    <input ng-show="addingDisease || editingDisease" type="text" ng-model="diseaseSummary"/>
-
-
-
-                    <button ng-show="addingDisease" ng-click="addDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
-                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
-                    </button>
-                    <button ng-show="editingDisease"  ng-click="updateDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
-                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update disease
-                    </button>
-                    <a  ng-show="addingDisease || editingDisease" href="#" ng-click="cancerDis()">Cancel</a>
-
+                        <button  ng-disabled="diseaseForm.dideaseName.$invalid" ng-show="addingDisease" ng-click="addDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                        </button>
+                        <button  ng-disabled="diseaseForm.dideaseName.$invalid" ng-show="editingDisease"  ng-click="updateDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update disease
+                        </button>
+                        <a  ng-show="addingDisease || editingDisease" href="#" ng-click="cancerDis()">Cancel</a>
+                    </form>
 
                     <div class="list-group config-list">
-                        <p class="list-group-item">Gene list <span class="badge">{{altList.length}}</span></p>
+                        <p class="list-group-item">Disease list <span class="badge">{{cancerList.length}}</span></p>
                         <div class="list-group-item">
                             <ul class="list-group-item-text">
                                 <li ng-repeat="disease  in cancerList">
@@ -88,23 +90,28 @@
 
             <div class="row contenido">
                 <div class="col-lg-12">
-                    <a href="#"  ng-hide="addingAlt || editingAlt" ng-click="addAlt()">Add molecular alteration</a>
-
-                    <p ng-show="addingAlt || editingAlt">Alteration name:</p>
-                    <input ng-show="addingAlt || editingAlt" type="text" ng-model="alterationName"/>
-                    <p ng-show="addingAlt || editingAlt" >Aliases:</p>
-                    <input ng-show="addingAlt || editingAlt" type="text" ng-model="aliase"/>
-                    <button ng-show="addingAlt"  ng-click="addAlteration(alterationName, aliase)" class="btn btn-default" type="button">
-                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
-                    </button>
-                    <button ng-show="editingAlt"  ng-click="updateAlteration(alterationName, aliase)" class="btn btn-default" type="button">
-                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update molecular alteration
-                    </button>
-                    <a  ng-show="addingAlt || editingAlt" href="#" ng-click="cancelAlt()">Cancel</a>
-
+                    <form name="altForm">   
+                        <a href="#"  ng-hide="addingAlt || editingAlt" ng-click="addAlt()">Add molecular alteration</a>
+                        <div ng-class="{'has-error':altForm.alterationName.$invalid && altForm.alterationName.$dirty}"  
+                             ng-show="addingAlt || editingAlt" class="form-group ">
+                            <label  class="control-label" ng-show="addingAlt || editingAlt">Alteration name:</label>
+                            <input required="" class="form-control"   ng-show="addingAlt || editingAlt" type="text" ng-model="alterationName" name="alterationName"/>
+                        </div>
+                        <div ng-show="addingDisease || editingDisease" class="form-group ">
+                            <label class="control-label"  ng-show="addingAlt || editingAlt" >Aliases:</label>
+                            <input  required="" class="form-control"   ng-show="addingAlt || editingAlt" type="text" ng-model="aliase" />
+                        </div>
+                        <button ng-disabled="altForm.alterationName.$invalid" ng-show="addingAlt"  ng-click="addAlteration(alterationName, aliase)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                        </button>
+                        <button ng-disabled="altForm.alterationName.$invalid" ng-show="editingAlt"  ng-click="updateAlteration(alterationName, aliase)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update molecular alteration
+                        </button>
+                        <a  ng-show="addingAlt || editingAlt" href="#" ng-click="cancelAlt()">Cancel</a>
+                    </form>
 
                     <div class="list-group config-list">
-                        <p class="list-group-item">Gene list <span class="badge">{{altList.length}}</span></p>
+                        <p class="list-group-item">Alteration list <span class="badge">{{altList.length}}</span></p>
                         <div class="list-group-item">
                             <ul class="list-group-item-text">
                                 <li ng-repeat="alt in  altList"> 

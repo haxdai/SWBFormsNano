@@ -23,18 +23,16 @@
             <a class="navbar-brand col-xs-7 col-xs-9 col-md-9 col-lg-7" href="/"><h1>Aurora Nanopharm</h1><img src="/public/img/aurora.png" class="img-responsive" alt="Nanopharmacia Diagnóstica"></a>
             <a href="#" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
             <a href="/config" class="top-config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="config">Configure</span></a>
-            <!--div class="btn-group">
-                <button class="btn btn-default top-config" data-toggle="dropdown">
-                    <span aria-hidden="true" class="glyphicon glyphicon-cog"></span> <span class="hidden-xs">Configure</span> <span class="caret"></span>
-                </button> 
-                <ul class="dropdown-menu">
-                    <li><a href="#">Gene list</a></li>
-                    <li><a href="#">Updating settings</a></li>
-                </ul>
-            </div-->
         </div>
-        <!--a href="/">Home</a>
-        <a href="/config">Configure</a-->
+        <div id="message-box">
+            <div  style="display:none;" class="alert alert-danger text-center">
+            </div>
+            <div style="display:none;" class="alert alert-success text-center">
+            </div> 
+        </div>
+       
+
+
         <div id="wrapper" class="toggled">
             <div id="sidebar-wrapper" ui-view="menu"></div>
             <div id="page-content-wrapper"  ui-view="content"></div>
@@ -84,23 +82,34 @@
     <script src="/public/js/controllers/menuConfigController.js"></script>
     <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
     <script type="text/javascript">
-         function checkRezise() {
-                    console.log($(".query-check").width())
-                    if (parseInt($(".query-check").width()) === 1) { //Escritorio
-                        $("#wrapper").addClass("toggled");
-                        $("#menu-toggle").removeClass("menu-toggle-off");
-                    }else{
-                        $("#wrapper").removeClass("toggled");
-                        $("#menu-toggle").addClass("menu-toggle-off-fixed");
-                        $("#menu-toggle").addClass("menu-toggle-off");
-                        
-                    }
+            function checkRezise() {
+                console.log($(".query-check").width())
+                if (parseInt($(".query-check").width()) === 1) { //Escritorio
+                    $("#wrapper").addClass("toggled");
+                    $("#menu-toggle").removeClass("menu-toggle-off");
+                } else {
+                    $("#wrapper").removeClass("toggled");
+                    $("#menu-toggle").addClass("menu-toggle-off-fixed");
+                    $("#menu-toggle").addClass("menu-toggle-off");
+
+                }
+            }
+            function showMessage(type,msg){
+                if(type === "ok" ){
+                    $("#message-box > .alert-success").text(msg);
+                    $("#message-box > .alert-success").fadeIn().delay(3000).fadeOut();
+ 
+                }else if(type === "error"){
+                    $("#message-box > .alert-danger").text(msg);
+                    $("#message-box > .alert-danger").fadeIn().delay(3000).fadeOut();
+                }
+                
             }
             $(document).on("ready", function () {
-                
                
-                $(window).resize(function(){checkRezise()})
-           
+                $(window).resize(function () {
+                    checkRezise()
+                })
             })
     </script>
 </html>

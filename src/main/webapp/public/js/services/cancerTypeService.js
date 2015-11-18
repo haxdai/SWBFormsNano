@@ -3,6 +3,17 @@
 angular.module('service.cancerType', [])
         .service('CancerType', function ($http, $q, Gene_Cancer) {
 
+            this.validate =function(query){
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("CancerType");
+                var response = ds.validateObj(query);
+                if (response && response.status == 0 ) {
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject(response.errors);
+                }
+                return deferred.promise;
+            }
             this.byId = function (id) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("CancerType");
