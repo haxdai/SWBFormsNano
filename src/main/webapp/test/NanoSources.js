@@ -204,16 +204,15 @@ eng.dataProcessors["GeneProcessor"] = {
             var b = new StringArrayType(1);
             a[0] = "symbol";
             b[0] = gen;
-
             var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
             var isValid = utils.isValidObject("Gene", a, b, null, null);
-
+            
             if (isValid === true) {
                 var defGen = search.getGeneInfo(gen);
                 if (defGen !== null) {
                     var obj = JSON.parse(defGen);
                     if (request.data.symbol)
-                        request.data.symbol = obj.gene.symbol;
+                        request.data.symbol = obj.gene.nomSymbol;
                     if (obj.gene.nomName)
                         request.data.officialName = obj.gene.nomName;
                     if (obj.gene.id)
