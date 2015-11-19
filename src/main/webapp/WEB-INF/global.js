@@ -53,6 +53,7 @@ eng.routes["global"]={
         { routePath: "search/*", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "search/results/*", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "search/report/*", forwardTo: "/index.jsp", isRestricted: "true"},
-        { routePath: "config", forwardTo: "/index.jsp", isRestricted: "true"}
+        { routePath: "config", forwardTo: "/index.jsp", isRestricted: "true"},
+        { routePath: "", forwardTo: "/index.jsp", isRestricted: "true"}
     ],
 };

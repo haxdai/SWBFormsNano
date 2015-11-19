@@ -14,6 +14,7 @@ angular.module('service.cancerType', [])
                 }
                 return deferred.promise;
             }
+            
             this.byId = function (id) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("CancerType");

@@ -8,10 +8,11 @@ angular.module('controller.configGen', [])
             $scope.geneId;
             $scope.altList = [];
             $scope.cancerList = [];
-            
+
             var MSG_GENE_ADDED = "MSG_GENE_ADDED"
-            var MSG_ALT_ADDED  = "MSG_ALT_ADDED"
+            var MSG_ALT_ADDED = "MSG_ALT_ADDED"
             var MSG_DISEASE_ADDED = "MSG_DISEASE_ADDED"
+            var MSG_GENE_LOOKING = "MSG_GENE_LOOKING"
 
             var altIndex;
             var disIndex;
@@ -78,15 +79,20 @@ angular.module('controller.configGen', [])
 
             $scope.addGene = function (geneSymbol) {
                 var q = {symbol: geneSymbol};
+                waitingDialog.show(MSG_GENE_LOOKING, {headerText: false, dialogSize: "sm"});
                 Gene.validate(q).then(function () {
                     Gene.save(q).then(function (newGene) {
+                        waitingDialog.hide();
                         $scope.geneList.push(newGene);
                         $scope.cancelGen()
-                        showMessage("ok",MSG_GENE_ADDED)
+                        showMessage("ok", MSG_GENE_ADDED)
                     }, function (error) {
-
+                        console.log(error)
+                        waitingDialog.hide();
                     })
                 }, function (error) {
+                    console.log(error)
+                    waitingDialog.hide();
                     showMessage("error", error.symbol)
                     $scope.cancelGen()
                 });
@@ -95,18 +101,18 @@ angular.module('controller.configGen', [])
 
             $scope.addAlteration = function (alterationName, aliase) {
                 var q = {gene: $scope.geneId, name: alterationName, aliases: aliase};
-                Alteration.validate().then(function () {
+                Alteration.validate(q).then(function () {
                     Alteration.save({gene: $scope.geneId, name: alterationName, aliases: aliase}).then(function (newAlt) {
                         $scope.altList.push(newAlt);
                         console.log("Agregado")
-                        showMessage("ok",MSG_ALT_ADDED)
+                        showMessage("ok", MSG_ALT_ADDED)
                         $scope.cancelAlt()
                     }, function (error) {
                         console.log(error);
                     })
                 }, function (error) {
                     console.log(error);
-                    showMessage("error", error.symbol)
+                    showMessage("error", error.name)
                     $scope.cancelAlt()
                 });
 
@@ -133,7 +139,7 @@ angular.module('controller.configGen', [])
                         })
                     })
                 }, function (error) {
-                    
+
                 })
 
             }

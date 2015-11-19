@@ -6,17 +6,17 @@ angular.module('controller.menu', [])
             $scope.geneList;
             $scope.altList;
             $scope.datesList = Config.publicationDates();
-            
-            $scope.searchListFunction = function (list){
+
+            $scope.searchListFunction = function (list) {
                 var filterList = $scope.filterPattern || "";
-                return list.filter(function(e){
-                    return filterList.split(",").every(function(f){
+                return list.filter(function (e) {
+                    return filterList.split(",").every(function (f) {
                         var s = e.geneSymbol + " ; " + e.alteName
                         return new RegExp(f.toLowerCase().trim()).test(s.toLowerCase());
                     })
                 });
             }
-            
+
             $rootScope.$on('articleRead', function (event, searchId) {
                 $scope.searchList.forEach(function (search, i) {
                     if (search._id === searchId) {
@@ -65,18 +65,23 @@ angular.module('controller.menu', [])
             }
 
 
-            $scope.addSearch = function (geneSelected, altSelected,dateSelected) {
+            $scope.addSearch = function (geneSelected, altSelected, dateSelected) {
+                var q = {gene: geneSelected._id, altMolecular: altSelected._id, artYearsOld: dateSelected.year};
+                Search.validate(q).then(function () {
+                    Search.add(q).then(function (search) {
+                        var i = $scope.searchList.push(search.data);
+                        Gene.byId(search.gene).then(function (gene) {
+                            $scope.searchList[i - 1].geneSymbol = gene.symbol;
+                        });
+                        Alteration.byId(search.altMolecular).then(function (alte) {
+                            $scope.searchList[i - 1].alteName = alte.name;
+                        });
+                        $scope.newSearch = false;
+                    });
+                }, function (error) {
+                    console.log(error);
+                })
 
-                Search.add({gene: geneSelected._id, altMolecular: altSelected._id,artYearsOld:dateSelected.year}).then(function (search) {
-                    var i = $scope.searchList.push(search.data);
-                    Gene.byId(search.gene).then(function (gene) {
-                        $scope.searchList[i-1].geneSymbol = gene.symbol;
-                    });
-                    Alteration.byId(search.altMolecular).then(function (alte) {
-                        $scope.searchList[i-1].alteName = alte.name;
-                    });
-                    $scope.newSearch = false;
-                });
             }
-            
+
         })

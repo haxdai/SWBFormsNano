@@ -3,40 +3,42 @@
     <p>Your schemes:</p>
     <p>   <input ng-model="filterPattern" ng-change="searchListFunction(searchList)" type="text" class="form-control" placeholder="Search"></p>
 </div>
-        <div class="panel-group" id="panel-busca">
-        <div class="panel panel-default">
-            <div class="panel-heading"> <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-busca" href="#panel-element-busca">New  search scheme<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a> </div>
-            <div id="panel-element-busca" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <select ng-model="geneSelected" ng-change="geneChange(geneSelected)" ng-options="gene.symbol for gene in geneList track by gene._id">
+<div class="panel-group" id="panel-busca">
+    <div class="panel panel-default">
+        <div class="panel-heading"> <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-busca" href="#panel-element-busca">New  search scheme<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a> </div>
+        <div id="panel-element-busca" class="panel-collapse collapse">
+            <div class="panel-body">
+                <form name="schemeForm">
+                    <select name="geneSelected" required ng-model="geneSelected" ng-change="geneChange(geneSelected)" ng-options="gene.symbol for gene in geneList track by gene._id">
                         <!--option selected="true" value="{{gene._id}}"  ng-repeat="gene in geneList">{{gene.symbol}}</option-->
                         <option style="display:none" value="">Gene</option>
                     </select>
-                    <select ng-model="altSelected"  ng-options="alt.name for alt in altList track by alt._id">
+                    <select name="altSelected" required ng-model="altSelected"  ng-options="alt.name for alt in altList track by alt._id">
                         <option style="display:none" value="">Molecular Alteration</option>
                     </select>
-                    <select ng-model="dateSelected"  ng-options="date.text for date in datesList track by date.year">
+                    <select name="dateSelected" required ng-model="dateSelected"  ng-options="date.text for date in datesList track by date.year">
                         <option style="display:none" value="">Publication dates</option>
                     </select>
                     {{datePublication}}
-                    <button type="button" class="btn" ng-click="addSearch(geneSelected, altSelected, dateSelected)">Search</button>
-                </div>
+                    <button ng-disabled="schemeForm.geneSelected.$invalid || schemeForm.altSelected.$invalid || schemeForm.dateSelected.$invalid " type="button" class="btn" ng-click="addSearch(geneSelected, altSelected, dateSelected)">Search</button>
+                </form>
             </div>
         </div>
     </div>
-    <ul class="mis-esquemas">
-        <li ng-repeat="search  in searchListFunction(searchList)">
-            <a ng-if="search.notification > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notification}} new">
-                <i class="fa fa-certificate"></i>{{search.notification}}
-            </a>
-            <a  ng-if="search.recommended > 0" href="/search/results/{{search._id}}?status=4" class="alert rank" title="{{search.recommended}} recommended">
-                <i class="fa fa-thumbs-up"></i>{{search.recommended}}
-            </a>
+</div>
+<ul class="mis-esquemas">
+    <li ng-repeat="search  in searchListFunction(searchList)">
+        <a ng-if="search.notification > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notification}} new">
+            <i class="fa fa-certificate"></i>{{search.notification}}
+        </a>
+        <a  ng-if="search.recommended > 0" href="/search/results/{{search._id}}?status=4" class="alert rank" title="{{search.recommended}} recommended">
+            <i class="fa fa-thumbs-up"></i>{{search.recommended}}
+        </a>
 
-            <a class="gene" href="/search/{{search._id}}" >{{search.geneSymbol}} ; {{search.alteName}}</a>
+        <a class="gene" href="/search/{{search._id}}" >{{search.geneSymbol}} ; {{search.alteName}}</a>
 
-        </li>  
+    </li>  
 
-    </ul>
+</ul>
 
 

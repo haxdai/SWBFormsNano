@@ -58,6 +58,7 @@
     <script src="/public/libs/angular-ui-router/release/angular-ui-router.min.js" ></script>
     <script src="/public/libs/angular-touch/angular-touch.min.js" ></script>
     <script src="/public/libs/angular-carousel/dist/angular-carousel.min.js" ></script>
+    <script src="/public/libs/bootstrap-waitingfor/build/bootstrap-waitingfor.min.js"></script>
     <!--    Nano js     -->
     <script src="/public/js/app.js"></script>
     <!--    Nano js services     -->
