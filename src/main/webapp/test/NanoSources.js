@@ -17,6 +17,7 @@ eng.dataSources["Gene"] = {
                         var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
                         var search = new esearch();
                         var isValid = search.hasGeneBD(value);
+                        //value = /**/
                         if (!isValid)
                             return false;
                     },
@@ -108,10 +109,10 @@ eng.dataSources["Search"] = {
                         c[0] = "artYearsOld";
                         d[0] = request.data.artYearsOld;
 
-                        var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
-                        var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteración molecular
-                        b[0] = idGene;
-                        b[1] = idAltMolecular;
+                        //var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
+                        //var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteración molecular
+                        b[0] = request.data.gene;//idGene;
+                        b[1] = request.data.altMolecular;//idAltMolecular;
                         var isValid = utils.isValidObject("Search", a, b, c, d);
                         if (isValid)
                             return true;
@@ -212,7 +213,7 @@ eng.dataProcessors["GeneProcessor"] = {
                 if (defGen !== null) {
                     var obj = JSON.parse(defGen);
                     if (request.data.symbol)
-                        request.data.symbol = gen;
+                        request.data.symbol = obj.gene.symbol;
                     if (obj.gene.nomName)
                         request.data.officialName = obj.gene.nomName;
                     if (obj.gene.id)
@@ -267,7 +268,7 @@ eng.dataServices["GeneService"] = {
     actions: ["add"],
     service: function (request, response, dataSource, action)
     {
-        if (response.data._id != null && response.data._id != "") {
+        if (response.data.symbol != null && response.data._id != null && response.data._id != "") {
             var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
             var search = new esearch();
 
@@ -275,7 +276,7 @@ eng.dataServices["GeneService"] = {
             var defDiseases = search.getDiseasesInfo(response.data.symbol);
             if (defDiseases != null) {
                 utils.setNewDisease(defDiseases, response.data._id);
-                //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:5639598afcfbfa9096d3e756");
+                //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:56453514d501e2ac6ccea32c");
             }
         }
 
