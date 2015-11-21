@@ -9,7 +9,8 @@
         <!--    Lib css     -->
         <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css"  rel="stylesheet" type="text/css" />
         <link href="/public/libs/font-awesome/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
-        <link href="/public/libs/angular-carousel/dist/angular-carousel.min.css" rel="stylesheet" type="text/css" />
+        
+        <link href="/public/libs/css-spinners/css/spinners.css" rel="stylesheet" type="text/css" />
         <!--    Nano css     -->
         <link href="/public/css/nano.css" rel="stylesheet" type="text/css" />
         <link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
@@ -29,8 +30,11 @@
             </div>
             <div style="display:none;" class="alert alert-success text-center">
             </div> 
+            <div style="display:none; padding: 8px 0 0 0;" class="alert alert-info text-center">
+            </div>
         </div>
-       
+
+
 
 
         <div id="wrapper" class="toggled">
@@ -58,7 +62,7 @@
     <script src="/public/libs/angular-ui-router/release/angular-ui-router.min.js" ></script>
     <script src="/public/libs/angular-touch/angular-touch.min.js" ></script>
     <script src="/public/libs/angular-carousel/dist/angular-carousel.min.js" ></script>
-    <script src="/public/libs/bootstrap-waitingfor/build/bootstrap-waitingfor.min.js"></script>
+    <script src="/public/libs/angular-animate/angular-animate.min.js" ></script>
     <!--    Nano js     -->
     <script src="/public/js/app.js"></script>
     <!--    Nano js services     -->
@@ -95,19 +99,33 @@
 
                 }
             }
-            function showMessage(type,msg){
-                if(type === "ok" ){
+            function showMessage(type, msg) {
+                if (type === "ok") {
                     $("#message-box > .alert-success").text(msg);
                     $("#message-box > .alert-success").fadeIn().delay(3000).fadeOut();
- 
-                }else if(type === "error"){
+
+                } else if (type === "error") {
                     $("#message-box > .alert-danger").text(msg);
                     $("#message-box > .alert-danger").fadeIn().delay(3000).fadeOut();
+                } else if (type === "msg") {
+                    $("#message-box > .alert-info").html("<span  class='throbber-loader'></span><br>" + msg);
+                    $("#message-box > .alert-info").fadeIn();
                 }
-                
             }
+            
+              function removeMessage(type) {
+                if (type === "ok") {
+                    $("#message-box > .alert-success").hide();
+                } else if (type === "error") {
+                    $("#message-box > .alert-danger").hide();
+                } else if (type === "msg") {
+                    $("#message-box > .alert-info").hide();
+                }
+            }
+            
+            
             $(document).on("ready", function () {
-               
+
                 $(window).resize(function () {
                     checkRezise()
                 })

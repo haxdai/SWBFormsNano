@@ -16,7 +16,7 @@
         <script src="/public/libs/crypto-js/sha512.js" ></script>
         <script type="text/javascript">
             eng.initPlatform("/test/NanoSources.js");
-            eng.dataSourceServlet = "dslogin";
+            eng.dataSourceServlet = "/dslogin";
         </script> 
     </head>
     <body ng-controller="loginController" class="login">
@@ -81,12 +81,14 @@
         angular.module('NanoLogin', [])
                 .controller("loginController", function ($scope, $window) {
                     $scope.loginUsr = function (password, email) {
-                        var res = eng.login(email, "[SHA-512]" + CryptoJS.SHA512(password).toString());
+                        eng.login(email, "[SHA-512]" + CryptoJS.SHA512(password).toString(),function(res){
                         if (res.status === -1) {
                             $scope.alert = "Usuario o contraseña inválido";
                         } else {
                             $window.location.href = '/';
                         }
+                        });
+                     
                     }
                 });
     </script>

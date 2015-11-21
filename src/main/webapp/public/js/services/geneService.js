@@ -2,52 +2,60 @@
 
 angular.module('service.gene', [])
         .service('Gene', function ($http, $q) {
-            
-            this.validate =function(query){
+
+            this.validate = function (query) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Gene");
-                var response = ds.validateObj(query);
-                if (response && response.status == 0 ) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject(response.errors);
-                }
+                ds.validateObj(query, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject(response.errors);
+                    }
+
+                });
                 return deferred.promise;
             }
-            
+
             this.byId = function (id) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Gene");
-                var response = ds.fetchObjById(id)
-                if (response) {
-                    deferred.resolve(response);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.fetchObjById(id, function (response) {
+                    if (response) {
+                        deferred.resolve(response);
+                    } else {
+                        deferred.reject("No data");
+                    }
+
+                })
                 return deferred.promise;
             };
 
             this.list = function () {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Gene");
-                var result = ds.fetch({});
-                if(result.status == 0 ){
-                    deferred.resolve(result.data);
-                }else{
-                    deferred.reject("Server error");
-                }
+                ds.fetch({}, function (result) {
+                    if (result.status == 0) {
+                        deferred.resolve(result.data);
+                    } else {
+                        deferred.reject("Server error");
+                    }
+
+                });
                 return deferred.promise;
             };
 
-             this.save = function (gene) {
+            this.save = function (gene) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Gene");
-                var response = ds.addObj(gene);
-                if (response && response.status == 0 ) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.addObj(gene, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject("No data");
+                    }
+
+                });
                 return deferred.promise;
             };
 

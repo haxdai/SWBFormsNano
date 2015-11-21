@@ -79,20 +79,21 @@ angular.module('controller.configGen', [])
 
             $scope.addGene = function (geneSymbol) {
                 var q = {symbol: geneSymbol};
-                waitingDialog.show(MSG_GENE_LOOKING, {headerText: false, dialogSize: "sm"});
+                showMessage("msg",MSG_GENE_LOOKING)
                 Gene.validate(q).then(function () {
                     Gene.save(q).then(function (newGene) {
-                        waitingDialog.hide();
+                        removeMessage("msg")
                         $scope.geneList.push(newGene);
                         $scope.cancelGen()
                         showMessage("ok", MSG_GENE_ADDED)
                     }, function (error) {
+                        removeMessage("msg")
+                        showMessage("error", error.symbol)
                         console.log(error)
-                        waitingDialog.hide();
                     })
                 }, function (error) {
+                    removeMessage("msg")
                     console.log(error)
-                    waitingDialog.hide();
                     showMessage("error", error.symbol)
                     $scope.cancelGen()
                 });

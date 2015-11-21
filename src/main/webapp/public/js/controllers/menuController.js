@@ -6,7 +6,9 @@ angular.module('controller.menu', [])
             $scope.geneList;
             $scope.altList;
             $scope.datesList = Config.publicationDates();
-
+            var MSG_SCHEME_LOOKING = "MSG_SCHEME_LOOKING";
+            var MSG_SCHEME_ADDED = "MSG_SCHEME_ADDED"
+            
             $scope.searchListFunction = function (list) {
                 var filterList = $scope.filterPattern || "";
                 return list.filter(function (e) {
@@ -67,8 +69,12 @@ angular.module('controller.menu', [])
 
             $scope.addSearch = function (geneSelected, altSelected, dateSelected) {
                 var q = {gene: geneSelected._id, altMolecular: altSelected._id, artYearsOld: dateSelected.year};
+                showMessage("msg",MSG_SCHEME_LOOKING)
                 Search.validate(q).then(function () {
                     Search.add(q).then(function (search) {
+                        removeMessage("msg")
+                        showMessage("ok", MSG_SCHEME_ADDED)
+                        $('#panel-element-busca').collapse("hide");
                         var i = $scope.searchList.push(search.data);
                         Gene.byId(search.gene).then(function (gene) {
                             $scope.searchList[i - 1].geneSymbol = gene.symbol;
@@ -78,7 +84,9 @@ angular.module('controller.menu', [])
                         });
                         $scope.newSearch = false;
                     });
-                }, function (error) {
+                }, function (error){
+                    removeMessage("msg")
+                    showMessage("error",error.gene)
                     console.log(error);
                 })
 

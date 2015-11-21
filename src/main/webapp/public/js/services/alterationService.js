@@ -2,28 +2,32 @@
 
 angular.module('service.alteration', [])
         .service('Alteration', function ($http, $q) {
-            
-            this.validate =function(query){
+
+            this.validate = function (query) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("AlterationMolecular");
-                var response = ds.validateObj(query);
-                if (response && response.status == 0 ) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject(response.errors);
-                }
+                ds.validateObj(query, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject(response.errors);
+                    }
+                });
+
                 return deferred.promise;
             }
-            
+
             this.byId = function (id) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("AlterationMolecular");
-                var response = ds.fetchObjById(id)
-                if (response) {
-                    deferred.resolve(response);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.fetchObjById(id, function (response) {
+                    if (response) {
+                        deferred.resolve(response);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                })
+
                 return deferred.promise;
             };
 
@@ -31,39 +35,45 @@ angular.module('service.alteration', [])
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("AlterationMolecular");
                 var query = {};
-                if(geneId){
+                if (geneId) {
                     query.gene = geneId;
                 }
-                var result = ds.fetchObj(query);
-                if(result.status == 0 ){
-                    deferred.resolve(result.data);
-                }else{
-                    deferred.reject("Server error");
-                }
+                ds.fetchObj(query, function (response) {
+                    if (response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject("Server error");
+                    }
+                });
+
                 return deferred.promise;
             };
-            
+
             this.save = function (alt) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("AlterationMolecular");
-                var response = ds.addObj(alt);
-                if (response && response.status == 0 ) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.addObj(alt, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
+
                 return deferred.promise;
             };
-            
-               this.update = function (alt) {
+
+            this.update = function (alt) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("AlterationMolecular");
-                var response = ds.updateObj(alt);
-                if (response && response.status == 0 ) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.updateObj(alt, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
+
                 return deferred.promise;
             };
 

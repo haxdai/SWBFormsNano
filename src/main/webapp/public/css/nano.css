@@ -1,3 +1,11 @@
+.ng-animate.ng-enter,.ng-animate.ng-leave { 
+    -webkit-transition: none!important;
+    -moz-transition:none!important;
+    -ms-transition: none!important;
+    -o-transition: none!important;
+    transition: none!important;
+}
+
 ul[rn-carousel] {
     width: 400px;
     height: 300px;
@@ -64,6 +72,36 @@ ul[rn-carousel] {
     right: 0;
     left: 0;
     z-index: 2000;
+}
+
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave 
+{ 
+    -webkit-transition: 500ms linear all!important;
+    -moz-transition: 500ms linear all!important;
+    -ms-transition: 500ms linear all!important;
+    -o-transition: 500ms linear all!important;
+    transition: 500ms linear all!important;
+    position: relative;
+    display: block;
+    overflow: hidden;
+} 
+
+
+.animate-repeat.ng-leave  {
+    //opacity: 1;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    color:red!important;
+}
+
+.animate-repeat.ng-leave.ng-leave-active{
+    //opacity: 0;
+    left: 50%;
+    right: 50%;
+    width: 0px;
+ color:red!important;
 }
 
 @media (max-width:767px){

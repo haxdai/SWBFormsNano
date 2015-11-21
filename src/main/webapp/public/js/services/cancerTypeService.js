@@ -3,27 +3,31 @@
 angular.module('service.cancerType', [])
         .service('CancerType', function ($http, $q, Gene_Cancer) {
 
-            this.validate =function(query){
+            this.validate = function (query) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("CancerType");
-                var response = ds.validateObj(query);
-                if (response && response.status == 0 ) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject(response.errors);
-                }
+                ds.validateObj(query, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject(response.errors);
+                    }
+                });
+
                 return deferred.promise;
             }
-            
+
             this.byId = function (id) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("CancerType");
-                var response = ds.fetchObjById(id);
-                if (response) {
-                    deferred.resolve(response);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.fetchObjById(id, function (response) {
+                    if (response) {
+                        deferred.resolve(response);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
+
                 return deferred.promise;
             };
 
@@ -55,31 +59,39 @@ angular.module('service.cancerType', [])
             this.list = function () {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("CancerType");
-                deferred.resolve(ds.fetch({}));
+                ds.fetch({}, function (result) {
+                    if (result && result.status == 0) {
+                        deferred.resolve(result.data);
+                    } else {
+                        deferred.reject("Server error");
+                    }
+                });
                 return deferred.promise;
             };
 
             this.save = function (cancer) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("CancerType");
-                var response = ds.addObj(cancer);
-                if (response && response.status == 0) {
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.addObj(cancer, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
                 return deferred.promise;
             };
-            
-             this.update = function (cancer) {
+
+            this.update = function (cancer) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("CancerType");
-                var response = ds.updateObj(cancer);
-                if (response && response.status == 0) {
+                ds.updateObj(cancer,function(response){
+                       if (response && response.status == 0) {
                     deferred.resolve(response.data);
                 } else {
                     deferred.reject("No data");
                 }
+                });
                 return deferred.promise;
             };
 

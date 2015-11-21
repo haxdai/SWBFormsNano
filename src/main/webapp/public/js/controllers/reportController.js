@@ -1,16 +1,20 @@
 'use strict';
 
 angular.module('controller.report', ['angular-carousel'])
-        .controller('ReportController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Report, Search, Gene) {
+        .controller('ReportController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Report, Search, Gene, Alteration) {
             $scope.searchId = $stateParams.id;
             $scope.status = 2; /*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado, 4 Recomendado*/
             $scope.report = {};
             $scope.articleList = [];
             $scope.gene;
+            $scope.alt;
 
             Search.byId($scope.searchId).then(function (search) {
                 Gene.byId(search.gene).then(function (gene) {
                     $scope.gene = gene;
+                })
+                Alteration.byId(search.alt).then(function (alt) {
+                    $scope.alt = alt;
                 })
             }, function (error) {
                 console.log(error)
@@ -53,10 +57,10 @@ angular.module('controller.report', ['angular-carousel'])
 
             updateResults($scope.searchId, $scope.status);
             $("#menu-toggle").click(function (e) {
-                  $("#menu-toggle").removeClass("menu-toggle-off-fixed");
+                $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
-                   $(this).toggleClass("menu-toggle-off");
+                $(this).toggleClass("menu-toggle-off");
             });
-             checkRezise()
+            checkRezise()
         })

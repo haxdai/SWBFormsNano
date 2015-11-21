@@ -1,5 +1,5 @@
 'use strict';
-angular.module('NanoApp', ['controllers', 'services', 'ui.router'])
+angular.module('NanoApp', ['controllers', 'services', 'ui.router','ngAnimate'])
 
         .run(function () {
 

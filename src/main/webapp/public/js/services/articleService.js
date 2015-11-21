@@ -6,12 +6,14 @@ angular.module('service.article', [])
             this.byId = function (id) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Article");
-                var response = ds.fetchObjById(id);
-                if (response) {
-                    deferred.resolve(response);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.fetchObjById(id, function (response) {
+                    if (response) {
+                        deferred.resolve(response);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
+
                 return deferred.promise;
             };
 
@@ -39,12 +41,14 @@ angular.module('service.article', [])
                         }
                     }
                 }
-                var response = ds.fetch(req)
-                if (response) {
-                    deferred.resolve(response);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.fetch(req, function (response) {
+                    if (response) {
+                        deferred.resolve(response);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                })
+
                 return deferred.promise;
             }
 
@@ -60,7 +64,7 @@ angular.module('service.article', [])
                 }
                 Art_Search.list(searchId, status, sortArtSearch).then(function (articleIds) {
                     Article.list(articleIds, sortBy, pag, ele).then(function (articleList) {
-                        if (articleList && articleList.data.length>0) {
+                        if (articleList && articleList.data.length > 0) {
                             articleList.limit = limit
                             var artCount = 0;
                             articleList.data.forEach(function (a, i) {
@@ -77,24 +81,25 @@ angular.module('service.article', [])
                             deferred.reject("No data");
                         }
 
-                    },function(error){
-                         deferred.reject(error);
+                    }, function (error) {
+                        deferred.reject(error);
                     })
-                },function(error){
-                         deferred.reject(error);
-                    })
+                }, function (error) {
+                    deferred.reject(error);
+                })
                 return deferred.promise;
             }
 
             this.update = function (article) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Article");
-                var response = ds.updateObj(article);
-                if (response) {
-                    deferred.resolve(response);
-                } else {
-                    deferred.reject("No data");
-                }
+                ds.updateObj(article, function (response) {
+                    if (response) {
+                        deferred.resolve(response);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
                 return deferred.promise;
             };
         })

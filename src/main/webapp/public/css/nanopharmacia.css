@@ -303,12 +303,12 @@ nav { position: relative; top:70px; z-index: 10}
 .pie img { margin:5px auto}
 
 /*RESULTS*/
-#panel-results      { margin-top:10px} 
+#panel-results      { margin-top:10px; margin-bottom: 50px} 
 #panel-results .panel.panel-default { margin-bottom:20px}
 #panel-results *              { color: #666}
-#panel-results ol             { margin:0; padding:0 0 0 25px;}
+#panel-results ol             { margin:0; padding:8px 0 0 25px;}
 #panel-results .panel         { box-shadow:none; border:none; }
-#panel-results .panel-heading 		 {background:#6b9baf; padding:0; line-height:20px; }
+#panel-results .panel-heading 		 {background:#6b9baf; padding:0; line-height:20px; height: 50px;}
 #panel-results .panel-heading:hover  {background:#3b6b85 } 
 #panel-results .panel-heading:active {background:#345060 } 
 #panel-results .panel-heading.new 		 {background:#900;}
@@ -316,15 +316,22 @@ nav { position: relative; top:70px; z-index: 10}
 #panel-results .panel-heading.new:active {background:#900 } 
 
 #panel-results .panel-heading * 	 {color:#FFF;}
-#panel-results .panel-title   { font-size:14px; text-decoration:none !important; padding:7px 6px 7px 0px; display:block}
+#panel-results .panel-title   { font-size:14px; text-decoration:none !important; padding:7px 6px 7px 0px; display:block;position:relative}
 #panel-results .panel-body	  { background:#fafbfc; border-left:1px solid #CCC; border-right:1px solid #CCC;} 
 
-.panel-califica            { float:right; display:inline-block; margin-left:20px; margin-bottom:10px}
+.panel-califica            { position: absolute; top:-20px; right: 8px; display:inline-block; margin-left:20px; margin-bottom:10px}
 .panel-califica .fa        { margin-right:3px}
 .panel-califica i          {}
 .panel-califica .star      { border-left:solid 1px rgba(255, 255, 255, 0.3); border-right:solid 1px rgba(255, 255, 255, 0.3); padding:0 8px;  display: inline-block}
 .panel-califica .star i    { margin:0 -2px 0 -2px; padding:0; font-size:14px}
 .panel-califica .glyphicon { position:relative; top:-3px; border-radius:3px; padding:2px}
+
+.panel-text-title{
+    position: absolute;
+    top:-20px;
+    left: 0px;
+    right: 120px;
+}
 
 #panel-results .panel-pie     { background:#96b6c3; border-radius:0 0 4px 4px; }
 #panel-results .panel-pie *   { color:#fff !important; text-decoration:none;}
@@ -368,11 +375,12 @@ nav { position: relative; top:70px; z-index: 10}
 @media (min-width:768px) and (max-width:991px){ #x {background-color:blue !important;}
     .top-config {padding:10px 13px; width:107px}
 	#wrapper.toggled #page-content-wrapper { width:65%;}
+        #panel-results .panel-heading 		 {height: 70px;}
 }
 
 /* Smartphone */
 @media (max-width:767px){ #x {background-color:yellow !important;}
-	
+	      #panel-results .panel-heading 		 {height: 90px;}
     /*sidebar*/
    /* #wrapper { padding-left:300px;}
     #wrapper.toggled {padding-left: 0;}

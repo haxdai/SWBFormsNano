@@ -5,13 +5,13 @@ angular.module('controller.results', [])
             $scope.searchId = $stateParams.id;
             console.log($stateParams)
             var status = parseInt($stateParams.status);
-            if($stateParams.status>=0 && $stateParams.status<=4 ){
+            if ($stateParams.status >= 0 && $stateParams.status <= 4) {
                 $scope.status = status;
-            }else{
+            } else {
                 $scope.status = 4; /*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado, 4 Recomendado*/
             }
-            
-            $scope.statuslist = ["Unclassified","New","Accepted","Rejected","Recommended"];
+
+            $scope.statuslist = ["Unclassified", "New", "Accepted", "Rejected", "Recommended"];
 
             $scope.pag = 1;
             $scope.maxPage;
@@ -21,7 +21,7 @@ angular.module('controller.results', [])
             $scope.gene;
 
             $scope.articleList = [];
-            
+
 
 
             Search.byId($scope.searchId).then(function (search) {
@@ -51,7 +51,14 @@ angular.module('controller.results', [])
                 var statusPrev = art_search.status;
                 art_search.status = 3;
                 Art_Search.update(art_search).then(function () {
-                    $scope.articleList.splice(i, 1);
+                    $('#panel-element-00' + (i + 1)).on('hidden.bs.collapse', function () {
+                        console.log(i + 1)
+                        $('#panel-element-00' + (i + 1)).off('hidden.bs.collapse')
+                        $scope.articleList.splice(i, 1);
+                        $scope.$digest()
+                    })
+                    $('#panel-element-00' + (i + 1)).collapse("hide");
+
                     //$scope.articleList = [];
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     if (art_search.ranking > 5) {
@@ -74,8 +81,13 @@ angular.module('controller.results', [])
                 var statusPrev = art_search.status;
                 art_search.status = 2;
                 Art_Search.update(art_search).then(function () {
-                    $scope.articleList.splice(i, 1);
-                    //$scope.articleList = [];
+                    $('#panel-element-00' + (i + 1)).on('hidden.bs.collapse', function () {
+                        console.log(i + 1)
+                        $('#panel-element-00' + (i + 1)).off('hidden.bs.collapse')
+                        $scope.articleList.splice(i, 1);
+                        $scope.$digest()
+                    })
+                    $('#panel-element-00' + (i + 1)).collapse("hide");
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     if (art_search.ranking > 5) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
@@ -118,7 +130,7 @@ angular.module('controller.results', [])
                     }
                 }
                 Article.listBySearchId(searchId, status, orderBy, pag, ele).then(function (artSearchList) {
-                    
+
                     $scope.totalRows = artSearchList.totalRows;
                     $scope.limit = artSearchList.limit;
                     $scope.maxPage = Math.ceil($scope.totalRows / $scope.limit);
@@ -138,8 +150,8 @@ angular.module('controller.results', [])
                         }
                         $scope.articleList.push({article: art, artSearch: art.artSearch})
                     });
-                },function(error){
-                    if(error == "No data"){
+                }, function (error) {
+                    if (error == "No data") {
                         $scope.maxPage = 0;
                     }
                 });
@@ -148,12 +160,12 @@ angular.module('controller.results', [])
 
 
             $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
-            
+
             $("#menu-toggle").click(function (e) {
                 $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
-                   $(this).toggleClass("menu-toggle-off");
+                $(this).toggleClass("menu-toggle-off");
             });
-             checkRezise()
+            checkRezise()
         })
