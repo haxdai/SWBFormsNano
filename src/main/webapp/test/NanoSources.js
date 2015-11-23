@@ -299,7 +299,14 @@ eng.dataServices["SearchService"] = {
             var dataArt = search.getPublicationsInfo(gene, altMolecular, response.data.artYearsOld, 0);//
             if (dataArt != null) {
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-                response.data.notification = utils.saveNewArticles(dataArt, response.data._id);
+                var res = utils.saveNewArticles(dataArt, response.data._id);
+                var temp = new Array();
+                temp = res.split(",");
+                if(temp != null && temp.length === 2) {
+                    response.data.notification = parseInt(temp[0]); 
+                    response.data.recommended = parseInt(temp[1]); 
+                }
+                 
                 //utils.saveUpdateArticles(dataArt, "_suri:NanoPharmacy:Search:5632a99e3831a3e77b9ec2b3");//response.data._id
             }
         }
