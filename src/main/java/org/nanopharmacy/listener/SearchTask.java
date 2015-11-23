@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONObject;
 import org.semanticwb.datamanager.DataList;
 import org.semanticwb.datamanager.DataMgr;
@@ -98,12 +100,14 @@ public class SearchTask extends TimerTask {
                                 molAlteration.replaceAll(" ", ""), 0, daysFromLastUpdate);
                         if (articles2Update.getJSONArray("outstanding").length() > 0 ||
                                 articles2Update.getJSONArray("rejected").length() > 0) {
-                            Utils.ENG.saveUpdateArticles(articles2Update, searchId);
+                                Utils.ENG.saveUpdateArticles(articles2Update, searchId);
                         }
                     } catch (NoDataException nde) {
                         System.out.println("Tarea programada - No se encontro informacion para actualizar. " + nde.getMessage());
                     } catch (UseHistoryException uhe) {
                         System.out.println("Tarea programada - Problema con la extraccion de informacion. " + uhe.getMessage());
+                    } catch(InterruptedException ex) {
+                        System.out.println("Error al actualizar articulos: " + ex.getMessage());
                     }
                 }
                 
