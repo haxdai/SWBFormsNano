@@ -176,15 +176,16 @@ eng.dataSources["Configuration"] = {
     ]
 };
 
-eng.dataSources["Report"] = {
-    scls: "Report",
+eng.dataSources["User"] = {
+    scls: "User",
     modelid: "NanoPharmacy",
-    dataStore: "mongodb",    
-    displayField: "search",
+    dataStore: "mongodb",
+    displayField: "name",
     fields: [
-        {name: "search", title: "Búsqueda", stype: "select", dataSource:"Search"},
-        {name: "comment", title: "Observaciones", type: "string"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+        {name: "password", title: "Contraseña", type: "string"},
+        {name: "email", title: "Correo electronico", type: "string"},
+        {name: "name", title: "Nombre", type: "string"},
+        {name: "rol", title: "Rol", type: "string"}
     ]
 };
 

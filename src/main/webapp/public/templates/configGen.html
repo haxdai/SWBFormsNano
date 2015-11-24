@@ -73,9 +73,13 @@
                         <div class="list-group-item">
                             <ul class="list-group-item-text">
                                 <li ng-repeat="disease  in cancerList">
-                                    <a> 
-                                        <span  class="glyphicon glyphicon-pencil" ng-click="editDisease(disease)"></span>  
-                                        {{disease.name}}</a> 
+                                    <a  ng-click="editDisease(disease)" ng-if="!disease.conceptId"> 
+                                        <span   class="glyphicon glyphicon-pencil"></span>  
+                                        {{disease.name}}
+                                    </a>
+                                    <a ng-if="disease.conceptId"> 
+                                       {{disease.name}}
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -115,8 +119,8 @@
                         <div class="list-group-item">
                             <ul class="list-group-item-text">
                                 <li ng-repeat="alt in  altList"> 
-                                    <a>
-                                        <span  class="glyphicon glyphicon-pencil" ng-click="editAlt(alt)"></span>  
+                                    <a ng-click="editAlt(alt)">
+                                        <span  class="glyphicon glyphicon-pencil" ></span>  
                                         {{alt.name}}</a>
                                 </li>
 

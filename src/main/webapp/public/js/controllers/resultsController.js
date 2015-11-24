@@ -33,18 +33,24 @@ angular.module('controller.results', [])
             })
 
             $scope.prev = function () {
-                if ($scope.pag > 1)
-                    $scope.pag--;
+                if ($scope.status !== 1) {
+                    if ($scope.pag > 1) {
+                        $scope.pag--;
+
+                    }
+                }
                 $scope.articleList = [];
-                $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 0);
+                $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
             }
 
             $scope.next = function () {
-                if ($scope.pag < $scope.maxPage) {
-                    $scope.pag++;
+                if ($scope.status !== 1) {
+                    if ($scope.pag < $scope.maxPage) {
+                        $scope.pag++;
+                    }
                 }
                 $scope.articleList = [];
-                $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy,  $scope.status != 1 ? $scope.pag : 0);
+                $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
             }
 
             $scope.discard = function (art_search, i) {
@@ -62,7 +68,7 @@ angular.module('controller.results', [])
                     //$scope.articleList = [];
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     if (art_search.ranking > 5) {
-                        $rootScope.$emit('articleRecommended', $scope.searchId,-1);
+                        $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
                     if (statusPrev == 1) {
                         $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);

@@ -80,10 +80,10 @@ angular.module('controller.menu', [])
                         showMessage("ok", MSG_SCHEME_ADDED)
                         $('#panel-element-busca').collapse("hide");
                         var i = $scope.searchList.push(search.data);
-                        Gene.byId(search.gene).then(function (gene) {
+                        Gene.byId(search.data.gene).then(function (gene) {
                             $scope.searchList[i - 1].geneSymbol = gene.symbol;
                         });
-                        Alteration.byId(search.altMolecular).then(function (alte) {
+                        Alteration.byId(search.data.altMolecular).then(function (alte) {
                             $scope.searchList[i - 1].alteName = alte.name;
                         });
                         $scope.newSearch = false;

@@ -9,12 +9,12 @@
         <!--    Lib css     -->
         <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css"  rel="stylesheet" type="text/css" />
         <link href="/public/libs/font-awesome/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
-        
+
         <link href="/public/libs/css-spinners/css/spinners.css" rel="stylesheet" type="text/css" />
         <!--    Nano css     -->
-      
+
         <link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
-          <link href="/public/css/nano.css" rel="stylesheet" type="text/css" />
+        <link href="/public/css/nano.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript">
 
         </script>
@@ -26,14 +26,7 @@
             <a href="#" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
             <a href="/config" class="top-config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="config">Configure</span></a>
         </div>
-        <div id="message-box">
-            <div  style="display:none;" class="alert alert-danger text-center">
-            </div>
-            <div style="display:none;" class="alert alert-success text-center">
-            </div> 
-            <div style="display:none; padding: 8px 0 0 0;" class="alert alert-info text-center">
-            </div>
-        </div>
+
 
 
 
@@ -41,15 +34,23 @@
         <div id="wrapper" class="toggled">
             <div id="sidebar-wrapper" ui-view="menu"></div>
             <div id="page-content-wrapper"  ui-view="content"></div>
-        </div>
-        <div class="container-fluid">
-            <div id="x"></div> 
-            <div class="row clearfix pie">
-                <img src="/public/img/nanopharmacia-blanco.png">
-                <p>01 800 910 6266 <a href="contacto@nanopharmacia.com">contacto@nanopharmacia.com</a>
-                </p>
+            <div id="message-box">
+                <div  style="display:none;" class="alert alert-danger text-center">
+                </div>
+                <div style="display:none;" class="alert alert-success text-center">
+                </div> 
+                <div style="display:none; padding: 8px 0 0 0;" class="alert alert-info text-center">
+                </div>
             </div>
-        </div> 
+            <div class="container-fluid">
+                <div id="x"></div> 
+                <div class="row clearfix pie">
+                    <img src="/public/img/nanopharmacia-blanco.png">
+
+                </div>
+            </div> 
+        </div>
+
     </body>    
     <script src="/swbforms/js/eng.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -87,6 +88,8 @@
     <script src="/public/js/controllers/configGenController.js"></script>
     <script src="/public/js/controllers/menuConfigController.js"></script>
     <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
+    <script src="/public/js/controllers/configUsersController.js"></script>
+    <script src="/public/js/controllers/configImagesController.js"></script>
     <script type="text/javascript">
             function checkRezise() {
                 console.log($(".query-check").width())
@@ -113,8 +116,8 @@
                     $("#message-box > .alert-info").fadeIn();
                 }
             }
-            
-              function removeMessage(type) {
+
+            function removeMessage(type) {
                 if (type === "ok") {
                     $("#message-box > .alert-success").hide();
                 } else if (type === "error") {
@@ -123,8 +126,8 @@
                     $("#message-box > .alert-info").hide();
                 }
             }
-            
-            
+
+
             $(document).on("ready", function () {
 
                 $(window).resize(function () {

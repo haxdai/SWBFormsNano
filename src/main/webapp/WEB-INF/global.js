@@ -55,6 +55,8 @@ eng.routes["global"]={
         { routePath: "search/report/*", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "config", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "config-time", forwardTo: "/index.jsp", isRestricted: "true"},
+        { routePath: "config-users", forwardTo: "/index.jsp", isRestricted: "true"},
+        { routePath: "config-images", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "", forwardTo: "/index.jsp", isRestricted: "true"}
     ],
 };

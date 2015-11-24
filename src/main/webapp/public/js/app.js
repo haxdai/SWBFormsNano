@@ -43,6 +43,30 @@ angular.module('NanoApp', ['controllers', 'services', 'ui.router','ngAnimate'])
                     }
                 }
             })
+             .state('configUsers', {
+                url: '/config-users',
+                views: {
+                    "menu": {templateUrl: "/public/templates/menuConfig.html",
+                        controller: 'MenuConfigController'
+                    },
+                    "content": {
+                        templateUrl: "/public/templates/configUsers.html",
+                        controller: 'ConfigUsersController'
+                    }
+                }
+            })
+             .state('configImages', {
+                url: '/config-images',
+                views: {
+                    "menu": {templateUrl: "/public/templates/menuConfig.html",
+                        controller: 'MenuConfigController'
+                    },
+                    "content": {
+                        templateUrl: "/public/templates/configImages.html",
+                        controller: 'ConfigImagesController'
+                    }
+                }
+            })
             .state('genInfo', {
                 url: '/search/:id',
                 views: {

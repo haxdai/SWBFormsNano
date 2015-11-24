@@ -47,7 +47,7 @@
                     <div class="tab-pane" id="panel-type">
                         <ul  ng-if="(cancerList.length > 0)" class="pagination clearfix">
                             <li><a ng-if="position > 0" ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
-                            <li><a href="#">{{position + 1}}</a></li>
+                            <li><a href="#">{{position + 1}} / {{cancerList.length}} </a></li>
                             <li><a ng-if="(position < ((cancerList.length) - 1))" ng-click="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
                         </ul>
                         <div class="clearfix"></div>
