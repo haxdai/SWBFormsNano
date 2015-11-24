@@ -154,7 +154,7 @@ nav { position: relative; top:70px; z-index: 10}
 .sidebar-nav > .sidebar-brand a:hover { color:#fff; background:none;}
 
 /*ALERT*/
-.mis-esquemas .alert      {  color:#FFF !important; border-radius:5px; width:30px; height:20px; margin:0 5px 0 0; text-align:center; font-weight:bold; padding:1px 0 0; float:right; font-size:12px; }
+.mis-esquemas .alert      {  color:#FFF !important; border-radius:5px; width:52px; height:20px; margin:0 5px 0 0; text-align:center; font-weight:bold; padding:1px 0 0; float:right; font-size:12px; }
 .mis-esquemas .alert, .alert i   { text-shadow:none;}
 .mis-esquemas .alert.new         { background:#900}
 .mis-esquemas .alert.new:hover   { background:#600; box-shadow:0px 0px 4px #fff}
@@ -308,7 +308,7 @@ nav { position: relative; top:70px; z-index: 10}
 #panel-results *              { color: #666}
 #panel-results ol             { margin:0; padding:8px 0 0 25px;}
 #panel-results .panel         { box-shadow:none; border:none; }
-#panel-results .panel-heading 		 {background:#6b9baf; padding:0; line-height:20px; height: 50px;}
+#panel-results .panel-heading 		 {background:#6b9baf; padding:0; line-height:20px; height: 70px;}
 #panel-results .panel-heading:hover  {background:#3b6b85 } 
 #panel-results .panel-heading:active {background:#345060 } 
 #panel-results .panel-heading.new 		 {background:#900;}
@@ -375,12 +375,12 @@ nav { position: relative; top:70px; z-index: 10}
 @media (min-width:768px) and (max-width:991px){ #x {background-color:blue !important;}
     .top-config {padding:10px 13px; width:107px}
 	#wrapper.toggled #page-content-wrapper { width:65%;}
-        #panel-results .panel-heading 		 {height: 70px;}
+        #panel-results .panel-heading 		 {height: 90px;}
 }
 
 /* Smartphone */
 @media (max-width:767px){ #x {background-color:yellow !important;}
-	      #panel-results .panel-heading 		 {height: 90px;}
+	      #panel-results .panel-heading 		 {height: 110px;}
     /*sidebar*/
    /* #wrapper { padding-left:300px;}
     #wrapper.toggled {padding-left: 0;}
@@ -417,7 +417,7 @@ nav { position: relative; top:70px; z-index: 10}
     .main-tabs button { margin-top: 0}
     .main-tabs .btn-default.focus,
     .main-tabs .btn-default:focus {background:#3b6b85 !important; color:#fff !important;}
-     body { background: url(../img/nanopharmacia-negro.jpg) no-repeat center bottom;}
+     //body { background: url(../img/nanopharmacia-negro.jpg) no-repeat center bottom;}
     .carousel-caption    { bottom:0;}
     .carousel-caption h4 { font-size:14px}
     .carousel-caption p  { font-size:12px}

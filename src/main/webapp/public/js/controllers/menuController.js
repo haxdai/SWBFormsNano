@@ -28,7 +28,11 @@ angular.module('controller.menu', [])
 
                 })
             });
-            $rootScope.$on('articleRecommended', function (event, searchId, val) {
+            $rootScope.$on('articleRecommended', function (event, searchId,val ) {
+                console.log(event)
+                console.log(searchId)
+                console.log(val)
+                
                 $scope.searchList.forEach(function (search, i) {
                     if (search._id === searchId) {
                         $scope.searchList[i].recommended += val;

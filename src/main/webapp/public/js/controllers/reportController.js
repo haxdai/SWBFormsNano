@@ -8,7 +8,9 @@ angular.module('controller.report', ['angular-carousel'])
             $scope.articleList = [];
             $scope.gene;
             $scope.alt;
-
+            var MSG_REPORT_SAVED = "MSG_REPORT_SAVED";
+            var MSG_REPORT_UPDATED = "MSG_REPORT_UPDATED";
+            
             Search.byId($scope.searchId).then(function (search) {
                 Gene.byId(search.gene).then(function (gene) {
                     $scope.gene = gene;
@@ -21,12 +23,17 @@ angular.module('controller.report', ['angular-carousel'])
             })
 
             $scope.save = function (report) {
-                console.log(report)
                 if ($scope.report.hasOwnProperty("_id")) {
-                    Report.update(report);
+                    Report.update(report).then(function(){
+                        showMessage("ok", MSG_REPORT_UPDATED)
+                    });
+                    
                 } else {
                     report.search = $scope.searchId;
-                    Report.save(report);
+                    Report.save(report).then(function(){
+                        showMessage("ok", MSG_REPORT_SAVED)
+                    });
+                    
                 }
             }
 

@@ -13,7 +13,13 @@ angular.module('service.art-search', [])
                     req.data.search = searchId;
                 }
                 if (status != null) {
-                    req.data.status = status;
+                    if (parseInt(status) == 4) {
+                        req.data.ranking = {"$gt": 5};
+                        req.data.status = {$in:[1,4]}
+                    } else {
+                        req.data.status = status;
+                    }
+
                 }
                 if (sortBy != null) {
                     req.sortBy = [sortBy];
@@ -63,14 +69,14 @@ angular.module('service.art-search', [])
             this.update = function (art_search) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Art_Search");
-                ds.updateObj(art_search,function(response){
+                ds.updateObj(art_search, function (response) {
                     if (response) {
-                    deferred.resolve(response);
-                } else {
-                    deferred.reject("No data");
-                }
+                        deferred.resolve(response);
+                    } else {
+                        deferred.reject("No data");
+                    }
                 });
-              
+
                 return deferred.promise;
             };
 

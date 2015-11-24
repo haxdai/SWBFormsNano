@@ -12,8 +12,9 @@
         
         <link href="/public/libs/css-spinners/css/spinners.css" rel="stylesheet" type="text/css" />
         <!--    Nano css     -->
-        <link href="/public/css/nano.css" rel="stylesheet" type="text/css" />
+      
         <link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
+          <link href="/public/css/nano.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript">
 
         </script>
@@ -102,11 +103,11 @@
             function showMessage(type, msg) {
                 if (type === "ok") {
                     $("#message-box > .alert-success").text(msg);
-                    $("#message-box > .alert-success").fadeIn().delay(3000).fadeOut();
+                    $("#message-box > .alert-success").fadeIn().delay(2500).fadeOut();
 
                 } else if (type === "error") {
                     $("#message-box > .alert-danger").text(msg);
-                    $("#message-box > .alert-danger").fadeIn().delay(3000).fadeOut();
+                    $("#message-box > .alert-danger").fadeIn().delay(2500).fadeOut();
                 } else if (type === "msg") {
                     $("#message-box > .alert-info").html("<span  class='throbber-loader'></span><br>" + msg);
                     $("#message-box > .alert-info").fadeIn();
