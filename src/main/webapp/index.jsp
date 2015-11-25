@@ -23,8 +23,9 @@
         <div class="query-check"></div>
         <div class="top">
             <a class="navbar-brand col-xs-7 col-xs-9 col-md-9 col-lg-7" href="/"><h1>Aurora Nanopharm</h1><img src="/public/img/aurora.png" class="img-responsive" alt="Nanopharmacia Diagnóstica"></a>
-            <a href="#" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
+            <a href="/login" id="logoout" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
             <a href="/config" class="top-config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="config">Configure</span></a>
+            <a href="/" class="top-config"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <span class="config">Home</span></a>
         </div>
 
 
@@ -129,6 +130,31 @@
 
 
             $(document).on("ready", function () {
+                $("#logoout").on("click", function () {
+                    eng.logout();
+                    window.location = "/login"
+                })
+
+                XMLHttpRequest.prototype.realOpen = XMLHttpRequest.prototype.open;
+                var myOpen = function (method, url, async, user, password) {
+                    this.addEventListener("readystatechange", function () {
+                        if (this.readyState === 4) {
+                            try {
+                                JSON.parse(this.response)
+                            } catch (e) {
+                                console.log(this.response)
+                                if(this.response.search("valid-this-is-login-view")>=0){
+                                    window.location = "/login"
+                                    return
+                                }
+                            }
+
+                        }
+
+                    }, false);
+                    this.realOpen(method, url, async, user, password);
+                }
+                XMLHttpRequest.prototype.open = myOpen;
 
                 $(window).resize(function () {
                     checkRezise()

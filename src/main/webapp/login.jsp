@@ -19,7 +19,7 @@
             eng.dataSourceServlet = "/dslogin";
         </script> 
     </head>
-    <body ng-controller="loginController" class="login">
+    <body ng-controller="loginController" class="login valid-this-is-login-view">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -61,20 +61,6 @@
                 </div>
             </div>
         </div>
-
-        <!--div class="form-group has-feedback">
-
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <div class="row">
-            <div class="col-xs-4">
-                
-            </div>
-        </div-->
     </body>
     <script type="text/javascript">
         'use strict';

@@ -1,10 +1,10 @@
 'use strict';
-angular.module('NanoApp', ['controllers', 'services', 'ui.router','ngAnimate'])
+angular.module('NanoApp', ['controllers', 'services', 'ui.router', 'ngAnimate'])
 
         .run(function () {
 
 
-        }).config(function ($urlRouterProvider, $stateProvider, $locationProvider) {
+        }).config(function ($urlRouterProvider, $stateProvider, $locationProvider, $httpProvider) {
 
     $locationProvider.html5Mode({enabled: true, requireBase: false});
     $stateProvider
@@ -43,7 +43,7 @@ angular.module('NanoApp', ['controllers', 'services', 'ui.router','ngAnimate'])
                     }
                 }
             })
-             .state('configUsers', {
+            .state('configUsers', {
                 url: '/config-users',
                 views: {
                     "menu": {templateUrl: "/public/templates/menuConfig.html",
@@ -55,7 +55,7 @@ angular.module('NanoApp', ['controllers', 'services', 'ui.router','ngAnimate'])
                     }
                 }
             })
-             .state('configImages', {
+            .state('configImages', {
                 url: '/config-images',
                 views: {
                     "menu": {templateUrl: "/public/templates/menuConfig.html",
@@ -103,4 +103,4 @@ angular.module('NanoApp', ['controllers', 'services', 'ui.router','ngAnimate'])
     $urlRouterProvider.otherwise("/");
 
 
-});
+}) 

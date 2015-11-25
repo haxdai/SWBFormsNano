@@ -28,10 +28,10 @@
 </div>
 <ul class="mis-esquemas">
     <li ng-repeat="search  in searchListFunction(searchList)">
-        <a ng-if="search.notification > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notification}} new">
+        <a ng-if="search.notification > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notification}} new items">
             <i class="fa fa-certificate"></i>{{search.notification}}
         </a>
-        <a  ng-if="search.recommended > 0" href="/search/results/{{search._id}}?status=4" class="alert rank" title="{{search.recommended}} recommended">
+        <a  ng-if="search.recommended > 0" href="/search/results/{{search._id}}?status=4" class="alert rank" title="{{search.recommended}} recommended items">
             <i class="fa fa-thumbs-up"></i>{{search.recommended}}
         </a>
 

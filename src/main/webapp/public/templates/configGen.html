@@ -56,7 +56,7 @@
                         <div  ng-show="addingDisease || editingDisease"  
                               ng-class="{'has-error':diseaseForm.diseaseSummary.$invalid && diseaseForm.diseaseSummary.$dirty}" class="form-group " >
                             <label  class="control-label"  >Summary</label>
-                            <input name="diseaseSummary" type="text"    class="form-control"  ng-model="diseaseSummary"/>
+                            <textarea name="diseaseSummary" type="text"    class="form-control"  ng-model="diseaseSummary"></textarea>
                         </div>
 
                         <button  ng-disabled="diseaseForm.dideaseName.$invalid" ng-show="addingDisease" ng-click="addDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">

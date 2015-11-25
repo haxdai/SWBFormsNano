@@ -105,7 +105,7 @@ angular.module('controller.configGen', [])
                 Alteration.validate(q).then(function () {
                     Alteration.save({gene: $scope.geneId, name: alterationName, aliases: aliase}).then(function (newAlt) {
                         $scope.altList.push(newAlt);
-                        console.log("Agregado")
+                        //console.log("Agregado")
                         showMessage("ok", MSG_ALT_ADDED)
                         $scope.cancelAlt()
                     }, function (error) {
@@ -164,7 +164,7 @@ angular.module('controller.configGen', [])
                 })
                 CancerType.listByGenId($scope.geneId).then(function (cancerList) {
                     $scope.cancerList = cancerList;
-                    console.log($scope.cancerList);
+                    //console.log($scope.cancerList);
                 }, function (error) {
                     console.log(error)
                 })
@@ -172,7 +172,7 @@ angular.module('controller.configGen', [])
 
             Gene.list().then(function (geneList) {
                 $scope.geneList = geneList;
-                console.log($scope.geneList)
+                //console.log($scope.geneList)
             })
             $("#menu-toggle").click(function (e) {
                 $("#menu-toggle").removeClass("menu-toggle-off-fixed");

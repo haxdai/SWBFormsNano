@@ -28,11 +28,7 @@ angular.module('controller.menu', [])
 
                 })
             });
-            $rootScope.$on('articleRecommended', function (event, searchId,val ) {
-                console.log(event)
-                console.log(searchId)
-                console.log(val)
-                
+            $rootScope.$on('articleRecommended', function (event, searchId,val ) {         
                 $scope.searchList.forEach(function (search, i) {
                     if (search._id === searchId) {
                         $scope.searchList[i].recommended += val;
@@ -64,7 +60,7 @@ angular.module('controller.menu', [])
             })
 
             $scope.geneChange = function (gene) {
-                console.log(gene)
+                //console.log(gene)
                 Alteration.list(gene._id).then(function (altList) {
                     $scope.altList = altList;
                 })

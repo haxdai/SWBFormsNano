@@ -58,7 +58,7 @@ angular.module('controller.results', [])
                 art_search.status = 3;
                 Art_Search.update(art_search).then(function () {
                     $('#panel-element-00' + (i + 1)).on('hidden.bs.collapse', function () {
-                        console.log(i + 1)
+                        //console.log(i + 1)
                         $('#panel-element-00' + (i + 1)).off('hidden.bs.collapse')
                         $scope.articleList.splice(i, 1);
                         $scope.$digest()
@@ -88,7 +88,7 @@ angular.module('controller.results', [])
                 art_search.status = 2;
                 Art_Search.update(art_search).then(function () {
                     $('#panel-element-00' + (i + 1)).on('hidden.bs.collapse', function () {
-                        console.log(i + 1)
+                        //console.log(i + 1)
                         $('#panel-element-00' + (i + 1)).off('hidden.bs.collapse')
                         $scope.articleList.splice(i, 1);
                         $scope.$digest()
@@ -120,7 +120,7 @@ angular.module('controller.results', [])
             }
 
             $scope.filterChange = function (filter) {
-                console.log("filtrando : " + filter)
+                //console.log("filtrando : " + filter)
                 $scope.articleList = [];
                 $scope.pag = 1;
                 $scope.sortBy = filter;
@@ -141,7 +141,7 @@ angular.module('controller.results', [])
                     $scope.limit = artSearchList.limit;
                     $scope.maxPage = Math.ceil($scope.totalRows / $scope.limit);
                     artSearchList.data.forEach(function (art) {
-                        console.log(art)
+                        //console.log(art)
                         if (art.artSearch.status == 1) {
                             if (art.artSearch.ranking > 5) {
                                 //$rootScope.$emit('articleRecommended', $scope.searchId);
