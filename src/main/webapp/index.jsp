@@ -145,12 +145,9 @@
                                 console.log(this.response)
                                 if(this.response.search("valid-this-is-login-view")>=0){
                                     window.location = "/login"
-                                    return
                                 }
                             }
-
                         }
-
                     }, false);
                     this.realOpen(method, url, async, user, password);
                 }

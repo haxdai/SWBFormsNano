@@ -58,13 +58,30 @@ angular.module('service.article', [])
                 var Article = this;
                 if (sortBy != null) {
                     if (sortBy == "ranking") {
-                        sortArtSearch = "ranking";
+                        sortArtSearch = "-ranking";
                         sortBy = null;
                     }
                 }
                 Art_Search.list(searchId, status, sortArtSearch).then(function (articleIds) {
+                    var articleIdsLength = articleIds.length
+                    if (sortBy == null) {
+                        if (pag == -1) {
+                            articleIds = articleIds.slice(0,1) 
+                        } else {
+                            var endRow = (pag) * limit;
+                            if (ele != null) {
+                                articleIds = articleIds.slice( ((pag - 1) * limit) + limit - ele,endRow)
+                            } else {  
+                                articleIds = articleIds.slice( (pag - 1) * limit, endRow)
+                            }
+                        }
+                        pag = null;
+                    }
                     Article.list(articleIds, sortBy, pag, ele).then(function (articleList) {
+
+
                         if (articleList && articleList.data.length > 0) {
+                            articleList.totalRows = articleIdsLength
                             articleList.limit = limit
                             var artCount = 0;
                             articleList.data.forEach(function (a, i) {

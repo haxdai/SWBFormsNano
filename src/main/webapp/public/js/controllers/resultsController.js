@@ -16,11 +16,13 @@ angular.module('controller.results', [])
             $scope.pag = 1;
             $scope.maxPage;
             $scope.totalRows;
-            $scope.sortBy;
+            $scope.sortBy = "ranking";
             $scope.limit;
             $scope.gene;
-
+            $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
+             $scope.isReorderToggle = true;
             $scope.articleList = [];
+            $scope.filterSelected = "ranking"
 
 
 
@@ -112,13 +114,26 @@ angular.module('controller.results', [])
                     }
                 })
             }
+            
             $scope.statusChange = function (status) {
                 $scope.articleList = [];
                 $scope.pag = 1;
                 $scope.status = parseInt(status);
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             }
-
+            
+            $scope.filterToogle = function(){
+                if($scope.isReorderToggle){
+                        $scope.isReorderToggle = false;
+                        $scope.reorderClass = "glyphicon-sort-by-attributes";
+                         $scope.filterChange("-"+$scope.filterSelected)
+                }else{
+                    $scope.isReorderToggle = true;
+                      $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
+                       $scope.filterChange($scope.filterSelected)
+                }
+            }
+            
             $scope.filterChange = function (filter) {
                 //console.log("filtrando : " + filter)
                 $scope.articleList = [];

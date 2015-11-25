@@ -19,12 +19,10 @@ angular.module('service.art-search', [])
                     } else {
                         req.data.status = status;
                     }
-
                 }
                 if (sortBy != null) {
                     req.sortBy = [sortBy];
                 }
-
 
                 ds.fetch(req, function (response) {
                     if (response) {
