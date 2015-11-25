@@ -88,7 +88,7 @@
                     <div id="panel-element-00{{$index + 1}}" class="panel-collapse collapse">
 
                         <div class="panel-body">
-                            <p>{{article.article.abstract}}</p>
+                            <p ng-bind-html="article.article.abstract | sanitize"></p>
                             <p class="reference"><strong>Reference:</strong>{{article.article.reference}}</p>
                         </div>
                         <div class="panel-pie clearfix">

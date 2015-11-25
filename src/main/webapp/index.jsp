@@ -66,6 +66,7 @@
     <script src="/public/libs/angular-touch/angular-touch.min.js" ></script>
     <script src="/public/libs/angular-carousel/dist/angular-carousel.min.js" ></script>
     <script src="/public/libs/angular-animate/angular-animate.min.js" ></script>
+    <script src="/public/libs/angular-sanitize/angular-sanitize.min.js" ></script>
     <!--    Nano js     -->
     <script src="/public/js/app.js"></script>
     <!--    Nano js services     -->
