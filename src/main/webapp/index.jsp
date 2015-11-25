@@ -35,7 +35,7 @@
         <div id="wrapper" class="toggled">
             <div id="sidebar-wrapper" ui-view="menu"></div>
             <div id="page-content-wrapper"  ui-view="content"></div>
-            <div id="message-box">
+            <div  class="noprint" id="message-box">
                 <div  style="display:none;" class="alert alert-danger text-center">
                 </div>
                 <div style="display:none;" class="alert alert-success text-center">

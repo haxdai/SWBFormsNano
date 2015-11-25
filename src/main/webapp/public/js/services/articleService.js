@@ -57,8 +57,8 @@ angular.module('service.article', [])
                 var sortArtSearch = null;
                 var Article = this;
                 if (sortBy != null) {
-                    if (sortBy == "ranking") {
-                        sortArtSearch = "-ranking";
+                    if (sortBy == "ranking" || sortBy == "-ranking" ) {
+                        sortArtSearch = sortBy;
                         sortBy = null;
                     }
                 }
@@ -81,6 +81,16 @@ angular.module('service.article', [])
 
 
                         if (articleList && articleList.data.length > 0) {
+                            if (sortBy == null) {
+                                 articleList.data = articleList.data.sort(function (a, b) {
+                                    return (articleIds.findIndex(function (e) {
+                                        return (e === a._id);
+                                    }) -
+                                            articleIds.findIndex(function (e) {
+                                                return (e === b._id);
+                                            }))
+                                })
+                            }
                             articleList.totalRows = articleIdsLength
                             articleList.limit = limit
                             var artCount = 0;

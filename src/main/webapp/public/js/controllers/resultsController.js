@@ -19,7 +19,7 @@ angular.module('controller.results', [])
             $scope.sortBy = "ranking";
             $scope.limit;
             $scope.gene;
-            $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
+            $scope.reorderClass = "glyphicon-sort-by-attributes";
              $scope.isReorderToggle = true;
             $scope.articleList = [];
             $scope.filterSelected = "ranking"
@@ -38,7 +38,6 @@ angular.module('controller.results', [])
                 if ($scope.status !== 1) {
                     if ($scope.pag > 1) {
                         $scope.pag--;
-
                     }
                 }
                 $scope.articleList = [];
@@ -125,16 +124,19 @@ angular.module('controller.results', [])
             $scope.filterToogle = function(){
                 if($scope.isReorderToggle){
                         $scope.isReorderToggle = false;
-                        $scope.reorderClass = "glyphicon-sort-by-attributes";
-                         $scope.filterChange("-"+$scope.filterSelected)
+                        $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
+                        $scope.filterChange($scope.filterSelected)
                 }else{
                     $scope.isReorderToggle = true;
-                      $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
+                      $scope.reorderClass = "glyphicon-sort-by-attributes";
                        $scope.filterChange($scope.filterSelected)
                 }
             }
             
             $scope.filterChange = function (filter) {
+                if(!$scope.isReorderToggle){
+                    filter = "-"+filter
+                }
                 //console.log("filtrando : " + filter)
                 $scope.articleList = [];
                 $scope.pag = 1;

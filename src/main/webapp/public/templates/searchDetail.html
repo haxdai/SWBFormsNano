@@ -6,23 +6,20 @@
             <h3> {{gene.officialName}}</h3>
         </div>      
     </div>    
-    <nav class="navbar navbar-default nav-nanopharma" role="navigation">
-        <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"> <a href="/search/{{searchId}}">Gene Info</a></li>
-                 <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Results<strong class="caret"></strong></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
-                        <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
-                        <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
-                        <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
-                        <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
-                    </ul>
-                </li>
-                <li><a href="/search/report/{{searchId}}">Report</a> </li>
-            </ul>
-        </div>
-    </nav>
+    <div class="btn-group main-tabs">
+        <a href="/search/{{searchId}}" class="btn btn-default active" type="button">Gene Info</a>
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Results<span class="caret"></span>
+        </button> 
+        <ul class="dropdown-menu">
+            <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
+            <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
+            <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
+            <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
+            <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
+        </ul>
+        <a href="/search/report/{{searchId}}"class="btn btn-default " type="button">Report</a> 
+    </div>
 
     <div class="row contenido">
         <div class="col-lg-12">

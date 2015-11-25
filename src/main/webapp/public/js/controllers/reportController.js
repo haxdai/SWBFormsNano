@@ -8,6 +8,7 @@ angular.module('controller.report', ['angular-carousel'])
             $scope.articleList = [];
             $scope.gene;
             $scope.alt;
+            $scope.orderBy = "title"
             var MSG_REPORT_SAVED = "MSG_REPORT_SAVED";
             var MSG_REPORT_UPDATED = "MSG_REPORT_UPDATED";
             
@@ -62,7 +63,7 @@ angular.module('controller.report', ['angular-carousel'])
             });
 
 
-            updateResults($scope.searchId, $scope.status);
+            updateResults($scope.searchId, $scope.status,$scope.orderBy);
             $("#menu-toggle").click(function (e) {
                 $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();
