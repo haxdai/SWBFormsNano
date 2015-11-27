@@ -44,6 +44,7 @@ angular.module('controller.report', ['angular-carousel'])
                 } else {
                     report.search = $scope.searchId;
                     Report.save(report).then(function(){
+                         $scope.report.comment = $filter('formatReport')($scope.report.comment)
                         showMessage("ok", MSG_REPORT_SAVED)
                     });
                     

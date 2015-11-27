@@ -1770,7 +1770,7 @@ var eng =  {
      * Get the user object if exist or undefined if not loged
      * @returns {eng.user}
      */
-    getUser: function ()
+    getUser: function (callback)
     {
         if (eng._u)
         {
@@ -1791,7 +1791,7 @@ var eng =  {
                     {
                         eng._u = {usr: undefined};
                     }
-                    return eng._u.usr;
+                    callback( eng._u.usr);
                 }
             });
 

@@ -56,7 +56,7 @@ li span { font-size:10px}
 .config-update div          { text-align: right;}
 
 /*TOP*/
-.top  { position:fixed; top:0; z-index:1030; width:100%; padding:15px 10px; margin:0px auto 1px !important; border-bottom:1px solid #8bbbd5 ;
+.top  { position:fixed; top:0; z-index:1030; width:100%; padding:25px 10px 5px 10px;  margin:0px auto 1px !important; border-bottom:1px solid #8bbbd5 ;
   background: -webkit-linear-gradient(#fff ,#e1eaef  ); 
   background: -o-linear-gradient(#fff ,#e1eaef  );
   background: -moz-linear-gradient(#fff ,#e1eaef   );

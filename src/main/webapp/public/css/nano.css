@@ -35,7 +35,7 @@ ul[rn-carousel] {
     cursor:pointer;
 }
 .config-list li a:hover span{
-  color: white;
+    color: white;
 }
 .config-list li a span{
     color:#3b6b85;
@@ -49,7 +49,7 @@ ul[rn-carousel] {
 }
 
 .menu-toggle-off{
-     webkit-transition: all 0.3s ease;
+    webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
@@ -63,8 +63,8 @@ ul[rn-carousel] {
     transition: none!important;
 }
 .query-check{
- height: 0px;
- width: 1px;
+    height: 0px;
+    width: 1px;
 }
 #message-box{
     position: fixed;
@@ -123,27 +123,39 @@ ul[rn-carousel] {
     overflow: hidden;
 }
 
-    .sort  select {
-        width: 150px;
-    }
+.sort  select {
+    width: 150px;
+}
 
-    .scheme-selected{
-            border-radius: 4px;
-        background-color: #3b6b85!important;
-    }
-    
-    .scheme-selected a{
-        color: white!important;
-    }
+.scheme-selected{
+    border-radius: 4px;
+    background-color: #3b6b85!important;
+}
+
+.scheme-selected a{
+    color: white!important;
+}
+
+.user-name{
+    padding: 0px;
+    margin: 0px;
+    display: inline-block;
+    position: absolute;
+    right: 12px;
+    top: 2px;
+    color: #3b6b85;
+
+
+}
 @media (max-width:767px){
     .query-check{
-         width: 0px;
+        width: 0px;
     }
-    
+
     .results-options{
         text-align: center!important;
     }
-    
+
     .panel-text-title{
         top:0px;
         right: 16px;

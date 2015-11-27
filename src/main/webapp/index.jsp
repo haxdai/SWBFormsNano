@@ -21,16 +21,15 @@
     </head>
     <body ng-app="NanoApp">
         <div class="query-check"></div>
-        <div class="top">
+      
+        <div ng-controller="headerController"  class="top">
+            <p class="user-name">Oscar paredes</p>
             <a class="navbar-brand" href="/"><h1>Aurora Nanopharm</h1><img src="/public/img/aurora.png" class="img-responsive" alt="Nanopharmacia Diagnóstica"></a>
             <a href="/login" id="logoout" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
             <a href="/config" class="top-config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="config">Configure</span></a>
             <a href="/" class="top-config"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <span class="config">Home</span></a>
+            
         </div>
-
-
-
-
 
         <div id="wrapper" class="toggled">
             <div id="sidebar-wrapper" ui-view="menu"></div>
@@ -91,6 +90,13 @@
     <script src="/public/js/controllers/configGenController.js"></script>
     <script src="/public/js/controllers/menuConfigController.js"></script>
     <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
+    <script type="text/javascript">
+        'use strict';
+        angular.module('NanoApp', [])
+                .controller("headerController", function ($scope) {
+
+                });
+    </script>
     <script type="text/javascript">
             function checkRezise() {
                 console.log($(".query-check").width())
