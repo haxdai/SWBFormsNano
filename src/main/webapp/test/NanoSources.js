@@ -50,7 +50,15 @@ eng.dataSources["AlterationMolecular"] = {
         {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"}
     ]
 };
-
+/*eng.dataSources["Role"] = {
+    scls: "Role",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",
+    displayField: "title",
+    fields: [
+        {name: "title", title: "Título", type: "string"},
+    ]
+};*/
 
 eng.dataSources["CancerType"] = {
     scls: "CancerType",
@@ -177,6 +185,15 @@ eng.dataSources["Configuration"] = {
         {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "int"}
     ]
 };
+eng.dataSources["Role"] = {
+    scls: "Role",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",
+    displayField: "title",
+    fields: [
+        {name: "title", title: "Título", type: "string"},
+    ]
+};
 
 eng.dataSources["User"] = {
     scls: "User",
@@ -184,11 +201,13 @@ eng.dataSources["User"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
+         {name: "name", title: "Nombre", type: "string"},
+         {name: "email", title: "Correo electrónico", type: "string"},
         {name: "password", title: "Contraseña", type: "password"},
-        {name: "email", title: "Correo electronico", type: "string"},
-        {name: "name", title: "Nombre", type: "string"},
-        {name: "rol", title: "Rol", type: "string"}
-    ]
+        {name: "title", title: "Rol", stype: "select", dataSource:"Role"},//stype: "select"
+        
+    ],
+    
 };
 
 eng.dataProcessors["GeneProcessor"] = {
@@ -320,7 +339,7 @@ eng.dataSources["Images"] = {
     scls: "Images",
     modelid: "NanoPharmacy",
     dataStore: "mongodb",
-    displayField: "search",
+    displayField: "title",
     fields: [
         {name: "title", title: "Título", type: "string"},
         {name: "text", title: "Descripción de la imagen", type: "string"},
@@ -328,3 +347,7 @@ eng.dataSources["Images"] = {
     ]
 };
 
+
+/*eng.getDataSource("User")/*.add({fullname: "admin admin", email: "admin@nanopharmacia.com", password: "nanoadmin"},function(){})
+eng.getDataSource("Role").add({name: "Adminitration"},function(){})
+eng.getDataSource("Role").add({name: "User"},function(){})*/

@@ -7,10 +7,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Nanopharmacia Diagnóstica</title>
         <!--    Lib css     -->
-        <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css"  rel="stylesheet" type="text/css" />
+        <!--link href="/public/libs/bootstrap/dist/css/bootstrap.min.css"  rel="stylesheet" type="text/css" /-->
         <link href="/public/libs/font-awesome/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
 
-        <link href="/public/libs/css-spinners/css/spinners.css" rel="stylesheet" type="text/css" />
+        <!--link href="/public/libs/css-spinners/css/spinners.css" rel="stylesheet" type="text/css" /-->
         <!--    Nano css     -->
 
         <link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
@@ -43,12 +43,12 @@
                 canEdit: true,
                 canRemove: true,
                 canAdd: true,
-                fields: [
-                    {name: "name"},
+                /*fields: [
+                    /*{name: "name"},
                     {name: "email"},
                     {name: "password"},
-                    {name: "rol"},
-                ]
+                    /*{name: "title"},*/
+                /*]*/
             }, "User");
 
                 </script>

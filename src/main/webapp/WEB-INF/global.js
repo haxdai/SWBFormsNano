@@ -21,6 +21,7 @@ eng.dataSources["User"]={
         //{name:"username",title:"Usuario",type:"string"},
         {name:"password",title:"Contraseña",type:"password"},
         {name:"email",title:"Correo electrónico",type:"string"},
+        {name: "role", title: "Rol", stype: "select", dataSource:"Role"}
     ],
 };
 
@@ -60,3 +61,4 @@ eng.routes["global"]={
         { routePath: "", forwardTo: "/index.jsp", isRestricted: "true"}
     ],
 };
+
