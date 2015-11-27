@@ -42,6 +42,8 @@ eng.routes["global"]={
     loginFallback: "login",
     routeList:[
         { routePath: "login", forwardTo: "/login.jsp", isRestricted: "false", zindex:1 },
+        { routePath: "imgcarousel", forwardTo: "/imgcarousel.jsp", isRestricted: "true", zindex:1,hasRole:"admin" },
+        { routePath: "adminusers", forwardTo:"/admin.jsp", isRestricted:"true", zindex:1, hasRole:"admin"},
         { routePath: "register", forwardTo: "/work/config/register.jsp", isRestricted: "false" },
         { routePath: "work", isRestricted: "true"},
         { routePath: "work/*", jspMapTo: "/work/jsp/", isRestricted: "true" },
@@ -55,8 +57,6 @@ eng.routes["global"]={
         { routePath: "search/report/*", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "config", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "config-time", forwardTo: "/index.jsp", isRestricted: "true"},
-        { routePath: "config-users", forwardTo: "/index.jsp", isRestricted: "true"},
-        { routePath: "config-images", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "", forwardTo: "/index.jsp", isRestricted: "true"}
     ],
 };

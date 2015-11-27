@@ -73,12 +73,14 @@ eng.dataSources["Article"] = {
     /*methodsAvalaible: ["add","update"],*/
     fields: [
         {name: "title", title: "Título del artículo", type: "string"},
+        {name: "titleSort", title: "Título del artículo", type: "string"},
         {name: "abstract", title: "Resumen del artículo", type: "string"},
         {name: "link", title: "Liga", type: "string"},
         {name: "reference", title: "Referencia", type: "string"},
         {name: "pmid", title: "Id PubMed", type: "int"},
         {name: "pmcid", title: "Id PMC", type: "int"},
         {name: "autor", title: "Autores", type: "string"},
+        {name: "autorSort", title: "Autores", type: "string"},
         {name: "prognosis", title: "Pronóstico", type: "int"},
         {name: "prediction", title: "Predicción", type: "int"},
         {name: "treatment", title: "Tratamiento", type: "int"},
@@ -182,7 +184,7 @@ eng.dataSources["User"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "password", title: "Contraseña", type: "string"},
+        {name: "password", title: "Contraseña", type: "password"},
         {name: "email", title: "Correo electronico", type: "string"},
         {name: "name", title: "Nombre", type: "string"},
         {name: "rol", title: "Rol", type: "string"}
@@ -314,3 +316,15 @@ eng.dataServices["SearchService"] = {
         return request;
     }
 };
+eng.dataSources["Images"] = {
+    scls: "Images",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",
+    displayField: "search",
+    fields: [
+        {name: "title", title: "Título", type: "string"},
+        {name: "text", title: "Descripción de la imagen", type: "string"},
+        {name: "src", title: "Url", multiple: true, stype: "file"},
+    ]
+};
+
