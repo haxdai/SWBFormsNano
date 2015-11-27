@@ -22,7 +22,7 @@
     <body ng-app="NanoApp">
         <div class="query-check"></div>
         <div class="top">
-            <a class="navbar-brand col-xs-7 col-xs-9 col-md-9 col-lg-7" href="/"><h1>Aurora Nanopharm</h1><img src="/public/img/aurora.png" class="img-responsive" alt="Nanopharmacia Diagnóstica"></a>
+            <a class="navbar-brand" href="/"><h1>Aurora Nanopharm</h1><img src="/public/img/aurora.png" class="img-responsive" alt="Nanopharmacia Diagnóstica"></a>
             <a href="/login" id="logoout" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
             <a href="/config" class="top-config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="config">Configure</span></a>
             <a href="/" class="top-config"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <span class="config">Home</span></a>
@@ -35,6 +35,8 @@
         <div id="wrapper" class="toggled">
             <div id="sidebar-wrapper" ui-view="menu"></div>
             <div id="page-content-wrapper"  ui-view="content"></div>
+
+        </div>
             <div  class="noprint" id="message-box">
                 <div  style="display:none;" class="alert alert-danger text-center">
                 </div>
@@ -50,8 +52,6 @@
 
                 </div>
             </div> 
-        </div>
-
     </body>    
     <script src="/swbforms/js/eng.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -80,6 +80,7 @@
     <script src="/public/js/services/articleService.js"></script>
     <script src="/public/js/services/reportService.js"></script>
     <script src="/public/js/services/configService.js"></script>
+    <script src="/public/js/services/imagesService.js"></script>
     <!--    Nano js controllers     -->
     <script src="/public/js/controllers/appController.js"></script>
     <script src="/public/js/controllers/menuController.js"></script>
@@ -90,8 +91,6 @@
     <script src="/public/js/controllers/configGenController.js"></script>
     <script src="/public/js/controllers/menuConfigController.js"></script>
     <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
-    <script src="/public/js/controllers/configUsersController.js"></script>
-    <script src="/public/js/controllers/configImagesController.js"></script>
     <script type="text/javascript">
             function checkRezise() {
                 console.log($(".query-check").width())

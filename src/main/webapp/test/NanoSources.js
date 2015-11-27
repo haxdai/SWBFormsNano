@@ -21,10 +21,10 @@ eng.dataSources["Gene"] = {
                         if (!isValid)
                             return false;
                     },
-                    errorMessage: "Gen no encontrado en BD de NCBI"
+                    errorMessage: "The gene was not found on NCBI data bases, please check the spelling."
                 },
                 {type: "isUnique", //serverCustom del lado del servidor
-                    errorMessage: "El gen proporcionado oficial ya existe"
+                    errorMessage: "This gene already exists."
                 }
             ]
         },
@@ -44,7 +44,7 @@ eng.dataSources["AlterationMolecular"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre de la alteración molecular", type: "string", validators: [{type: "isUnique", errorMessage: "La alteración molecular proporcionado ya existe"}]},
+        {name: "name", title: "Nombre de la alteración molecular", type: "string", validators: [{type: "isUnique", errorMessage: "The molecular alteration already exists."}]},
         {name: "aliases", title: "Nombres alternos", type: "string"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"}
@@ -58,7 +58,7 @@ eng.dataSources["CancerType"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre del tipo de cáncer", type: "string", validators: [{type: "isUnique", errorMessage: "El tipo de cáncer proporcionado oficial ya existe"}]},
+        {name: "name", title: "Nombre del tipo de cáncer", type: "string", validators: [{type: "isUnique", errorMessage: "The disease already exists."}]},
         {name: "summary", title: "Definición del cáncer", type: "string"},
         {name: "conceptId", title: "Id", type: "String"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"}

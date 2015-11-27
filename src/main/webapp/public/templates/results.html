@@ -17,11 +17,11 @@
             Results<span class="caret"></span>
         </button> 
         <ul class="dropdown-menu">
-            <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
             <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
             <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
             <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
             <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
+            <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
         </ul>
 
         <a href="/search/report/{{searchId}}"class="btn btn-default" type="button">Report</a> 
@@ -36,24 +36,28 @@
                 </div>
                 <div  class="col-sm-4">
                     <ul  ng-if="(maxPage > 1)" class ="pagination clearfix">
+                        <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="firts()" href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
+                        
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
                         <li><a ng-style="pag > 0 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" href="#">{{pag}} / {{maxPage}}</a></li>
                         <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
+                        <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="last()" href="#"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></a></li>
+                    
                     </ul>
                 </div>
                 <div  class="col-sm-4">
                     <div class="sort">
-                        <p>
-                            <select ng-model="filterSelected" ng-change="filterChange(filterSelected)">
+                        <p>Sort by: 
+                            <select ng-model="filterSelected" ng-change="filterChange()">
                                 <option style="display:none" value="">Select filter      </option>
-                                <option value="title">Title</option>
-                                <option value="autor">Author</option>
+                                <option value="titleSort">Title</option>
+                                <option value="autorSort">Author</option>
                                 <option value="prognosis">Prognosis</option>
                                 <option value="prediction">Prediction</option>
                                 <option value="treatment">Treatment</option>
                                 <option value="ranking">Best rated</option>
                             </select>
-                            <button ng-click="filterToogle()" type="button" class="btn btn-default"><span   ng-class="reorderClass" class="glyphicon"></span></button>
+                            <button ng-click="filterToogle(isReorderToggle,filterSelected)" type="button" class="btn "><span   ng-class="reorderClass" class="glyphicon"></span></button>
 
                         </p>
                     </div>
@@ -64,9 +68,9 @@
             <div class="panel-group" id="panel-results">
                 <div class="panel panel-default animate-repeat" ng-repeat="article in articleList">
                     <div class="panel-heading">
-                        <ol start="{{$index + 1}}">
+                        <ol start="{{$index + 1 +(limit*(pag-1))}} ">
                             <li>
-                                <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-00{{$index + 1}}">
+                                <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-00{{$index + 1 +(limit*(pag-1))}}">
                                     <div class="panel-text-title">{{article.article.title}}</div>
                                     <div class="panel-califica">
                                         <span class="glyphicon glyphicon-menu-up"></span>
@@ -83,7 +87,7 @@
                             </li>
                         </ol>
                     </div>
-                    <div id="panel-element-00{{$index + 1}}" class="panel-collapse collapse">
+                    <div id="panel-element-00{{$index + 1 +(limit*(pag-1))}}" class="panel-collapse collapse">
 
                         <div class="panel-body">
                             <p ng-bind-html="article.article.abstract | sanitize"></p>
@@ -101,6 +105,11 @@
                     </div>
 
                 </div>
+            </div>
+            <div class="text-center">
+                <h3>
+                {{((pag-1)*limit)+1}}-{{ pag*limit < totalRows ? pag*limit : totalRows }} / {{totalRows}}
+                </h3>
             </div>
 
 

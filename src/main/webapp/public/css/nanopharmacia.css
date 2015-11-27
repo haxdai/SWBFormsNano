@@ -192,14 +192,15 @@ nav { position: relative; top:70px; z-index: 10}
     transition: all 0.3s ease;}
 .mis-esquemas { margin:0px; padding:0px; list-style-type:none;}
 .mis-esquemas a { color:#FFF; text-decoration:none; text-shadow:1px 1px 0px #4b7b95  }
-.mis-esquemas a:hover  { color: #345060; text-shadow:none ;}
+.mis-esquemas a:hover  {  text-shadow:none ;}
 .mis-esquemas a:active { color: #fff ;}
 .mis-esquemas li { margin:0; padding:0; border-bottom:solid 1px #7babc5;padding:10px 0;}
 .mis-esquemas li, #panel-busca .panel-body button,
 #panel-busca .panel-heading a {backgroundxx:#6b9bb5; color:#FFF; font-size:14px;  }
 .mis-esquemas li:hover, #panel-busca .panel-body button:hover,
 #panel-busca .panel-heading:hover {background:#5b8ba5;}
-.mis-esquemas .gene { padding:10px }
+.mis-esquemas .gene { padding:0 16px; display: block; width: 100%; }
+
 
 /*BUSCA*/
 #panel-busca                    { margin:0 ; border-bottom:solid 1px #7babc5; bcorder-top:solid 1px #90c0da; background:#7babc5 }
@@ -303,10 +304,10 @@ nav { position: relative; top:70px; z-index: 10}
 .pie img { margin:5px auto}
 
 /*RESULTS*/
-#panel-results      { margin-top:10px; margin-bottom: 50px} 
+#panel-results      { margin-top:10px; } 
 #panel-results .panel.panel-default { margin-bottom:20px}
 #panel-results *              { color: #666}
-#panel-results ol             { margin:0; padding:8px 0 0 25px;}
+#panel-results ol             { margin:0; padding:4px 0px 0px 40px}
 #panel-results .panel         { box-shadow:none; border:none; }
 #panel-results .panel-heading 		 {background:#6b9baf; padding:0; line-height:20px; height: 70px;}
 #panel-results .panel-heading:hover  {background:#3b6b85 } 

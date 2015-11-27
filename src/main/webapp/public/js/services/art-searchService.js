@@ -16,6 +16,8 @@ angular.module('service.art-search', [])
                     if (parseInt(status) == 4) {
                         req.data.ranking = {"$gt": 5};
                         req.data.status = {$in:[1,4]}
+                    }else if(parseInt(status) == 0){
+                        req.data.status = {$in:[0,4]}
                     } else {
                         req.data.status = status;
                     }

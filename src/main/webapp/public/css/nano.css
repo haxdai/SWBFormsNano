@@ -103,15 +103,20 @@ ul[rn-carousel] {
     width: 0px;
 }
 
-.results-options > div > p{
-    font-size: 18px;
+.results-options > div > p, .index-bottom{
+    font-size: 20px;
+    color: #3b6b85;
 }
 
 .results-options > div > ul{
     text-align: center;
-    width: 150px;
+    width: 230px;
     margin: 0 auto;
     display: block;
+}
+.results-options p button{
+    height: 24px;
+    padding: 2px 14px;
 }
 
 .panel-heading{
@@ -122,6 +127,14 @@ ul[rn-carousel] {
         width: 150px;
     }
 
+    .scheme-selected{
+            border-radius: 4px;
+        background-color: #3b6b85!important;
+    }
+    
+    .scheme-selected a{
+        color: white!important;
+    }
 @media (max-width:767px){
     .query-check{
          width: 0px;

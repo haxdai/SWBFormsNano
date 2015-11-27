@@ -3,7 +3,8 @@
 angular.module('controller.results', [])
         .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene) {
             $scope.searchId = $stateParams.id;
-            console.log($stateParams)
+            var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
+            var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var status = parseInt($stateParams.status);
             if ($stateParams.status >= 0 && $stateParams.status <= 4) {
                 $scope.status = status;
@@ -11,16 +12,16 @@ angular.module('controller.results', [])
                 $scope.status = 4; /*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado, 4 Recomendado*/
             }
 
-            $scope.statuslist = ["Unclassified", "New", "Accepted", "Rejected", "Recommended"];
+            $scope.statuslist = ["Unclassified documents", "New documents", "Accepted documents", "Rejected documents", "Recommended documents"];
 
             $scope.pag = 1;
             $scope.maxPage;
             $scope.totalRows;
-            $scope.sortBy = "ranking";
+            $scope.sortBy = "-ranking";
             $scope.limit;
             $scope.gene;
             $scope.reorderClass = "glyphicon-sort-by-attributes";
-             $scope.isReorderToggle = true;
+             $scope.isReorderToggle = false;
             $scope.articleList = [];
             $scope.filterSelected = "ranking"
 
@@ -43,6 +44,17 @@ angular.module('controller.results', [])
                 $scope.articleList = [];
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
             }
+            $scope.firts = function () {
+                $scope.pag = 1;
+                
+                $scope.articleList = [];
+                $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
+            }
+            $scope.last = function () {
+                $scope.pag = $scope.maxPage; 
+                $scope.articleList = [];
+                $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
+            }
 
             $scope.next = function () {
                 if ($scope.status !== 1) {
@@ -59,14 +71,12 @@ angular.module('controller.results', [])
                 art_search.status = 3;
                 Art_Search.update(art_search).then(function () {
                     $('#panel-element-00' + (i + 1)).on('hidden.bs.collapse', function () {
-                        //console.log(i + 1)
                         $('#panel-element-00' + (i + 1)).off('hidden.bs.collapse')
                         $scope.articleList.splice(i, 1);
                         $scope.$digest()
                     })
                     $('#panel-element-00' + (i + 1)).collapse("hide");
 
-                    //$scope.articleList = [];
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     if (art_search.ranking > 5) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
@@ -89,7 +99,6 @@ angular.module('controller.results', [])
                 art_search.status = 2;
                 Art_Search.update(art_search).then(function () {
                     $('#panel-element-00' + (i + 1)).on('hidden.bs.collapse', function () {
-                        //console.log(i + 1)
                         $('#panel-element-00' + (i + 1)).off('hidden.bs.collapse')
                         $scope.articleList.splice(i, 1);
                         $scope.$digest()
@@ -121,27 +130,34 @@ angular.module('controller.results', [])
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             }
             
-            $scope.filterToogle = function(){
-                if($scope.isReorderToggle){
+            $scope.filterToogle = function(newReorderToggle,filter){
+                console.log(filter)
+                console.log(newReorderToggle)
+
+                if(newReorderToggle){
                         $scope.isReorderToggle = false;
                         $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
-                        $scope.filterChange($scope.filterSelected)
                 }else{
                     $scope.isReorderToggle = true;
                       $scope.reorderClass = "glyphicon-sort-by-attributes";
-                       $scope.filterChange($scope.filterSelected)
+                
                 }
-            }
-            
-            $scope.filterChange = function (filter) {
-                if(!$scope.isReorderToggle){
+                if($scope.isReorderToggle){
                     filter = "-"+filter
                 }
-                //console.log("filtrando : " + filter)
                 $scope.articleList = [];
                 $scope.pag = 1;
                 $scope.sortBy = filter;
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
+            }
+            
+            $scope.filterChange = function () {
+                if($scope.filterSelected == "title" ||$scope.filterSelected == "autor" ){
+                     $scope.filterToogle(true, $scope.filterSelected)
+                }else{
+                     $scope.filterToogle(false, $scope.filterSelected)
+                }
+                
             }
 
 
@@ -161,7 +177,6 @@ angular.module('controller.results', [])
                         //console.log(art)
                         if (art.artSearch.status == 1) {
                             if (art.artSearch.ranking > 5) {
-                                //$rootScope.$emit('articleRecommended', $scope.searchId);
                                 art.artSearch.status = 4;
                             } else {
                                 art.artSearch.status = 0;

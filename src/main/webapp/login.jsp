@@ -27,12 +27,19 @@
                     <form role="form">
                         <div class="form-group">
                             <div class="row clearfix">
-                                <div ng-bind="alert"></div>
+                                 <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 loginlabel">
+                
+                                </div>
+                                 <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
+                                     <div ng-show="alert" class="alert alert-danger" ng-bind="alert"></div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
                                 <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 loginlabel">
                                     <label for="exampleInputEmail1" >Email:</label>
                                 </div>
                                 <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
-                                    <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email"/>
+                                    <input required type="email" name="email" ng-model="email" class="form-control" placeholder="Email"/>
                                 </div>
                             </div>
                         </div>
@@ -45,11 +52,11 @@
                                     </label>
                                 </div> 
                                 <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
-                                    <input type="password" name="password" ng-model="password" class="form-control" placeholder="Password"/>
+                                    <input required type="password" name="password" ng-model="password" class="form-control" placeholder="Password"/>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row clearfix">
                             <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 loginlabel">
                             </div> 
@@ -67,14 +74,17 @@
         angular.module('NanoLogin', [])
                 .controller("loginController", function ($scope, $window) {
                     $scope.loginUsr = function (password, email) {
-                        eng.login(email, "[SHA-512]" + CryptoJS.SHA512(password).toString(),function(res){
-                        if (res.status === -1) {
-                            $scope.alert = "Usuario o contraseña inválido";
-                        } else {
-                            $window.location.href = '/';
+                        if (password && email) {
+                            eng.login(email, "[SHA-512]" + CryptoJS.SHA512(password).toString(), function (res) {
+                                if (res.status === -1) {
+                                    $scope.alert = "User or password invalid";
+                                    $scope.$digest()
+                                } else {
+                                    $window.location.href = '/';
+                                }
+                            });
+
                         }
-                        });
-                     
                     }
                 });
     </script>

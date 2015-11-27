@@ -1,23 +1,25 @@
-<a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+<a  class="btn btn-default" id="menu-toggle">
+    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+</a>
 <div class="container-fluid">
-
-
-    <div class="carousel slide" id="carousel-993590">
+    <div  ng-if="galleryImages.length > 0" class="carousel slide" data-ride="carousel" id="c">
         <ol class="carousel-indicators">
-            <!--li ng-repeat="image in galleryImages"data-slide-to="{{$index}}" data-target="#carousel-993590" ng-class="{active:$index==0}">
-            </li-->
+            <li ng-repeat="image in galleryImages"data-slide-to="{{$index}}" data-target="#c" ng-class="{active:$index==0}">
+            </li>
 
         </ol>
-        <div class="carousel-inner">
+        <div class="carousel-inner" role="listbox">
             <div ng-repeat="image in galleryImages" class="item" ng-class="{active:$index==0}">
-                <img  ng-src="{{image.url}}" />
+                <img  ng-src="{{image.src}}" />
                 <div class="carousel-caption">
                     <h4>{{image.title}}</h4>
-                    <p>{{image.text}}</p>
+                    <a  target="_blank" href="http://{{image.link}}" >{{image.text}}</a>
                 </div>
             </div>
         </div> 
-        <a class="left carousel-control" href="#carousel-993590" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-993590" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        <a class="left carousel-control" href="#c" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> 
+        <a class="right carousel-control" href="#c" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 
 
     </div>

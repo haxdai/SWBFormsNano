@@ -11,6 +11,7 @@ angular.module('services',
             'service.article',
             'service.report',
             'service.config',
+            'service.images',
         ])
         .filter("sanitize", ['$sce', function ($sce) {
                 return function (htmlCode) {

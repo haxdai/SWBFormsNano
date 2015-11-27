@@ -9,10 +9,12 @@ angular.module('controller.configGen', [])
             $scope.altList = [];
             $scope.cancerList = [];
 
-            var MSG_GENE_ADDED = "MSG_GENE_ADDED"
-            var MSG_ALT_ADDED = "MSG_ALT_ADDED"
-            var MSG_DISEASE_ADDED = "MSG_DISEASE_ADDED"
-            var MSG_GENE_LOOKING = "MSG_GENE_LOOKING"
+            var MSG_GENE_ADDED = "The gene has been added correctly."
+            var MSG_ALT_ADDED = "The molecular alteration has been added correctly"
+            var MSG_ALT_EDITED = "The molecular alteration has been correctly updated"
+            var MSG_DISEASE_ADDED = "The disease and its information has been added correctly"
+            var MSG_DISEASE_EDITED= "The disease information has been correctly updated"
+            var MSG_GENE_LOOKING = "The existence of this gene is being validated, please wait."
 
             var altIndex;
             var disIndex;
@@ -55,8 +57,6 @@ angular.module('controller.configGen', [])
             $scope.addDis = function () {
                 $scope.cancerDis();
                 $scope.addingDisease = true;
-
-
             }
             $scope.cancerDis = function () {
                 $scope.addingDisease = false;
@@ -105,7 +105,6 @@ angular.module('controller.configGen', [])
                 Alteration.validate(q).then(function () {
                     Alteration.save({gene: $scope.geneId, name: alterationName, aliases: aliase}).then(function (newAlt) {
                         $scope.altList.push(newAlt);
-                        //console.log("Agregado")
                         showMessage("ok", MSG_ALT_ADDED)
                         $scope.cancelAlt()
                     }, function (error) {
@@ -125,6 +124,7 @@ angular.module('controller.configGen', [])
 
                 Alteration.update($scope.altList[altIndex]).then(function (newAlt) {
                     $scope.cancelAlt();
+                     showMessage("ok", MSG_ALT_EDITED)
                 }, function (error) {
                     console.log(error);
                 })
@@ -150,11 +150,15 @@ angular.module('controller.configGen', [])
                 $scope.cancerList[disIndex].summary = diseaseSummary;
                 CancerType.update($scope.cancerList[disIndex]).then(function (newCancer) {
                     $scope.cancerDis();
+                    showMessage("ok", MSG_DISEASE_EDITED)
                 })
             }
 
 
             $scope.setGenId = function (geneId) {
+                $scope.cancelAlt()
+                $scope.cancerDis()
+                $scope.cancelGen()
                 $scope.geneSelected = true;
                 $scope.geneId = geneId;
                 Alteration.list($scope.geneId).then(function (altList) {

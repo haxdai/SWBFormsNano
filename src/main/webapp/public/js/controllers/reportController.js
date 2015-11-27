@@ -9,8 +9,17 @@ angular.module('controller.report', ['angular-carousel'])
             $scope.gene;
             $scope.alt;
             $scope.orderBy = "title"
-            var MSG_REPORT_SAVED = "MSG_REPORT_SAVED";
-            var MSG_REPORT_UPDATED = "MSG_REPORT_UPDATED";
+            var MSG_REPORT_SAVED = "The report document has been saved correctly";
+            var MSG_REPORT_UPDATED = "The report document has been updated correctly";
+            var ERROR_REPORT_EMPTY = "A report without interpretation or without reference documents can not being printed, please provide an interpretation and check if there are documents in accepted documents folder.";
+            
+            $scope.print = function () {
+                if( ! $scope.report.hasOwnProperty("comment") || $scope.articleList.length == 0 ){
+                    showMessage("error",ERROR_REPORT_EMPTY);
+                }else{
+                    window.print();
+                }
+            }
             
             Search.byId($scope.searchId).then(function (search) {
                 Gene.byId(search.gene).then(function (gene) {

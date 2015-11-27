@@ -7,7 +7,5 @@ angular.module('controllers',
                 'controller.report',
                 'controller.menuConfig',
                 'controller.configGen',
-                'controller.configUpdatingTime',
-                'controller.imagesConfig',
-                'controller.usersConfig'
+                'controller.configUpdatingTime'
             ])

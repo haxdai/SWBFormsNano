@@ -32,7 +32,7 @@
                         <p class="list-group-item">Gene list <span class="badge">{{geneList.length}}</span></p>
                         <div class="list-group-item">
                             <ul class="list-group-item-text">
-                                <li ng-repeat="gene in geneList"><a ng-click="setGenId(gene._id)">{{gene.symbol}}</a></li>
+                                <li ng-class="{'scheme-selected':gene._id===geneId}" ng-repeat="gene in geneList"><a ng-click="setGenId(gene._id)">{{gene.symbol}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         <button  ng-disabled="diseaseForm.dideaseName.$invalid" ng-show="editingDisease"  ng-click="updateDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
                             <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update disease
                         </button>
-                        <a  ng-show="addingDisease || editingDisease" href="#" ng-click="cancerDis()">Cancel</a>
+                        <button class="btn" ng-show="addingDisease || editingDisease" href="#" ng-click="cancerDis()">Cancel</button>
                     </form>
 
                     <div class="list-group config-list">
@@ -103,7 +103,7 @@
                         </div>
                         <div  ng-show="addingAlt || editingAlt" class="form-group ">
                             <label class="control-label"  ng-show="addingAlt || editingAlt" >Aliases:</label>
-                            <input  required="" class="form-control"   ng-show="addingAlt || editingAlt" type="text" ng-model="aliase" />
+                            <textarea  required="" class="form-control"   ng-show="addingAlt || editingAlt" type="text" ng-model="aliase" /></textarea>
                         </div>
                         <button ng-disabled="altForm.alterationName.$invalid" ng-show="addingAlt"  ng-click="addAlteration(alterationName, aliase)" class="btn btn-default" type="button">
                             <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
@@ -111,7 +111,7 @@
                         <button ng-disabled="altForm.alterationName.$invalid" ng-show="editingAlt"  ng-click="updateAlteration(alterationName, aliase)" class="btn btn-default" type="button">
                             <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update molecular alteration
                         </button>
-                        <a  ng-show="addingAlt || editingAlt" href="#" ng-click="cancelAlt()">Cancel</a>
+                        <button class="btn"  ng-show="addingAlt || editingAlt" href="#" ng-click="cancelAlt()">Cancel</button>
                     </form>
 
                     <div class="list-group config-list">

@@ -3,11 +3,16 @@
 angular.module('controller.menu', [])
         .controller('MenuController', function ($scope, $state, $rootScope, $stateParams, Search, Gene, Alteration, Config) {
             $scope.searchList = [];
+            $scope.searchId = $stateParams.id;
             $scope.geneList;
             $scope.altList;
             $scope.datesList = Config.publicationDates();
-            var MSG_SCHEME_LOOKING = "MSG_SCHEME_LOOKING";
-            var MSG_SCHEME_ADDED = "MSG_SCHEME_ADDED"
+            var MSG_SCHEME_LOOKING = "Aurora is searching information about this schema of search. This process may take several minutes, please wait.";
+            var MSG_SCHEME_ADDED = "The search schema has been added correctly"
+            
+            $scope.schemeSelected = function (scheme){
+                $scope.searchId = scheme;
+            }
             
             $scope.searchListFunction = function (list) {
                 var filterList = $scope.filterPattern || "";
@@ -68,6 +73,7 @@ angular.module('controller.menu', [])
 
 
             $scope.addSearch = function (geneSelected, altSelected, dateSelected) {
+                
                 var q = {gene: geneSelected._id, altMolecular: altSelected._id, artYearsOld: dateSelected.year};
                 showMessage("msg",MSG_SCHEME_LOOKING)
                 Search.validate(q).then(function () {

@@ -4,7 +4,7 @@ angular.module('controller.configUpdatingTime', ['angular-carousel'])
         .controller('ConfigUpdatingTimeController', function ($scope, Config) {
             $scope.rates = Config.rateUpdate();
             console.log($scope.rates )
-            var MSG_CONFIG_UPDATED = "MSG_CONFIG_UPDATED"
+            var MSG_CONFIG_UPDATED = "Configuration settings have been updated correctly"
 
             Config.getRateUpdate().then(function (rate) {
                 console.log(rate)
