@@ -17,10 +17,10 @@
             Results<span class="caret"></span>
         </button> 
         <ul class="dropdown-menu">
+            <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
             <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
             <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
             <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
-            <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
             <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
         </ul>
 
@@ -106,9 +106,9 @@
 
                 </div>
             </div>
-            <div class="text-center">
+            <div ng-if="articleList.length >0" class="text-center">
                 <h3>
-                {{((pag-1)*limit)+1}}-{{ pag*limit < totalRows ? pag*limit : totalRows }} / {{totalRows}}
+                {{((pag-1)*limit)+1}}-{{ pag*limit < totalRows ? pag*limit : totalRowsFinal }} / {{totalRowsFinal  }}
                 </h3>
             </div>
 

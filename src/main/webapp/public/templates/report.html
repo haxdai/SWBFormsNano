@@ -25,11 +25,12 @@
             Results<span class="caret"></span>
         </button> 
         <ul class="dropdown-menu">
-            <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
+             <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
             <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
             <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
             <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
-            <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
+             <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
+           
         </ul>
 
         <a href="/search/report/{{searchId}}"class="btn btn-default active" type="button">Report</a> 
@@ -38,9 +39,9 @@
     <div class="row contenido">
         <div class="col-lg-12">
             <form name="reportform"> 
-                <textarea required name="textreport" ng-model="report.comment" class="result-notes">Add notes here:</textarea>
+                <textarea ng-model="report.comment" required name="textreport"  class="result-notes">Add notes here:</textarea>
                 <div class="visible-print print-border">
-                    <p>{{report.comment}}</p>
+                    <p ng-bind-html="report.comment | formatPrint | sanitize  "></p>
                 </div>
                 <div class="panel-buttons">
                     <button ng-disabled="reportform.textreport.$invalid"  ng-click="save(report)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
@@ -61,11 +62,11 @@
                                         <span class="glyphicon glyphicon-menu-up"></span>
                                         <span class="glyphicon glyphicon-menu-down"></span>
                                         <div class="star">
-                                            <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa - star - o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa - star - o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa - star - o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa - star - o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=10 ? 'fa-star' : 'fa - star - o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                            <i ng-class="article.artSearch.ranking >=10 ? 'fa-star' :'fa-star-o'" class="fa"></i>
                                         </div>
                                     </div>
                                 </a>

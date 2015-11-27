@@ -17,4 +17,18 @@ angular.module('services',
                 return function (htmlCode) {
                     return $sce.trustAsHtml(htmlCode);
                 }
+            }]) 
+        .filter("formatPrint", [ function () {
+                return function (text) {
+                    if (text)
+                    return text.replace(new RegExp("\n", 'g'), "<br>");
+                    return ""
+                }
+            }]) 
+        .filter("formatReport", [ function () {
+                return function (text) {
+                    if (text)
+                    return text.replace(new RegExp("<br>", 'g'), "\n");
+                    return ""
+                }
             }]);

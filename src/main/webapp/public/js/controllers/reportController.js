@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('controller.report', ['angular-carousel'])
-        .controller('ReportController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Report, Search, Gene, Alteration) {
+        .controller('ReportController', function ($scope,$filter, $rootScope, $stateParams, Art_Search, Article, Report, Search, Gene, Alteration) {
             $scope.searchId = $stateParams.id;
             $scope.status = 2; /*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado, 4 Recomendado*/
             $scope.report = {};
@@ -33,8 +33,11 @@ angular.module('controller.report', ['angular-carousel'])
             })
 
             $scope.save = function (report) {
+                console.log(report)
+                report.comment = report.comment.replace(new RegExp("\n", 'g'), '<br>');
                 if ($scope.report.hasOwnProperty("_id")) {
                     Report.update(report).then(function(){
+                        $scope.report.comment = $filter('formatReport')($scope.report.comment)
                         showMessage("ok", MSG_REPORT_UPDATED)
                     });
                     
@@ -67,6 +70,7 @@ angular.module('controller.report', ['angular-carousel'])
 
             Report.bySearchId($scope.searchId).then(function (report) {
                 $scope.report = report;
+                $scope.report.comment = $filter('formatReport')($scope.report.comment)
             }, function (error) {
                 console.log(error)
             });

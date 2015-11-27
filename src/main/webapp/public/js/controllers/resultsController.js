@@ -17,6 +17,7 @@ angular.module('controller.results', [])
             $scope.pag = 1;
             $scope.maxPage;
             $scope.totalRows;
+            $scope.totalRowsFinal;
             $scope.sortBy = "-ranking";
             $scope.limit;
             $scope.gene;
@@ -170,7 +171,7 @@ angular.module('controller.results', [])
                 }
                 Article.listBySearchId(searchId, status, orderBy, pag, ele).then(function (artSearchList) {
 
-                    $scope.totalRows = artSearchList.totalRows;
+                    $scope.totalRowsFinal =  $scope.totalRows = artSearchList.totalRows;
                     $scope.limit = artSearchList.limit;
                     $scope.maxPage = Math.ceil($scope.totalRows / $scope.limit);
                     artSearchList.data.forEach(function (art) {
