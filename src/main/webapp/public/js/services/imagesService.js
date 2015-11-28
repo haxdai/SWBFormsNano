@@ -6,7 +6,7 @@ angular.module('service.images', [])
 
             this.list = function () {
                 var deferred = $q.defer();
-                var ds = eng.getDataSource("Image");
+                var ds = eng.getDataSource("Images");
                 ds.fetch({}, function (result) {
                     if (result.status == 0) {
                         deferred.resolve(result.data);

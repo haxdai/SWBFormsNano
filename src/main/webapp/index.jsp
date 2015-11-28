@@ -23,10 +23,11 @@
         <div class="query-check"></div>
       
         <div ng-controller="headerController"  class="top">
-            <p class="user-name">Oscar paredes</p>
+            <p ng-bind="user.name" class="user-name"></p>
             <a class="navbar-brand" href="/"><h1>Aurora Nanopharm</h1><img src="/public/img/aurora.png" class="img-responsive" alt="Nanopharmacia Diagnóstica"></a>
             <a href="/login" id="logoout" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
-            <a href="/config" class="top-config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="config">Configure</span></a>
+            <a href="/config" class="top-config"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <span class="config">Configure</span></a>
+            <a href="/admin" target="_self" ng-hide="user.roleName!=='admin'"  class="top-config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="config">Admin</span></a>
             <a href="/" class="top-config"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <span class="config">Home</span></a>
             
         </div>
@@ -80,6 +81,8 @@
     <script src="/public/js/services/reportService.js"></script>
     <script src="/public/js/services/configService.js"></script>
     <script src="/public/js/services/imagesService.js"></script>
+    <script src="/public/js/services/userService.js"></script>
+    <script src="/public/js/services/roleService.js"></script>
     <!--    Nano js controllers     -->
     <script src="/public/js/controllers/appController.js"></script>
     <script src="/public/js/controllers/menuController.js"></script>
@@ -90,11 +93,21 @@
     <script src="/public/js/controllers/configGenController.js"></script>
     <script src="/public/js/controllers/menuConfigController.js"></script>
     <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
+    
     <script type="text/javascript">
         'use strict';
-        angular.module('NanoApp', [])
-                .controller("headerController", function ($scope) {
-
+        angular.module('userController', [])
+                .controller("headerController", function ($scope,User,Role) {
+                    $scope.user;
+                    User.getUser().then(function(user){
+                        $scope.user = user;
+                        Role.byId($scope.user.role).then(function(role){
+                            $scope.user.roleName = role.title;
+                        })
+                      
+                    },function(error){
+                        
+                    });
                 });
     </script>
     <script type="text/javascript">

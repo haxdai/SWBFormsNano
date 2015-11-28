@@ -3,7 +3,7 @@
     private static final String RESP_ERROR = "{\"jsonrpc\" : \"2.0\", \"error\" : {\"code\": 101, \"message\": \"Failed to open input stream.\"}, \"id\" : \"id\"}";
     public static final String JSON = "application/json";
     public static final int BUF_SIZE = 2 * 1024;
-    public static final String FileDir = "/uploadfile/";
+    public static final String FileDir = "/public/img";
     private int chunk;
     private int chunks;
     private String name;

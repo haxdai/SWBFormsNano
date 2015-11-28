@@ -201,10 +201,10 @@ eng.dataSources["User"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-         {name: "name", title: "Nombre", type: "string"},
-         {name: "email", title: "Correo electrónico", type: "string"},
+        {name: "name", title: "Nombre", type: "string"},
+        {name: "email", title: "Correo electrónico", type: "string"},
         {name: "password", title: "Contraseña", type: "password"},
-        {name: "title", title: "Rol", stype: "select", dataSource:"Role"},//stype: "select"
+        {name: "role", title: "Rol", stype: "select", dataSource:"Role"},//stype: "select"
         
     ],
     
@@ -343,7 +343,8 @@ eng.dataSources["Images"] = {
     fields: [
         {name: "title", title: "Título", type: "string"},
         {name: "text", title: "Descripción de la imagen", type: "string"},
-        {name: "src", title: "Url", multiple: true, stype: "file"},
+        {name: "src", title: "Url", multiple: false, stype: "file"},
+        {name: "link", title: "Link", type: "string"},
     ]
 };
 

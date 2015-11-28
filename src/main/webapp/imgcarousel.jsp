@@ -32,7 +32,7 @@
             <div style="width: 100%; height: inherit">
 
                 <h1>Image's administration</h1>
-                <script type="text/javascript">
+            <script type="text/javascript">
             eng.initPlatform("/test/NanoSources.js");
             var id = "<%=request.getParameter("id")%>";
             eng.createForm({

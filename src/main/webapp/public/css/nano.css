@@ -147,6 +147,14 @@ ul[rn-carousel] {
 
 
 }
+
+.top-admin  { width:100%; padding:25px  10px 5px 10px; margin:0px; border-bottom:1px solid #8bbbd5 ;
+  background: -webkit-linear-gradient(#fff ,#e1eaef  ); 
+  background: -o-linear-gradient(#fff ,#e1eaef  );
+  background: -moz-linear-gradient(#fff ,#e1eaef   );
+  background: linear-gradient(#fff ,#e1eaef  );}
+.top-admin * { text-decoration: none !important;}
+
 @media (max-width:767px){
     .query-check{
         width: 0px;

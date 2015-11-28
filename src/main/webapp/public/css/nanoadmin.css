@@ -1,0 +1,16 @@
+body{
+    margin:0px;
+    padding: 0px;
+}
+
+.top-admin  {  padding:25px  10px 5px 10px; margin:0px; border-bottom:1px solid #8bbbd5 ;
+  background: -webkit-linear-gradient(#fff ,#e1eaef  ); 
+  background: -o-linear-gradient(#fff ,#e1eaef  );
+  background: -moz-linear-gradient(#fff ,#e1eaef   );
+  background: linear-gradient(#fff ,#e1eaef  );}
+.top-admin * { text-decoration: none !important;}
+
+.container{
+    margin: 16px;
+    position: relative;
+}

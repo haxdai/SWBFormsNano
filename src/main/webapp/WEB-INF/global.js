@@ -43,8 +43,8 @@ eng.routes["global"]={
     loginFallback: "login",
     routeList:[
         { routePath: "login", forwardTo: "/login.jsp", isRestricted: "false", zindex:1 },
-        { routePath: "imgcarousel", forwardTo: "/imgcarousel.jsp", isRestricted: "true", zindex:1,hasRole:"admin" },
-        { routePath: "adminusers", forwardTo:"/admin.jsp", isRestricted:"true", zindex:1, hasRole:"admin"},
+        /*{ routePath: "imgcarousel", forwardTo: "/imgcarousel.jsp", isRestricted: "true", zindex:1,hasRole:"admin" },*/
+        { routePath: "admin", forwardTo:"/admin.jsp", isRestricted:"true", hasRole:"admin"},
         { routePath: "register", forwardTo: "/work/config/register.jsp", isRestricted: "false" },
         { routePath: "work", isRestricted: "true"},
         { routePath: "work/*", jspMapTo: "/work/jsp/", isRestricted: "true" },

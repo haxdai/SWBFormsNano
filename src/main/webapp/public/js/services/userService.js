@@ -1,15 +1,14 @@
 'use strict';
 
-angular.module('service.images', [])
-        .service('Image', function ($http, $q) {
-
+angular.module('service.user', [])
+        .service('User', function ($http, $q) {
 
             this.getUser = function () {
                 var deferred = $q.defer();
-                var ds = eng.getUser()
-                ds.fetch({}, function (result) {
-                    if (result.status == 0) {
-                        deferred.resolve(result.data);
+                eng.getUser(function (result) {
+
+                    if (result) {
+                        deferred.resolve(result);
                     } else {
                         deferred.reject("Server error");
                     }
