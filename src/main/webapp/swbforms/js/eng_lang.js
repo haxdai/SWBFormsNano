@@ -366,7 +366,7 @@ eng.fieldProcesors["file"] = function(field)
             for(var i=0;i<value.length;i++)
             {
                 var f=value[i];
-                ret+="<a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\"/uploadfile/" + f.id + "\">"+f.name;
+                ret+="<a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\"/public/img/" + f.id + "\">"+f.name;
                 if(f.percent)ret+=" ("+f.percent+"%)";
                 ret+="</a>";
                 if(i<value.length-1)ret+=", ";
@@ -768,7 +768,7 @@ isc.FileUpload.addProperties({
                     var p=100;
                     if(dataValue[i].percent)p=dataValue[i].percent;
                     
-                    content += "        <span><a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\"/uploadfile/" + dataValue[i].id + "\">" + dataValue[i].name + "</a>";
+                    content += "        <span><a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\"/public/img/" + dataValue[i].id + "\">" + dataValue[i].name + "</a>";
                     if(p<100)content+=" ("+p+")";
                     if(this.isEditable())content += "<img style=\"margin-left: 2px; cursor: pointer; vertical-align: middle;\" onClick=\"" + this.ID + ".remove('"+dataValue[i].id+"');\" src=\"/isomorphic/skins/Enterprise/images/actions/close.png\"/>";
                     if(i<dataValue.length-1)content+=",";

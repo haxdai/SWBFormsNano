@@ -73,11 +73,11 @@
         }
         resp.setContentType(JSON);
         //System.out.println("res: "  + resp);
-        byte[] responseBytes = responseString.getBytes();
+        /*byte[] responseBytes = responseString.getBytes();
         resp.setContentLength(responseBytes.length);
         ServletOutputStream output = resp.getOutputStream();
         output.write(responseBytes);
-        output.flush();
+        output.flush();*/
     }
     /**
      * Saves the given file item (using the given input stream) to the web
