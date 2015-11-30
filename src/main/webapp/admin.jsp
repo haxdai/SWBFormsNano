@@ -34,7 +34,8 @@
                     height: "200px",
                     canEdit: true,
                     canRemove: true,
-                    canAdd: true
+                    canAdd: true,
+                    canPrint: false,
                 }, "User");
             </script>
             
@@ -46,7 +47,9 @@
                     width: "97%",
                     height: "100px",
                     showTabs: false,
-                    canPrint:false,
+                    winEdit:false,
+//                    canPrint:false,
+//                    winPrint: false,
                     fields: [
                         {name: "title"},
                         {name: "text"},
@@ -55,10 +58,11 @@
                        
                     ],
                 }, "","Images");
-                var altSearch = eng.createGrid({
+                var images = eng.createGrid({
                     width: "97%",
                     height: "200px",
                     canEdit: true,
+                    canPrint: false,
                     //canAdd:true,
                     canRemove: true,
                     fields: [

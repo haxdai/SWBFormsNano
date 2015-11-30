@@ -16,9 +16,9 @@ eng.dataSources["Gene"] = {
                     serverCondition: function (name, value, request) {
                         var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
                         var search = new esearch();
-                        var isValid = search.hasGeneBD(value);
-                        //value = /**/
-                        if (!isValid)
+                        //var isValid = search.hasGeneBD(value);
+                        var isValid = search.getGeneInfo(value);
+                        if (isValid === null)
                             return false;
                     },
                     errorMessage: "The gene was not found on NCBI data bases, please check the spelling."
@@ -50,15 +50,6 @@ eng.dataSources["AlterationMolecular"] = {
         {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"}
     ]
 };
-/*eng.dataSources["Role"] = {
-    scls: "Role",
-    modelid: "NanoPharmacy",
-    dataStore: "mongodb",
-    displayField: "title",
-    fields: [
-        {name: "title", title: "Título", type: "string"},
-    ]
-};*/
 
 eng.dataSources["CancerType"] = {
     scls: "CancerType",
@@ -201,9 +192,9 @@ eng.dataSources["User"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre", type: "string"},
-        {name: "email", title: "Correo electrónico", type: "string"},
-        {name: "password", title: "Contraseña", type: "password"},
+        {name: "name", title: "Fullname", type: "string"},
+        {name: "email", title: "Email", type: "string", required: true, validators:[{stype:"email"}]},
+        {name: "password", title: "Password", type: "password", required: true},
         {name: "role", title: "Rol", stype: "select", dataSource:"Role"},//stype: "select"
         
     ],
@@ -341,14 +332,11 @@ eng.dataSources["Images"] = {
     dataStore: "mongodb",
     displayField: "title",
     fields: [
-        {name: "title", title: "Título", type: "string"},
-        {name: "text", title: "Descripción de la imagen", type: "string"},
-        {name: "src", title: "Url", multiple: false, stype: "file"},
+        {name: "title", title: "Title", type: "string"},
+        {name: "text", title: "Description", type: "string"},
+        {name: "src", title: "Url", multiple: false, stype: "file", required: true},
         {name: "link", title: "Link", type: "string"},
     ]
 };
 
-
-/*eng.getDataSource("User")/*.add({fullname: "admin admin", email: "admin@nanopharmacia.com", password: "nanoadmin"},function(){})
-eng.getDataSource("Role").add({name: "Adminitration"},function(){})
-eng.getDataSource("Role").add({name: "User"},function(){})*/
+eng.validators["email"] = {type:"regexp", expression:"^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$",errorMessage:"No es un correo electrónico válido"};
