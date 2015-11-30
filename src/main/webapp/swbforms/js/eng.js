@@ -940,7 +940,7 @@ var eng =  {
                             isc.confirm("¿Desea guardar la información?", "value = value ? 'OK' : 'Cancel'; if(value == 'OK'){eng.submit(formsubmit);}");
                         }
                     });
-
+/*
             var print = isc.IButton.create(
                     {
                         title: "Imprimir",
@@ -954,9 +954,9 @@ var eng =  {
                         }
                     });
 
-
+*/
             submit.form = form;
-            butts = [print, submit];
+            butts = [submit];
         }
 
         var pane = isc.VStack.create({
