@@ -49,6 +49,8 @@ angular.module('service.search', [])
                 ds.addObj(newSearch, function (result) {
                     if (result && result.status == 0) {
                         deferred.resolve(result);
+                    }else if(result.status == -2){
+                        deferred.reject(result.msgError);
                     } else {
                         deferred.reject("Server error");
                     }

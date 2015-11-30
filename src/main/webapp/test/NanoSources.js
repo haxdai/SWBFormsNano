@@ -280,13 +280,13 @@ eng.dataServices["GeneService"] = {
     actions: ["add"],
     service: function (request, response, dataSource, action)
     {
-        if (response.data.symbol != null && response.data._id != null && response.data._id != "") {
+        if (response.data.symbol !== null && response.data._id !== null && response.data._id !== "") {
             var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
             var search = new esearch();
 
             var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
             var defDiseases = search.getDiseasesInfo(response.data.symbol);
-            if (defDiseases != null) {
+            if (defDiseases !== null) {
                 utils.setNewDisease(defDiseases, response.data._id);
                 //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:56453514d501e2ac6ccea32c");
             }
@@ -310,17 +310,27 @@ eng.dataServices["SearchService"] = {
                     fetchObjById(response.data.altMolecular).name;
 
             var dataArt = search.getPublicationsInfo(gene, altMolecular, response.data.artYearsOld, 0);//
-            if (dataArt != null) {
-                var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-                var res = utils.saveNewArticles(dataArt, response.data._id);
-                var temp = new Array();
-                temp = res.split(",");
-                if(temp != null && temp.length === 2) {
-                    response.data.notification = parseInt(temp[0]); 
-                    response.data.recommended = parseInt(temp[1]); 
+            if (dataArt !== null) {
+                var jsonArt = JSON.parse(dataArt);
+                if (jsonArt.outstanding != null) {
+                    var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                    var res = utils.saveNewArticles(dataArt, response.data._id);
+                    var temp = new Array();
+                    temp = res.split(",");
+                    if (temp !== null && temp.length === 2) {
+                        response.data.notification = parseInt(temp[0]); 
+                        response.data.recommended = parseInt(temp[1]); 
+                    }
+                } else if (jsonArt.error != null) {
+                    //print("En error!!!" + jsonArt.error.error)
+                    this.getDataSource("Search").removeObjById(response.data._id);
+                    response.status = -2;
+                    if ("COMMUNICATION_PROBLEM".equals(jsonArt.error.error)) {
+                        response.msgError = "A communications error happened, please try again later";
+                    } else if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
+                        response.msgError = "No information was found for your search scheme";
+                    }
                 }
-                 
-                //utils.saveUpdateArticles(dataArt, "_suri:NanoPharmacy:Search:5632a99e3831a3e77b9ec2b3");//response.data._id
             }
         }
         return request;

@@ -81,6 +81,7 @@ angular.module('controller.menu', [])
                         removeMessage("msg")
                         showMessage("ok", MSG_SCHEME_ADDED)
                         $('#panel-element-busca').collapse("hide");
+                        $scope.schemeForm.$setPristine();
                         var i = $scope.searchList.push(search.data);
                         Gene.byId(search.data.gene).then(function (gene) {
                             $scope.searchList[i - 1].geneSymbol = gene.symbol;
@@ -89,6 +90,15 @@ angular.module('controller.menu', [])
                             $scope.searchList[i - 1].alteName = alte.name;
                         });
                         $scope.newSearch = false;
+                    },function(error){
+                        removeMessage("msg")
+                        showMessage("error",error)
+                        console.log(error);
+                        $('#panel-element-busca').collapse("hide");
+                         $scope.schemeForm.$setPristine();
+                         $scope.geneSelected = null;
+                         $scope.altSelected = null;
+                         $scope.dateSelected = null;
                     });
                 }, function (error){
                     removeMessage("msg")
