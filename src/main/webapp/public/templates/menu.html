@@ -27,7 +27,7 @@
     </div>
 </div>
 <ul class="mis-esquemas">
-    <li ng-class="{'scheme-selected':search._id===searchId}"  ng-repeat="search  in searchListFunction(searchList)">
+    <li ng-if="search.noArts!= 0" ng-class="{'scheme-selected':search._id===searchId}"  ng-repeat="search  in searchListFunction(searchList)">
         <a ng-if="search.notification > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notification}} new items">
             <i class="fa fa-certificate"></i>{{search.notification}}
         </a>
@@ -36,7 +36,7 @@
         </a>
 
         <a ng-click="schemeSelected(search._id)" class="gene" href="/search/{{search._id}}" >{{search.geneSymbol}} ; {{search.alteName}}</a>
-
+        
     </li>  
 
 </ul>

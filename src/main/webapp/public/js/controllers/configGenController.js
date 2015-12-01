@@ -88,7 +88,7 @@ angular.module('controller.configGen', [])
                         showMessage("ok", MSG_GENE_ADDED)
                     }, function (error) {
                         removeMessage("msg")
-                        showMessage("error", error.symbol)
+                        showMessage("error", error)
                         console.log(error)
                     })
                 }, function (error) {

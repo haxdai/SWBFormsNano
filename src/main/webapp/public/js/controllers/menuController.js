@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('controller.menu', [])
-        .controller('MenuController', function ($scope, $state, $rootScope, $stateParams, Search, Gene, Alteration, Config) {
+        .controller('MenuController', function ($scope, $state, $rootScope, $stateParams, Search, Gene, Alteration, Config,Art_Search) {
             $scope.searchList = [];
             $scope.searchId = $stateParams.id;
             $scope.geneList;
@@ -47,6 +47,10 @@ angular.module('controller.menu', [])
             Search.list().then(function (searchList) {
                 searchList.forEach(function (search, i) {
                     $scope.searchList.push(search);
+                    Art_Search.listbyStatusSearchId(search._id).then(function(artSearchList){
+                        console.log(artSearchList)
+                        $scope.searchList[i].noArts = artSearchList.length;
+                    })
                     Gene.byId(search.gene).then(function (gene) {
                         $scope.searchList[i].geneSymbol = gene.symbol;
                     });

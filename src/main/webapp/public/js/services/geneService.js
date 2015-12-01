@@ -51,6 +51,9 @@ angular.module('service.gene', [])
                 ds.addObj(gene, function (response) {
                     if (response && response.status == 0) {
                         deferred.resolve(response.data);
+                    }else  if(response.status == -2){
+                        deferred.reject(response.msgError);
+                      
                     } else {
                         deferred.reject("No data");
                     }
