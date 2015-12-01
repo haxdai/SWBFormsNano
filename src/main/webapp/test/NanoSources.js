@@ -36,12 +36,12 @@ eng.dataSources["Gene"] = {
             ]
         },
         {name: "officialName", title: "Nombre oficial", type: "string"},
-        {name: "mimId", title: "Número identificador", type: "int"},
+        {name: "mimId", title: "NÃºmero identificador", type: "int"},
         {name: "organism", title: "Organismo", type: "string"},
         {name: "aliases", title: "Nombres alternos", type: "string"},
-        {name: "mapLocation", title: "Localización", type: "string"},
+        {name: "mapLocation", title: "LocalizaciÃ³n", type: "string"},
         {name: "summary", title: "Resumen", type: "string"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"}
+        {name: "lastUpdate", title: "Ultima actualizaciÃ³n", type: "date"}
     ]
 };
 
@@ -51,9 +51,9 @@ eng.dataSources["AlterationMolecular"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre de la alteración molecular", type: "string", validators: [{type: "isUnique", errorMessage: "The molecular alteration already exists."}]},
+        {name: "name", title: "Nombre de la alteraciÃ³n molecular", type: "string", validators: [{type: "isUnique", errorMessage: "The molecular alteration already exists."}]},
         {name: "aliases", title: "Nombres alternos", type: "string"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+        {name: "lastUpdate", title: "Ultima actualizaciÃ³n", type: "date"},
         {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"}
     ]
 };
@@ -64,10 +64,10 @@ eng.dataSources["CancerType"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre del tipo de cáncer", type: "string", validators: [{type: "isUnique", errorMessage: "The disease already exists."}]},
-        {name: "summary", title: "Definición del cáncer", type: "string"},
+        {name: "name", title: "Nombre del tipo de cÃ¡ncer", type: "string", validators: [{type: "isUnique", errorMessage: "The disease already exists."}]},
+        {name: "summary", title: "DefiniciÃ³n del cÃ¡ncer", type: "string"},
         {name: "conceptId", title: "Id", type: "String"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"}
+        {name: "lastUpdate", title: "Ultima actualizaciÃ³n", type: "date"}
     ]
 };
 
@@ -78,19 +78,19 @@ eng.dataSources["Article"] = {
     displayField: "title",
     /*methodsAvalaible: ["add","update"],*/
     fields: [
-        {name: "title", title: "Título del artículo", type: "string"},
-        {name: "titleSort", title: "Título del artículo", type: "string"},
-        {name: "abstract", title: "Resumen del artículo", type: "string"},
+        {name: "title", title: "TÃ­tulo del artÃ­culo", type: "string"},
+        {name: "titleSort", title: "TÃ­tulo del artÃ­culo", type: "string"},
+        {name: "abstract", title: "Resumen del artÃ­culo", type: "string"},
         {name: "link", title: "Liga", type: "string"},
         {name: "reference", title: "Referencia", type: "string"},
         {name: "pmid", title: "Id PubMed", type: "int"},
         {name: "pmcid", title: "Id PMC", type: "int"},
         {name: "autor", title: "Autores", type: "string"},
         {name: "autorSort", title: "Autores", type: "string"},
-        {name: "prognosis", title: "Pronóstico", type: "int"},
-        {name: "prediction", title: "Predicción", type: "int"},
+        {name: "prognosis", title: "PronÃ³stico", type: "int"},
+        {name: "prediction", title: "PredicciÃ³n", type: "int"},
         {name: "treatment", title: "Tratamiento", type: "int"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"}
+        {name: "lastUpdate", title: "Ultima actualizaciÃ³n", type: "date"}
     ]
 };
 
@@ -118,7 +118,7 @@ eng.dataSources["Search"] = {
                         d[0] = request.data.artYearsOld;
 
                         //var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
-                        //var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteración molecular
+                        //var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteraciÃ³n molecular
                         b[0] = request.data.gene;//idGene;
                         b[1] = request.data.altMolecular;//idAltMolecular;
                         var isValid = utils.isValidObject("Search", a, b, c, d);
@@ -127,12 +127,12 @@ eng.dataSources["Search"] = {
                         else
                             return false;
                     },
-                    errorMessage: "Búsqueda de Gen, Alteración Molecular y año ya realizada"
+                    errorMessage: "This search schema already exists. Please change gene, molecular alteration or Publication dates parameter and try it again. "
                 }]},
-        {name: "altMolecular", title: "Alteración Molecular", stype: "select", dataSource: "AlterationMolecular"},
+        {name: "altMolecular", title: "AlteraciÃ³n Molecular", stype: "select", dataSource: "AlterationMolecular"},
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
-        {name: "notification", title: "Número de notificaciones", type: "int"},
+        {name: "lastUpdate", title: "Ultima actualizaciÃ³n", type: "date"},
+        {name: "notification", title: "NÃºmero de notificaciones", type: "int"},
         {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
     ]
 };
@@ -143,10 +143,10 @@ eng.dataSources["Art_Search"] = {
     dataStore: "mongodb",
     displayField: "search",
     fields: [
-        {name: "search", title: "Búsqueda", stype: "select", dataSource: "Search"},
-        {name: "article", title: "Artículo", stype: "select", dataSource: "Article"},
-        {name: "ranking", title: "Clasificación", type: "int"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+        {name: "search", title: "BÃºsqueda", stype: "select", dataSource: "Search"},
+        {name: "article", title: "ArtÃ­culo", stype: "select", dataSource: "Article"},
+        {name: "ranking", title: "ClasificaciÃ³n", type: "int"},
+        {name: "lastUpdate", title: "Ultima actualizaciÃ³n", type: "date"},
         {name: "status", title: "Estatus", type: "int"}/*0 - Sin clasificar, 1 - Nuevo, 2 - Aceptado, 3 - Rechazado*/
 
     ]
@@ -158,9 +158,9 @@ eng.dataSources["Report"] = {
     dataStore: "mongodb",
     displayField: "search",
     fields: [
-        {name: "search", title: "Búsqueda", stype: "select", dataSource: "Search"},
+        {name: "search", title: "BÃºsqueda", stype: "select", dataSource: "Search"},
         {name: "comment", title: "Observaciones", type: "string"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+        {name: "lastUpdate", title: "Ultima actualizaciÃ³n", type: "date"},
     ]
 };
 
@@ -189,7 +189,7 @@ eng.dataSources["Role"] = {
     dataStore: "mongodb",
     displayField: "title",
     fields: [
-        {name: "title", title: "Título", type: "string"},
+        {name: "title", title: "TÃ­tulo", type: "string"},
     ]
 };
 
@@ -337,7 +337,7 @@ eng.dataServices["SearchService"] = {
                         break;
                     } else if (jsonArt.outstanding != null) {
                         var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-                        var res = utils.saveUpdateArticles(dataArt, response.data._id, tmpNotification, tmpRecommended);
+                        var res = utils.saveNewArticles(dataArt, response.data._id, tmpNotification, tmpRecommended);
                         var temp = new Array();
                         temp = res.split(",");
                         if (temp !== null && temp.length === 2) {
@@ -366,4 +366,4 @@ eng.dataSources["Images"] = {
     ]
 };
 
-eng.validators["email"] = {type: "regexp", expression: "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$", errorMessage: "No es un correo electrónico válido"};
+eng.validators["email"] = {type: "regexp", expression: "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$", errorMessage: "No es un correo electrÃ³nico vÃ¡lido"};
