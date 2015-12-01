@@ -337,12 +337,12 @@ eng.dataServices["SearchService"] = {
                         break;
                     } else if (jsonArt.outstanding != null) {
                         var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-                        var res = utils.saveNewArticles(dataArt, response.data._id);
+                        var res = utils.saveUpdateArticles(dataArt, response.data._id, tmpNotification, tmpRecommended);
                         var temp = new Array();
                         temp = res.split(",");
                         if (temp !== null && temp.length === 2) {
-                             tmpNotification += parseInt(temp[0]);
-                             tmpRecommended += parseInt(temp[1]);
+                             tmpNotification = parseInt(temp[0]);
+                             tmpRecommended = parseInt(temp[1]);
                         }
                     }
                 }

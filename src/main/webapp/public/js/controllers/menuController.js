@@ -97,7 +97,7 @@ angular.module('controller.menu', [])
                     },function(error){
                         removeMessage("msg")
                         showMessage("error",error)
-                        console.log(error);
+                        //console.log(error);
                         $('#panel-element-busca').collapse("hide");
                          $scope.schemeForm.$setPristine();
                          $scope.geneSelected = null;
@@ -107,7 +107,7 @@ angular.module('controller.menu', [])
                 }, function (error){
                     removeMessage("msg")
                     showMessage("error",error.gene)
-                    console.log(error);
+                    //console.log(error);
                 })
 
             }

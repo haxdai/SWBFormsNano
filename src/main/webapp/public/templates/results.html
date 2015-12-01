@@ -98,8 +98,8 @@
                                 <span class="glyphicon glyphicon-link" aria-hidden="true"></span> More
                             </a>
 
-                            <a  ng-if="status != 2" ng-click="accept(article.artSearch, $index)" href="" class="panel-pie-ok"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-                            <a  ng-if="status != 3"  ng-click="discard(article.artSearch, $index)"  href="" class="panel-pie-remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            <a  ng-if="status != 2" ng-click="accept(article.artSearch, $index + 1 +(limit*(pag-1)),$index)" href="" class="panel-pie-ok"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                            <a  ng-if="status != 3"  ng-click="discard(article.artSearch, $index + 1 +(limit*(pag-1)),$index)"  href="" class="panel-pie-remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 
                         </div>
                     </div>

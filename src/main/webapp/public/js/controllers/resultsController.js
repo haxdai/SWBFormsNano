@@ -67,16 +67,16 @@ angular.module('controller.results', [])
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
             }
 
-            $scope.discard = function (art_search, i) {
+            $scope.discard = function (art_search, i,index) {
                 var statusPrev = art_search.status;
                 art_search.status = 3;
                 Art_Search.update(art_search).then(function () {
-                    $('#panel-element-00' + (i + 1)).on('hidden.bs.collapse', function () {
-                        $('#panel-element-00' + (i + 1)).off('hidden.bs.collapse')
-                        $scope.articleList.splice(i, 1);
+                    $('#panel-element-00' + (i )).on('hidden.bs.collapse', function () {
+                        $('#panel-element-00' + (i)).off('hidden.bs.collapse')
+                        $scope.articleList.splice(index, 1);
                         $scope.$digest()
                     })
-                    $('#panel-element-00' + (i + 1)).collapse("hide");
+                    $('#panel-element-00' + (i)).collapse("hide");
 
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     if (art_search.ranking > 5) {
@@ -95,16 +95,17 @@ angular.module('controller.results', [])
                 })
             }
 
-            $scope.accept = function (art_search, i) {
+            $scope.accept = function (art_search, i,index) {
+                console.log(i);
                 var statusPrev = art_search.status;
                 art_search.status = 2;
                 Art_Search.update(art_search).then(function () {
-                    $('#panel-element-00' + (i + 1)).on('hidden.bs.collapse', function () {
-                        $('#panel-element-00' + (i + 1)).off('hidden.bs.collapse')
-                        $scope.articleList.splice(i, 1);
+                    $('#panel-element-00' + (i )).on('hidden.bs.collapse', function () {
+                        $('#panel-element-00' + (i)).off('hidden.bs.collapse')
+                        $scope.articleList.splice(index, 1);
                         $scope.$digest()
                     })
-                    $('#panel-element-00' + (i + 1)).collapse("hide");
+                    $('#panel-element-00' + (i)).collapse("hide");
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     if (art_search.ranking > 5) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
@@ -153,7 +154,7 @@ angular.module('controller.results', [])
             }
             
             $scope.filterChange = function () {
-                if($scope.filterSelected == "title" ||$scope.filterSelected == "autor" ){
+                if($scope.filterSelected == "titleSort" ||$scope.filterSelected == "autorSort" ){
                      $scope.filterToogle(true, $scope.filterSelected)
                 }else{
                      $scope.filterToogle(false, $scope.filterSelected)
