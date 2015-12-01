@@ -11,7 +11,7 @@
         </ol>
         <div class="carousel-inner" role="listbox">
             <div ng-repeat="image in galleryImages" class="item" ng-class="{active:$index==0}">
-                <img  ng-src="public/img/{{image.src[0].id}}" />
+                <img class="text-center" ng-src="public/img/{{image.src[0].id}}" />
                 <div class="carousel-caption">
                     <h4>{{image.title}}</h4>
                     <a  target="_blank" href="http://{{image.link}}" >{{image.text}}</a>

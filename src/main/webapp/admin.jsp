@@ -14,9 +14,7 @@
         <!--    Nano css     -->
 
         <link href="/public/css/nanoadmin.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript">
 
-        </script>
     </head>
     <body ng-app="NanoApp">
         <div class="top-admin">
@@ -43,7 +41,7 @@
             <script type="text/javascript">
                 eng.initPlatform("/test/NanoSources.js");
                 
-               eng.createForm({
+               var imageForm = eng.createForm({
                     width: "97%",
                     height: "100px",
                     showTabs: false,

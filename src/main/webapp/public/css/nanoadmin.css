@@ -14,3 +14,41 @@ body{
     margin: 16px;
     position: relative;
 }
+.top-config { 
+    float:right; 
+    font-size:14px; 
+    color:#FFF;  
+    text-align:center; 
+    border-radius:4px; 
+    background:#6b9baf;
+    border:none;
+    padding: .75em 1.5em;
+    margin: 0.5em;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 1.42857143;
+} 
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url('../libs/bootstrap/dist/fonts/glyphicons-halflings-regular.eot');
+  src: url('../libs/bootstrap/dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../libs/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../libs/bootstrap/dist/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../libs/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../libs/bootstrap/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-home:before {
+    content: "\e021";
+}
+.glyphicon-log-out:before {
+    content: "\e163";
+}

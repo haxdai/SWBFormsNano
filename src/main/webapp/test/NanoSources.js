@@ -126,7 +126,7 @@ eng.dataSources["Search"] = {
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "notification", title: "Número de notificaciones", type: "int"},
-          {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
+        {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
     ]
 };
 
@@ -193,12 +193,11 @@ eng.dataSources["User"] = {
     displayField: "name",
     fields: [
         {name: "name", title: "Fullname", type: "string"},
-        {name: "email", title: "Email", type: "string", required: true, validators:[{stype:"email"}]},
+        {name: "email", title: "Email", type: "string", required: true, validators: [{stype: "email"}]},
         {name: "password", title: "Password", type: "password", required: true},
-        {name: "role", title: "Rol", stype: "select", dataSource:"Role"},//stype: "select"
-        
+        {name: "role", title: "Rol", stype: "select", dataSource: "Role"}, //stype: "select"
+
     ],
-    
 };
 
 eng.dataProcessors["GeneProcessor"] = {
@@ -219,7 +218,7 @@ eng.dataProcessors["GeneProcessor"] = {
             b[0] = gen;
             var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
             var isValid = utils.isValidObject("Gene", a, b, null, null);
-            
+
             if (isValid === true) {
                 var defGen = search.getGeneInfo(gen);
                 if (defGen !== null) {
@@ -273,7 +272,7 @@ eng.dataSources["Configuration"] = {
     fields: [
         {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "string"}
     ]
-}; 
+};
 
 eng.dataServices["GeneService"] = {
     dataSources: ["Gene"],
@@ -309,29 +308,38 @@ eng.dataServices["SearchService"] = {
             var altMolecular = this.getDataSource("AlterationMolecular").
                     fetchObjById(response.data.altMolecular).name;
 
-            var dataArt = search.getPublicationsInfo(gene, altMolecular, response.data.artYearsOld, 0);//
-            if (dataArt !== null) {
-                var jsonArt = JSON.parse(dataArt);
-                if (jsonArt.outstanding != null) {
-                    var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-                    var res = utils.saveNewArticles(dataArt, response.data._id);
-                    var temp = new Array();
-                    temp = res.split(",");
-                    if (temp !== null && temp.length === 2) {
-                        response.data.notification = parseInt(temp[0]); 
-                        response.data.recommended = parseInt(temp[1]); 
-                    }
-                } else if (jsonArt.error != null) {
-                    //print("En error!!!" + jsonArt.error.error)
-                    this.getDataSource("Search").removeObjById(response.data._id);
-                    response.status = -2;
-                    if ("COMMUNICATION_PROBLEM".equals(jsonArt.error.error)) {
-                        response.msgError = "A communications error happened, please try again later";
-                    } else if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
-                        response.msgError = "No information was found for your search scheme";
+            var monthInc = 6;
+            var months = response.data.artYearsOld * 12;
+            var tmpNotification = 0;
+            var tmpRecommended = 0;
+            for (m = 0; m < months; m += monthInc) {
+                var dataArt = search.getPublicationsInfo(gene, altMolecular, 0, 0,m, m+monthInc);//
+                if (dataArt !== null) {
+                    var jsonArt = JSON.parse(dataArt);
+                    if (jsonArt.error != null) {
+                        //print("En error!!!" + jsonArt.error.error)
+                        this.getDataSource("Search").removeObjById(response.data._id);
+                        response.status = -2;
+                        if ("COMMUNICATION_PROBLEM".equals(jsonArt.error.error)) {
+                            response.msgError = "A communications error happened, please try again later";
+                        } else if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
+                            response.msgError = "No information was found for your search scheme";
+                        }
+                        break;
+                    } else if (jsonArt.outstanding != null) {
+                        var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                        var res = utils.saveNewArticles(dataArt, response.data._id);
+                        var temp = new Array();
+                        temp = res.split(",");
+                        if (temp !== null && temp.length === 2) {
+                             tmpNotification += parseInt(temp[0]);
+                             tmpRecommended += parseInt(temp[1]);
+                        }
                     }
                 }
             }
+            response.data.notification = tmpNotification;
+            response.data.recommended = tmpRecommended;
         }
         return request;
     }
@@ -349,4 +357,4 @@ eng.dataSources["Images"] = {
     ]
 };
 
-eng.validators["email"] = {type:"regexp", expression:"^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$",errorMessage:"No es un correo electrónico válido"};
+eng.validators["email"] = {type: "regexp", expression: "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$", errorMessage: "No es un correo electrónico válido"};

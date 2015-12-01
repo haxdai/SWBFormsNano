@@ -933,11 +933,11 @@ var eng =  {
         {
             var submit = isc.IButton.create(
                     {
-                        title: "Guardar",
+                        title: "Save",
                         click: function (p1) {
                             //eng.submit(p1.target.form);
                             formsubmit = p1.target.form;
-                            isc.confirm("¿Desea guardar la información?", "value = value ? 'OK' : 'Cancel'; if(value == 'OK'){eng.submit(formsubmit);}");
+                            isc.confirm("¿Desea guardar la información?", "value = value ? 'OK' : 'Cancel'; if(value == 'OK'){eng.submit(formsubmit);formsubmit.clearValues();}");
                         }
                     });
 /*
