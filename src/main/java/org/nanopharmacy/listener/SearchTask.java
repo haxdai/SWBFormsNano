@@ -97,7 +97,7 @@ public class SearchTask extends TimerTask {
                     ESearchImpl entrez = new ESearchImpl();
                     try {
                         JSONObject articles2Update = entrez.getPublicationsInfo(geneSymbol, 
-                                molAlteration.replaceAll(" ", ""), 0, daysFromLastUpdate);
+                                molAlteration.replaceAll(" ", ""), 0, daysFromLastUpdate, (short) 0, (short) 0);
                         if (articles2Update.getJSONArray("outstanding").length() > 0 ||
                                 articles2Update.getJSONArray("rejected").length() > 0) {
                                 Utils.ENG.saveUpdateArticles(articles2Update, searchId);
