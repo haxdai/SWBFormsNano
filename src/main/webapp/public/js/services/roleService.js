@@ -9,7 +9,6 @@ angular.module('service.role', [])
                 if(!id){
                     id=""
                 }
-                console.log(id)
                 ds.fetchObjById(id, function (response) {
                     if (response) {
                         deferred.resolve(response);

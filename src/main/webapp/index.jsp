@@ -112,7 +112,6 @@
     </script>
     <script type="text/javascript">
             function checkRezise() {
-                console.log($(".query-check").width())
                 if (parseInt($(".query-check").width()) === 1) { //Escritorio
                     $("#wrapper").addClass("toggled");
                     $("#menu-toggle").removeClass("menu-toggle-off");
@@ -161,7 +160,6 @@
                             try {
                                 JSON.parse(this.response)
                             } catch (e) {
-                                console.log(this.response)
                                 if(this.response.search("valid-this-is-login-view")>=0){
                                     window.location = "/login"
                                 }

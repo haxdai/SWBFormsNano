@@ -48,7 +48,6 @@ angular.module('controller.menu', [])
                 searchList.forEach(function (search, i) {
                     $scope.searchList.push(search);
                     Art_Search.listbyStatusSearchId(search._id).then(function(artSearchList){
-                        console.log(artSearchList)
                         $scope.searchList[i].noArts = artSearchList.length;
                     })
                     Gene.byId(search.gene).then(function (gene) {

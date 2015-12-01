@@ -9,7 +9,6 @@ angular.module('controller.galery', ['angular-carousel'])
             $scope.galleryImages = [];  
             Image.list().then(function(imagesList){
                 $scope.galleryImages = imagesList;   
-                console.log(imagesList)
             },function(error){
                 console.log(error)
             })

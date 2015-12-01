@@ -35,7 +35,7 @@
                     <p ng-bind="statuslist[status]"></p>
                 </div>
                 <div  class="col-sm-4">
-                    <ul  ng-if="(maxPage > 1)" class ="pagination clearfix">
+                    <ul  ng-if="(totalRowsFinal > 1)" class ="pagination clearfix">
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="firts()" href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
                         
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
@@ -70,7 +70,7 @@
                     <div class="panel-heading">
                         <ol start="{{$index + 1 +(limit*(pag-1))}} ">
                             <li>
-                                <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-00{{$index + 1 +(limit*(pag-1))}}">
+                                <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 +(limit*(pag-1))}}">
                                     <div class="panel-text-title">{{article.article.title}}</div>
                                     <div class="panel-califica">
                                         <span class="glyphicon glyphicon-menu-up"></span>
@@ -87,7 +87,7 @@
                             </li>
                         </ol>
                     </div>
-                    <div id="panel-element-00{{$index + 1 +(limit*(pag-1))}}" class="panel-collapse collapse">
+                    <div id="p{{$index + 1 +(limit*(pag-1))}}" class="panel-collapse collapse">
 
                         <div class="panel-body">
                             <p ng-bind-html="article.article.abstract | sanitize"></p>

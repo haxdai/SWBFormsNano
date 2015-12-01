@@ -71,14 +71,15 @@ angular.module('controller.results', [])
                 var statusPrev = art_search.status;
                 art_search.status = 3;
                 Art_Search.update(art_search).then(function () {
-                    $('#panel-element-00' + (i )).on('hidden.bs.collapse', function () {
-                        $('#panel-element-00' + (i)).off('hidden.bs.collapse')
+                    $('#p' + (i )).on('hidden.bs.collapse', function () {
+                        $('#p' + (i)).off('hidden.bs.collapse')
                         $scope.articleList.splice(index, 1);
                         $scope.$digest()
                     })
-                    $('#panel-element-00' + (i)).collapse("hide");
+                    $('#p' + (i)).collapse("hide");
 
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
+                    $scope.totalRowsFinal--;
                     if (art_search.ranking > 5) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
@@ -100,13 +101,14 @@ angular.module('controller.results', [])
                 var statusPrev = art_search.status;
                 art_search.status = 2;
                 Art_Search.update(art_search).then(function () {
-                    $('#panel-element-00' + (i )).on('hidden.bs.collapse', function () {
-                        $('#panel-element-00' + (i)).off('hidden.bs.collapse')
+                    $('#p' + (i )).on('hidden.bs.collapse', function () {
+                        $('#p' + (i)).off('hidden.bs.collapse')
                         $scope.articleList.splice(index, 1);
                         $scope.$digest()
                     })
-                    $('#panel-element-00' + (i)).collapse("hide");
+                    $('#p' + (i)).collapse("hide");
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
+                    $scope.totalRowsFinal--;
                     if (art_search.ranking > 5) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
@@ -171,12 +173,11 @@ angular.module('controller.results', [])
                     }
                 }
                 Article.listBySearchId(searchId, status, orderBy, pag, ele).then(function (artSearchList) {
-
+                    
                     $scope.totalRowsFinal =  $scope.totalRows = artSearchList.totalRows;
                     $scope.limit = artSearchList.limit;
                     $scope.maxPage = Math.ceil($scope.totalRows / $scope.limit);
                     artSearchList.data.forEach(function (art) {
-                        //console.log(art)
                         if (art.artSearch.status == 1) {
                             if (art.artSearch.ranking > 5) {
                                 art.artSearch.status = 4;
@@ -193,7 +194,7 @@ angular.module('controller.results', [])
                     });
                 }, function (error) {
                     if (error == "No data") {
-                        $scope.maxPage = 0;
+                        //$scope.maxPage = 0;
                     }
                 });
 
