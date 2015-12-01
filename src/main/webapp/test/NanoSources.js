@@ -18,12 +18,19 @@ eng.dataSources["Gene"] = {
                         var search = new esearch();
                         //var isValid = search.hasGeneBD(value);
                         var isValid = search.getGeneInfo(value);
+                        var jsonObj = JSON.parse(isValid);
+                        if (jsonObj.error != null) {
+                            if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
+                                isValid = null;
+                            }
+                        }
                         if (isValid === null)
                             return false;
                     },
                     errorMessage: "The gene was not found on NCBI data bases, please check the spelling."
                 },
-                {type: "isUnique", //serverCustom del lado del servidor
+                {
+                    type: "isUnique", //serverCustom del lado del servidor
                     errorMessage: "This gene already exists."
                 }
             ]
@@ -211,15 +218,15 @@ eng.dataProcessors["GeneProcessor"] = {
             var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
             var search = new esearch();
 
-            var StringArrayType = Java.type("java.lang.String[]");
-            var a = new StringArrayType(1);
-            var b = new StringArrayType(1);
-            a[0] = "symbol";
-            b[0] = gen;
-            var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-            var isValid = utils.isValidObject("Gene", a, b, null, null);
-
-            if (isValid === true) {
+//            var StringArrayType = Java.type("java.lang.String[]");
+//            var a = new StringArrayType(1);
+//            var b = new StringArrayType(1);
+//            a[0] = "symbol";
+//            b[0] = gen;
+//            var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+            //var isValid = utils.isValidObject("Gene", a, b, null, null);
+            
+            //if (isValid === true) {
                 var defGen = search.getGeneInfo(gen);
                 if (defGen !== null) {
                     var obj = JSON.parse(defGen);
@@ -246,14 +253,14 @@ eng.dataProcessors["GeneProcessor"] = {
                     action = null;
                     return;
                 }
-            }
-            else {
-                request.data.symbol = null;
-                request = null;
-                dataSource = null;
-                action = null;
-                return;
-            }
+//            }
+//            else {
+//                request.data.symbol = null;
+//                request = null;
+//                dataSource = null;
+//                action = null;
+//                return;
+//            }
         } else {
             request.data.symbol = null;
             request = null;
@@ -324,6 +331,8 @@ eng.dataServices["SearchService"] = {
                             response.msgError = "A communications error happened, please try again later";
                         } else if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
                             response.msgError = "No information was found for your search scheme";
+                        } else if ("EXECUTION_ERROR".equals(jsonArt.error.error)) {
+                            response.msgError = "An execution error happened while gathering information for your search scheme";
                         }
                         break;
                     } else if (jsonArt.outstanding != null) {
