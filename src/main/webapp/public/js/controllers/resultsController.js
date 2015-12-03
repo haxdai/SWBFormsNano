@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('controller.results', [])
-        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene) {
+        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene,Alteration) {
             $scope.searchId = $stateParams.id;
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
@@ -21,17 +21,22 @@ angular.module('controller.results', [])
             $scope.sortBy = "-ranking";
             $scope.limit;
             $scope.gene;
+            $scope.alt;
+            $scope.search;
             $scope.reorderClass = "glyphicon-sort-by-attributes";
              $scope.isReorderToggle = false;
             $scope.articleList = [];
             $scope.filterSelected = "ranking"
 
-
-
             Search.byId($scope.searchId).then(function (search) {
+                 $scope.search = search ;
                 Gene.byId(search.gene).then(function (gene) {
                     $scope.gene = gene;
                 })
+                Alteration.byId(search.altMolecular).then(function (alte) {
+                    $scope.alt = alte;
+                });
+                
             }, function (error) {
                 console.log(error)
             })
@@ -84,6 +89,7 @@ angular.module('controller.results', [])
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
                     if (statusPrev == 1) {
+                        
                         $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);
                     } else {
                         if ($scope.maxPage < $scope.pag) {

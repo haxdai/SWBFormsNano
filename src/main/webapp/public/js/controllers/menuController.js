@@ -18,7 +18,7 @@ angular.module('controller.menu', [])
                 var filterList = $scope.filterPattern || "";
                 return list.filter(function (e) {
                     return filterList.split(",").every(function (f) {
-                        var s = e.geneSymbol + " ; " + e.alteName
+                        var s = e.geneSymbol + " ; " + e.alteName + " ; " + e.artYearsOld+"Y";
                         return new RegExp(f.toLowerCase().trim()).test(s.toLowerCase());
                     })
                 });

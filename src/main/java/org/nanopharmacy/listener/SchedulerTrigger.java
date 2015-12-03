@@ -31,7 +31,7 @@ public class SchedulerTrigger implements ServletContextListener {
         try {
             Scheduler scheduler = Scheduler.getInstance();
             scheduler.programTask();
-            SWBScriptEngine engine = DataMgr.getUserScriptEngine("/test/NanoSources.js", null, false);
+            SWBScriptEngine engine = DataMgr.getUserScriptEngine("/WEB-INF/NanoSources.js", null, false);
             SWBDataSource dataUser = engine.getDataSource("User");
             SWBDataSource dataRole = engine.getDataSource("Role");
             SWBDataSource dataImages = engine.getDataSource("Images");

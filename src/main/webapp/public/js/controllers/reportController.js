@@ -8,7 +8,9 @@ angular.module('controller.report', ['angular-carousel'])
             $scope.articleList = [];
             $scope.gene;
             $scope.alt;
-            $scope.orderBy = "title"
+            $scope.search;
+            
+            $scope.orderBy = "-ranking"
             var MSG_REPORT_SAVED = "The report document has been saved correctly";
             var MSG_REPORT_UPDATED = "The report document has been updated correctly";
             var ERROR_REPORT_EMPTY = "A report without interpretation or without reference documents can not being printed, please provide an interpretation and check if there are documents in accepted documents folder.";
@@ -22,10 +24,12 @@ angular.module('controller.report', ['angular-carousel'])
             }
             
             Search.byId($scope.searchId).then(function (search) {
+                $scope.search = search;
+                 console.log(search)
                 Gene.byId(search.gene).then(function (gene) {
                     $scope.gene = gene;
                 })
-                Alteration.byId(search.alt).then(function (alt) {
+                Alteration.byId(search.altMolecular).then(function (alt) {
                     $scope.alt = alt;
                 })
             }, function (error) {
@@ -78,6 +82,7 @@ angular.module('controller.report', ['angular-carousel'])
 
 
             updateResults($scope.searchId, $scope.status,$scope.orderBy);
+            
             $("#menu-toggle").click(function (e) {
                 $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();

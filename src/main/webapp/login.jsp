@@ -9,15 +9,8 @@
         <!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"-->
         <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link  href="/public/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="/public/css/nanopharmacia.css" rel="stylesheet">
+        <link href="/public/dist/style.css" rel="stylesheet">
 
-        <script src="/swbforms/js/eng.js" type="text/javascript"></script>
-        <script src="/public/libs/angular/angular.min.js" ></script>
-        <script src="/public/libs/crypto-js/sha512.js" ></script>
-        <script type="text/javascript">
-            eng.initPlatform("/test/NanoSources.js");
-            eng.dataSourceServlet = "/dslogin";
-        </script> 
     </head>
     <body ng-controller="loginController" class="login valid-this-is-login-view">
         <div class="container-fluid">
@@ -27,11 +20,11 @@
                     <form role="form">
                         <div class="form-group">
                             <div class="row clearfix">
-                                 <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 loginlabel">
-                
+                                <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 loginlabel">
+
                                 </div>
-                                 <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
-                                     <div ng-show="alert" class="alert alert-danger" ng-bind="alert"></div>
+                                <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
+                                    <div ng-show="alert" class="alert alert-danger" ng-bind="alert"></div>
                                 </div>
                             </div>
                             <div class="row clearfix">
@@ -69,6 +62,16 @@
             </div>
         </div>
     </body>
+
+    <script src="/public/libs/jquery/dist/jquery.min.js" ></script>
+    <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js" ></script>
+    <script src="/swbforms/js/eng.js" type="text/javascript"></script>
+    <script src="/public/libs/angular/angular.min.js" ></script>
+    <script src="/public/libs/crypto-js/sha512.js" ></script>
+    <script type="text/javascript">
+        eng.initPlatform("/public/dist/NanoSources.js");
+        eng.dataSourceServlet = "/dslogin";
+    </script> 
     <script type="text/javascript">
         'use strict';
         angular.module('NanoLogin', [])
@@ -83,11 +86,8 @@
                                     $window.location.href = '/';
                                 }
                             });
-
                         }
                     }
                 });
     </script>
-    <script src="/public/libs/jquery/dist/jquery.min.js" ></script>
-    <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js" ></script>
 </html>

@@ -4,7 +4,7 @@ angular.module('service.config', [])
         .service('Config', function ($http, $q) {
 
             this.publicationDates = function () {
-                return [{year: 1, text: "1 year"}, {year: 3, text: "3 Years"}, {year: 5, text: "5 Years"}, {year: 10, text: "10 Years"}];
+                return [{year: 1, text: "1 year"}, {year: 2, text: "2 Years"}, {year: 3, text: "3 Years"}, {year: 5, text: "5 Years"}];
             };
 
             this.rateUpdate = function () {

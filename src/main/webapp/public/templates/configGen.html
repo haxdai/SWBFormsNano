@@ -102,8 +102,8 @@
                             <input required="" class="form-control"   ng-show="addingAlt || editingAlt" type="text" ng-model="alterationName" name="alterationName"/>
                         </div>
                         <div  ng-show="addingAlt || editingAlt" class="form-group ">
-                            <label class="control-label"  ng-show="addingAlt || editingAlt" >Aliases:</label>
-                            <textarea  required="" class="form-control"   ng-show="addingAlt || editingAlt" type="text" ng-model="aliase" /></textarea>
+                            <label class="control-label"  ng-show="addingAlt || editingAlt" >Aliases: <span title="Enter alias separated by commas"  class="glyphicon glyphicon-question-sign"></span></label>
+                            <textarea  required="" class="form-control"  ng-show="addingAlt || editingAlt" type="text" ng-model="aliase" /></textarea>
                         </div>
                         <button ng-disabled="altForm.alterationName.$invalid" ng-show="addingAlt"  ng-click="addAlteration(alterationName, aliase)" class="btn btn-default" type="button">
                             <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list

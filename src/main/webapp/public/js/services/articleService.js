@@ -57,7 +57,7 @@ angular.module('service.article', [])
                 var sortArtSearch = null;
                 var Article = this;
                 if (sortBy != null) {
-                    if (sortBy == "ranking" || sortBy == "-ranking" ) {
+                    if (sortBy == "ranking" || sortBy == "-ranking") {
                         sortArtSearch = sortBy;
                         sortBy = null;
                     }
@@ -65,24 +65,26 @@ angular.module('service.article', [])
                 Art_Search.list(searchId, status, sortArtSearch).then(function (articleIds) {
                     var articleIdsLength = articleIds.length
                     if (sortBy == null) {
-                        if (pag == -1) {
-                            articleIds = articleIds.slice(0,1) 
-                        } else {
-                            var endRow = (pag) * limit;
-                            if (ele != null) {
-                                articleIds = articleIds.slice( ((pag - 1) * limit) + limit - ele,endRow)
-                            } else {  
-                                articleIds = articleIds.slice( (pag - 1) * limit, endRow)
+                        if (pag != null) {
+                            if (pag == -1) {
+                                articleIds = articleIds.slice(0, 1)
+                            } else {
+                                var endRow = (pag) * limit;
+                                if (ele != null) {
+                                    articleIds = articleIds.slice(((pag - 1) * limit) + limit - ele, endRow)
+                                } else {
+                                    articleIds = articleIds.slice((pag - 1) * limit, endRow)
+                                }
                             }
+                            pag = null;
                         }
-                        pag = null;
                     }
                     Article.list(articleIds, sortBy, pag, ele).then(function (articleList) {
 
 
                         if (articleList && articleList.data.length > 0) {
                             if (sortBy == null) {
-                                 articleList.data = articleList.data.sort(function (a, b) {
+                                articleList.data = articleList.data.sort(function (a, b) {
                                     return (articleIds.findIndex(function (e) {
                                         return (e === a._id);
                                     }) -

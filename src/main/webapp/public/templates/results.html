@@ -5,8 +5,8 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h2>{{gene.symbol}}</h2>
-            <h3> {{gene.officialName}}</h3>
+            <h3>Search results of the gene: {{gene.symbol}}, molecular alteration:  {{alt.name}} and publication dates for {{search.artYearsOld}} year{{search.artYearsOld>1?"s":""}}</h3>
+            <h3>{{gene.symbol}} - {{gene.officialName}}</h3>
         </div>      
     </div>      
 
@@ -41,7 +41,7 @@
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
                         <li><a ng-style="pag > 0 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" href="#">{{pag}} / {{maxPage}}</a></li>
                         <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
-                        <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="last()" href="#"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></a></li>
+                        <li ><a ng-style="pag < ((maxPage)) && status!=1 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="last()" href="#"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></a></li>
                     
                     </ul>
                 </div>
@@ -90,8 +90,8 @@
                     <div id="p{{$index + 1 +(limit*(pag-1))}}" class="panel-collapse collapse">
 
                         <div class="panel-body">
-                            <p ng-bind-html="article.article.abstract | sanitize"></p>
-                            <p class="reference"><strong>Reference:</strong>{{article.article.reference}}</p>
+                            <p class="text-justify" ng-bind-html="article.article.abstract | sanitize"></p>
+                            <p class="text-justify reference"><strong>Reference:</strong>{{article.article.reference}}</p>
                         </div>
                         <div class="panel-pie clearfix">
                             <a  target="_blank" href="{{article.article.link}}" class="panel-pie-more">
