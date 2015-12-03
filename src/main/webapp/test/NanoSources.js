@@ -301,6 +301,16 @@ eng.dataServices["GeneService"] = {
     }
 };
 
+eng.dataServices["ConfigService"] = {
+    dataSources: ["Configuration"],
+    actions: ["update"],
+    service: function (request, response, dataSource, action)
+    {
+        var taskRestart = Java.type("org.nanopharmacy.listener.TaskRestarter");
+        taskRestart.reprogramAutoUpdate();
+    }
+};
+
 eng.dataServices["SearchService"] = {
     dataSources: ["Search"],
     actions: ["add"],
