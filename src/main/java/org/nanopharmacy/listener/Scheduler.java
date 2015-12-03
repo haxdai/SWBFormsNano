@@ -49,8 +49,7 @@ public class Scheduler extends Timer {
         int missingMinutes = 60 - minutes;
         int missingSeconds = 60 - seconds;
         System.out.println("Para la 1:00 am faltan:\n" + missingHours + " horas\n" + missingMinutes + " minutos\n" + missingSeconds + " segundos\n");
-        //TODO: Buscar fecha de ultima actualizacion para programar la siguiente
-        //      y la de periodicidad de actualizacion de las busquedas para compararlas
+        
         SWBScriptEngine engine = DataMgr.getUserScriptEngine("/test/NanoSources.js", null, false);
         SWBDataSource dataSearch = engine.getDataSource("Search");
         SWBDataSource dataConf = engine.getDataSource("Configuration");
@@ -99,8 +98,8 @@ public class Scheduler extends Timer {
                 delay += (daysToWait * 86400000); //dias * milisegundos en un dia
                 long period = daysInterval * 86400000;
                 System.out.println("delay: " + delay + "\nperiod: " + period);
-                //this.scheduleAtFixedRate(new SearchTask(), delay, period); //TODO: quitar comentario a esta linea
-                this.schedule(new SearchTask(), 10000, 3600000);
+                this.scheduleAtFixedRate(new SearchTask(), delay, period);
+                //this.schedule(new SearchTask(), 10000, 3600000); //TODO: quitar comentario a esta linea para pruebas
             }
         } else {
             System.out.println("No hay valores de fechas a comparar, no se programa tarea");
