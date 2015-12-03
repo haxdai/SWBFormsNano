@@ -155,6 +155,10 @@ ul[rn-carousel] {
   background: linear-gradient(#fff ,#e1eaef  );}
 .top-admin * { text-decoration: none !important;}
 
+.carousel-control.left,.carousel-control.right{
+    background-image:none!important;
+}
+
 @media (max-width:767px){
     .query-check{
         width: 0px;

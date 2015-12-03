@@ -2,13 +2,14 @@
 
 angular.module('controller.galery', ['angular-carousel'])
         .controller('GaleryController', function ($scope,Image) {
-            $('#c').carousel({
-                interval: 3000
-            })
-            
+           
             $scope.galleryImages = [];  
             Image.list().then(function(imagesList){
                 $scope.galleryImages = imagesList;   
+                 $('#c').carousel({
+                    interval: 3000
+                })
+            
             },function(error){
                 console.log(error)
             })
