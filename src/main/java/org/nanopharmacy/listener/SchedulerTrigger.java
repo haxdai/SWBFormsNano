@@ -88,7 +88,7 @@ public class SchedulerTrigger implements ServletContextListener {
             src.add(dataSrc);
             data.put("title", "Nanopharmacia");
             data.put("text", "Nanopharmacia");
-            data.put("link", "");
+            data.put("link", "nanopharmacia.com/");
             data.put("src", src);
             query.put("data", data);
             obj = dataImages.fetch(query);

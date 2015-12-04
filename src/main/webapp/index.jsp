@@ -47,7 +47,7 @@
     </body>    
     <script src="/swbforms/js/eng.js" type="text/javascript"></script>
     <script type="text/javascript">
-               eng.initPlatform("/public/NanoSources.js");
+               eng.initPlatform("/public/dist/NanoSources.js");
     </script>  
     <!--    Lib js     -->
     <script src="/public/libs/jquery/dist/jquery.min.js" ></script>

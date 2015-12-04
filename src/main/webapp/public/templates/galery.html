@@ -12,10 +12,12 @@
         <div class="carousel-inner" role="listbox">
             <div ng-repeat="image in galleryImages" class="item" ng-class="{active:$index==0}">
                 <img class="text-center" ng-src="public/img/{{image.src[0].id}}" />
-                <div class="carousel-caption">
-                    <h4>{{image.title}}</h4>
-                    <a  target="_blank" href="http://{{image.link}}" >{{image.text}}</a>
-                </div>
+                <div style="padding: 1em;" ng-if="image.link || image.text" class="carousel-caption">
+                    <h4>
+                        <a style="color: white!important;"  target="_blank" href="http://{{image.link}}" >{{image.title}}</a>
+                    </h4>
+                    
+                    </div>
             </div>
         </div> 
         <a class="left carousel-control" href="#c" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> 
