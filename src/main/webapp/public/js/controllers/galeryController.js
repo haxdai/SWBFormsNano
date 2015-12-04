@@ -1,15 +1,11 @@
 'use strict';
 
 angular.module('controller.galery', ['angular-carousel'])
-        .controller('GaleryController', function ($scope,Image) {
+        .controller('GaleryController', function ($scope,Image,$timeout) {
            
             $scope.galleryImages = [];  
             Image.list().then(function(imagesList){
                 $scope.galleryImages = imagesList;   
-                 $('#c').carousel({
-                    interval: 3000
-                })
-            
             },function(error){
                 console.log(error)
             })
@@ -18,6 +14,13 @@ angular.module('controller.galery', ['angular-carousel'])
                 {src: "/public/img/imagen-02.jpg", text: "Descripcion de la imagen", title:"Titulo" ,link: "www.google.com"},
                 {src: "/public/img/imagen-03.jpg", text: "Descripcion de la imagen", title:"Titulo" ,link: "www.google.com"}
             ]*/
+            $timeout(function(){
+                console.log("Carrusel")
+               $('#c').carousel({
+                    interval: 3000
+                })
+            },3000)
+            
             $("#menu-toggle").click(function (e) {
                   $("#menu-toggle").removeClass("menu-toggle-off-fixed");
                 e.preventDefault();
