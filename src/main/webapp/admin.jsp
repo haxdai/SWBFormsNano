@@ -21,7 +21,7 @@
         <div class="container">
             <h2>User's administration</h2>
             <script type="text/javascript">
-                  eng.initPlatform("/public/dist/NanoSources.js");
+                  eng.initPlatform("/public/NanoSources.js");
                 eng.createGrid({
                     width: "97%",
                     height: "200px",
@@ -33,7 +33,7 @@
             </script>
             <h2>Image's administration</h2>
             <script type="text/javascript">
-               eng.initPlatform("/test/NanoSources.js");
+               eng.initPlatform("/public/NanoSources.js");
                var imageForm = eng.createForm({
                     width: "97%",
                     height: "100px",

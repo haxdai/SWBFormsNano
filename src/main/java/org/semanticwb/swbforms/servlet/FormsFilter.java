@@ -68,7 +68,7 @@ public class FormsFilter implements Filter {
             if (validateRole) {
                 if (null != user && user.containsKey("role")) {
                     userRoleId = user.getString("role");
-                    SWBScriptEngine engine = DataMgr.getUserScriptEngine("/test/NanoSources.js", null, false);
+                    SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/NanoSources.js", null, false);
                     SWBDataSource dsRole = engine.getDataSource("Role");
                     DataObject queryRole = new DataObject();
                     DataObject dataRole = new DataObject();

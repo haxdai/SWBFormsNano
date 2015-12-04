@@ -51,7 +51,7 @@ public class Scheduler extends Timer {
         System.out.println("Para la 1:00 am faltan:\n" + missingHours + " horas\n" + missingMinutes + " minutos\n" + missingSeconds + " segundos\n");
         //TODO: Buscar fecha de ultima actualizacion para programar la siguiente
         //      y la de periodicidad de actualizacion de las busquedas para compararlas
-        SWBScriptEngine engine = DataMgr.getUserScriptEngine("/WEB-INF/NanoSources.js", null, false);
+        SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/NanoSources.js", null, false);
         SWBDataSource dataSearch = engine.getDataSource("Search");
         SWBDataSource dataConf = engine.getDataSource("Configuration");
         DataObject query = new DataObject();

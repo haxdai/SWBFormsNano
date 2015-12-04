@@ -37,7 +37,7 @@ public class SearchTask extends TimerTask {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSz");
         DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("------------- Ejecutando Tarea Programada: " + format.format(now));
-        SWBScriptEngine engine = DataMgr.getUserScriptEngine("/WEB-INF/NanoSources.js", null, false);
+        SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/NanoSources.js", null, false);
         SWBDataSource dsSearch = engine.getDataSource("Search");
         SWBDataSource dsGene = engine.getDataSource("Gene");
         SWBDataSource dsMA = engine.getDataSource("AlterationMolecular");

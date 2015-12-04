@@ -69,7 +69,7 @@
     <script src="/public/libs/angular/angular.min.js" ></script>
     <script src="/public/libs/crypto-js/sha512.js" ></script>
     <script type="text/javascript">
-        eng.initPlatform("/public/dist/NanoSources.js");
+        eng.initPlatform("/public/NanoSources.js");
         eng.dataSourceServlet = "/dslogin";
     </script> 
     <script type="text/javascript">
