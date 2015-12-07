@@ -283,58 +283,6 @@ eng.dataServices["GeneService"] = {
 
     }
 };
-/*eng.dataServices["SearchService"] = {
- dataSources: ["Search"],
- actions: ["add"],
- service: function (request, response, dataSource, action)
- {
- if (response.data._id !== null && response.data._id !== "" && response.data.gene !== null &&
- response.data.gene !== "" && response.data.altMolecular !== null &&
- response.data.altMolecular !== "") {
- var esearch = Java.type("org.nanopharmacy.eutility.impl.ESearchImpl");
- var search = new esearch();
- var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
- var altMolecular = this.getDataSource("AlterationMolecular").
- fetchObjById(response.data.altMolecular).name;
- 
- var monthInc = 6;
- var months = response.data.artYearsOld * 12;
- var tmpNotification = 0;
- var tmpRecommended = 0;
- for (m = 0; m < months; m += monthInc) {
- var dataArt = search.getPublicationsInfo(gene, altMolecular, 0, 0,m, m+monthInc);//
- if (dataArt !== null) {
- var jsonArt = JSON.parse(dataArt);
- if (jsonArt.error != null) {
- //print("En error!!!" + jsonArt.error.error)
- this.getDataSource("Search").removeObjById(response.data._id);
- response.status = -2;
- if ("COMMUNICATION_PROBLEM".equals(jsonArt.error.error)) {
- response.msgError = "A communications error happened, please try again later";
- } else if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
- response.msgError = "No information was found for your search scheme";
- } else if ("EXECUTION_ERROR".equals(jsonArt.error.error)) {
- response.msgError = "An execution error happened while gathering information for your search scheme";
- }
- break;
- } else if (jsonArt.outstanding != null) {
- var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
- var res = utils.saveNewArticles(dataArt, response.data._id, tmpNotification, tmpRecommended);
- var temp = new Array();
- temp = res.split(",");
- if (temp !== null && temp.length === 2) {
- tmpNotification = parseInt(temp[0]);
- tmpRecommended = parseInt(temp[1]);
- }
- }
- }
- }
- response.data.notification = tmpNotification;
- response.data.recommended = tmpRecommended;
- }
- return request;
- }
- };*/
 
 eng.dataServices["ConfigService"] = {
     dataSources: ["Configuration"],
@@ -379,8 +327,8 @@ eng.dataServices["SearchService"] = {
         }
         return request;
     }
-}
-;
+};
+
 eng.dataSources["Images"] = {
     scls: "Images",
     modelid: "NanoPharmacy",
