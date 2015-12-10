@@ -75,7 +75,7 @@
                     </div>
                     <div id="panel-element-00{{$index + 1}}" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <p class="noprint" >{{article.article.abstract}}</p>
+                            <p class="noprint" ng-bind-html="article.article.abstract | sanitize"></p>
                             <p class="noprint"><strong>Reference:</strong>{{article.article.reference}}</p>
 
                         </div>
