@@ -1,7 +1,6 @@
 package org.nanopharmacy.listener;
 
 import java.io.IOException;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
@@ -14,20 +13,28 @@ import org.semanticwb.datamanager.SWBDataSource;
 import org.semanticwb.datamanager.SWBScriptEngine;
 
 /**
- * Programa la ejecucion de las peticiones automaticas a la API Entrez para
+ * Solicita la programacion de la ejecucion de las peticiones automaticas a la API Entrez para
  * recuperar la informacion de los articulos correspondientes a los esquemas de
- * busqueda registrados.
- *
+ * busqueda registrados. Ademas de generar en base de datos, los roles basicos, el usuario administrador
+ * y las imagenes por defecto del carrusel, en caso de no existir.
  * @author jose.jimenez
  */
 @WebListener
 public class SchedulerTrigger implements ServletContextListener {
 
-    static Logger log = Logger.getLogger(SchedulerTrigger.class.getName());
+    /** Instancia del objeto para escribir en bitacora de la aplicacion */
+    private static final Logger LOG = Logger.getLogger(SchedulerTrigger.class.getName());
 
+    /**
+     * Prepara la instancia de la aplicacion para su correcto funcionamiento. Solicita la ejecucion
+     * de la programacion de la tarea que actualizara periodicamente las busquedas y crea en base de datos
+     * registros de los roles, el usuario administrador e imagenes por defecto del carrusel, en caso de ser
+     * necesario.
+     * @param sce evento de contexto de la aplicacion
+     */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
+        
         try {
             Scheduler scheduler = Scheduler.getInstance();
             scheduler.programTask();
@@ -135,10 +142,14 @@ public class SchedulerTrigger implements ServletContextListener {
              }*/
 
         } catch (IOException ex) {
-            Logger.getLogger(SchedulerTrigger.class.getName()).log(Level.SEVERE, null, ex);
+            SchedulerTrigger.LOG.log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Cancela la ejecucion de la tarea programada antes de la destruccion del contexto de la aplicacion
+     * @param sce evento del contexto de la aplicacion
+     */
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
 

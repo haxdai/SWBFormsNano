@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.TimerTask;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONObject;
 import org.semanticwb.datamanager.DataList;
@@ -27,10 +26,17 @@ import org.nanopharmacy.utils.Utils;
 public class SearchTask extends TimerTask {
 
     /**
-     * numero de dias adicionales al periodo de frecuencia con que se actualiza la informacion de los articulos de las busquedas
+     * Numero de dias adicionales al periodo de frecuencia con que se actualiza la informacion de los articulos de las busquedas
      */
-    private static int PIQUITO = 15;
+    private static final int PIQUITO = 15;
     
+    /** Instancia del objeto para escribir en bitacora de la aplicacion */
+    private static final Logger LOG = Logger.getLogger(SearchTask.class.getName());
+    
+    /**
+     * Realiza peticiones de informacion a la api de Entrez por cada esquema de busqueda disponible
+     * en la base de datos.
+     */
     @Override
     public void run() {
         Date now = new Date(System.currentTimeMillis());
@@ -95,25 +101,31 @@ public class SearchTask extends TimerTask {
                             geneSymbol + "\n   alteracion: " + molAlteration +
                             "\n   fecha: " + since + "\n   num. dias: " + daysFromLastUpdate);
                     ESearchImpl entrez = new ESearchImpl();
-                    try {
-                        JSONObject articles2Update = entrez.getPublicationsInfo(geneSymbol, 
-                                molAlteration.replaceAll(" ", ""), 0, daysFromLastUpdate, (short) 0, (short) 0);
-                        if (articles2Update.getJSONArray("outstanding").length() > 0 ||
-                                articles2Update.getJSONArray("rejected").length() > 0) {
-                                Utils.ENG.saveUpdateArticles(articles2Update, searchId);
+                    if (geneSymbol != null && molAlteration != null) {
+                        try {
+                            JSONObject articles2Update = entrez.getPublicationsInfo(geneSymbol, 
+                                    molAlteration.replaceAll(" ", ""), 0, daysFromLastUpdate, (short) 0, (short) 0);
+                            if (articles2Update.getJSONArray("outstanding").length() > 0 ||
+                                    articles2Update.getJSONArray("rejected").length() > 0) {
+                                    Utils.ENG.saveUpdateArticles(articles2Update, searchId);
+                            }
+                        } catch (NoDataException nde) {
+                            String msg = "Tarea programada - No se encontro informacion para actualizar. " + nde.getMessage();
+                            SearchTask.LOG.info(msg);
+                        } catch (UseHistoryException uhe) {
+                            String msg = "Tarea programada - Problema con la extraccion de informacion. " + uhe.getMessage();
+                            SearchTask.LOG.warning(msg);
+                        } catch(InterruptedException ex) {
+                            String msg = "Error al actualizar articulos: " + ex.getMessage();
+                            SearchTask.LOG.severe(msg);
                         }
-                    } catch (NoDataException nde) {
-                        System.out.println("Tarea programada - No se encontro informacion para actualizar. " + nde.getMessage());
-                    } catch (UseHistoryException uhe) {
-                        System.out.println("Tarea programada - Problema con la extraccion de informacion. " + uhe.getMessage());
-                    } catch(InterruptedException ex) {
-                        System.out.println("Error al actualizar articulos: " + ex.getMessage());
                     }
                 }
                 
             }
         } catch (IOException ioe) {
-            System.out.println("Tarea programada - Problema con lectura de info en BD. " + ioe.getMessage());
+            String msg = "Tarea programada - Problema con lectura de info en BD. " + ioe.getMessage();
+            SearchTask.LOG.severe(msg);
         }
     }
     
