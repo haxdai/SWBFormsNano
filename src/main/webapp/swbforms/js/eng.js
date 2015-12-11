@@ -1634,9 +1634,9 @@ var eng =  {
                 eng.utils.filterObj(obj);
                 return this.remove({data: obj},callback);
             },
-            removeObjById: function (id)
+            removeObjById: function (id,callback)
             {
-                return this.removeObj({"_id": id});
+                return this.removeObj({"_id": id},callback);
             },
             validate: function (data, callback)
             {

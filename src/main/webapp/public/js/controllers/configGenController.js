@@ -76,6 +76,18 @@ angular.module('controller.configGen', [])
                     }
                 })
             }
+            $scope.removeDisease =  function (dis) {
+                $scope.cancerList.forEach(function (c, i) {
+                    if (c._id == dis._id) {
+                        Gene_Cancer.byGeneIdCancerId($scope.geneId, dis._id).then(function(geneCancer){
+                            Gene_Cancer.remove(geneCancer[0]._id).then(function(){
+                                $scope.cancerList.splice(i,1);
+                            })
+                        })
+                        }
+                })
+            }
+            
 
             $scope.addGene = function (geneSymbol) {
                 var q = {symbol: geneSymbol};
@@ -131,7 +143,8 @@ angular.module('controller.configGen', [])
             }
 
             $scope.addDisease = function (dideaseName, diseaseSummary) {
-                CancerType.validate().then(function () {
+                var q = { gene: $scope.geneId, name: dideaseName}
+                CancerType.validate(q).then(function () {
                     CancerType.save({name: dideaseName, summary: diseaseSummary}).then(function (newCancer) {
                         Gene_Cancer.save({gene: $scope.geneId, cancer: newCancer._id}).then(function (newGeneCancer) {
                             $scope.cancerList.push(newCancer);

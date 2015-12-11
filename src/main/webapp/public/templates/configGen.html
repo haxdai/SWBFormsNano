@@ -13,7 +13,7 @@
         <!--Gene -->
         <div class="col-lg-4">
             <h2>Configure Gene</h2>
-
+            
             <div class="row contenido">
                 <div class="col-lg-12">
                     <form name="geneForm">   
@@ -73,8 +73,9 @@
                         <div class="list-group-item">
                             <ul class="list-group-item-text">
                                 <li ng-repeat="disease  in cancerList">
-                                    <a  ng-click="editDisease(disease)" ng-if="!disease.conceptId"> 
-                                        <span   class="glyphicon glyphicon-pencil"></span>  
+                                    <a  ng-if="!disease.conceptId"> 
+                                        <span ng-click="editDisease(disease)"   class="glyphicon glyphicon-pencil"></span>  
+                                        <span ng-click="removeDisease(disease)"  class="glyphicon glyphicon-trash"></span>  
                                         {{disease.name}}
                                     </a>
                                     <a ng-if="disease.conceptId"> 
@@ -119,8 +120,9 @@
                         <div class="list-group-item">
                             <ul class="list-group-item-text">
                                 <li ng-repeat="alt in  altList"> 
-                                    <a ng-click="editAlt(alt)">
-                                        <span  class="glyphicon glyphicon-pencil" ></span>  
+                                    <a >
+                                        <span ng-click="editAlt(alt)"  class="glyphicon glyphicon-pencil" ></span>  
+                                        <span ng-click="removeAlt(alt)"  class="glyphicon glyphicon-trash"></span>  
                                         {{alt.name}}</a>
                                 </li>
 
