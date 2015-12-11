@@ -50,7 +50,18 @@ eng.dataSources["AlterationMolecular"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre de la alteración molecular", type: "string", validators: [{type: "isUnique", errorMessage: "The molecular alteration already exists."}]},
+        {name: "name", title: "Nombre de la alteración molecular", type: "string", validators: [
+                {
+                    type: "serverCustom", //serverCustom del lado del servidor
+                    serverCondition: function (name, value, request) {
+                        var util = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                        var isValid = util.isValidAltMol(request.data.gene, request.data.name);
+                        if (!isValid)
+                            return false;
+                    },
+                    errorMessage: "The molecular alteration already exists."
+                }
+            ]},
         {name: "aliases", title: "Nombres alternos", type: "string"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "gene", title: "Gen", stype: "select", dataSource: "Gene"}
@@ -62,7 +73,19 @@ eng.dataSources["CancerType"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre del tipo de cáncer", type: "string", validators: [{type: "isUnique", errorMessage: "The disease already exists."}]},
+        {name: "name", title: "Nombre del tipo de cáncer", type: "string", 
+            validators: [
+                {
+                    type: "serverCustom", //serverCustom del lado del servidor
+                    serverCondition: function (name, value, request) {
+                        var util = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                        var isValid = util.isValidCancerType(request.data.gene, request.data.name);
+                        if (!isValid)
+                            return false;
+                    },
+                    errorMessage: "The disease already exists."
+                }
+            ]},
         {name: "summary", title: "DefiniciÃ³n del cáncer", type: "string"},
         {name: "conceptId", title: "Id", type: "String"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"}
