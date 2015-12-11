@@ -76,6 +76,19 @@ angular.module('service.alteration', [])
 
                 return deferred.promise;
             };
+            
+            this.remove = function (altId) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("AlterationMolecular");
+                ds.removeObjById(altId, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
 
+                return deferred.promise;
+            };
 
         })

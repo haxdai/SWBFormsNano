@@ -12,8 +12,11 @@ angular.module('controller.configGen', [])
             var MSG_GENE_ADDED = "The gene has been added correctly."
             var MSG_ALT_ADDED = "The molecular alteration has been added correctly"
             var MSG_ALT_EDITED = "The molecular alteration has been correctly updated"
+            var MSG_ALT_DELETED = "The molecular alteration has been correctly deleted"
             var MSG_DISEASE_ADDED = "The disease and its information has been added correctly"
-            var MSG_DISEASE_EDITED= "The disease information has been correctly updated"
+            var MSG_DISEASE_EDITED = "The disease information has been correctly updated"
+            var MSG_DISEASE_DELETE = "The disease information has been correctly deleted"
+            
             var MSG_GENE_LOOKING = "The existence of this gene is being validated, please wait."
 
             var altIndex;
@@ -53,6 +56,16 @@ angular.module('controller.configGen', [])
                     }
                 })
             }
+             $scope.removeAlt = function (alt) {
+                $scope.altList.forEach(function (a, i) {
+                    if (a._id == alt._id) {
+                        Alteration.remove(alt._id).then(function(){
+                             $scope.altList.splice(i, 1);
+                             showMessage("ok", MSG_ALT_DELETED)
+                        });
+                    }
+                })
+            }
 
             $scope.addDis = function () {
                 $scope.cancerDis();
@@ -76,22 +89,23 @@ angular.module('controller.configGen', [])
                     }
                 })
             }
-            $scope.removeDisease =  function (dis) {
+            $scope.removeDisease = function (dis) {
                 $scope.cancerList.forEach(function (c, i) {
                     if (c._id == dis._id) {
-                        Gene_Cancer.byGeneIdCancerId($scope.geneId, dis._id).then(function(geneCancer){
-                            Gene_Cancer.remove(geneCancer[0]._id).then(function(){
-                                $scope.cancerList.splice(i,1);
+                        Gene_Cancer.byGeneIdCancerId($scope.geneId, dis._id).then(function (geneCancer) {
+                            Gene_Cancer.remove(geneCancer[0]._id).then(function () {
+                                $scope.cancerList.splice(i, 1);
+                                showMessage("ok", MSG_DISEASE_DELETE)
                             })
                         })
-                        }
+                    }
                 })
             }
-            
+
 
             $scope.addGene = function (geneSymbol) {
                 var q = {symbol: geneSymbol};
-                showMessage("msg",MSG_GENE_LOOKING)
+                showMessage("msg", MSG_GENE_LOOKING)
                 Gene.validate(q).then(function () {
                     Gene.save(q).then(function (newGene) {
                         removeMessage("msg")
@@ -136,14 +150,14 @@ angular.module('controller.configGen', [])
 
                 Alteration.update($scope.altList[altIndex]).then(function (newAlt) {
                     $scope.cancelAlt();
-                     showMessage("ok", MSG_ALT_EDITED)
+                    showMessage("ok", MSG_ALT_EDITED)
                 }, function (error) {
                     console.log(error);
                 })
             }
 
             $scope.addDisease = function (dideaseName, diseaseSummary) {
-                var q = { gene: $scope.geneId, name: dideaseName}
+                var q = {gene: $scope.geneId, name: dideaseName}
                 CancerType.validate(q).then(function () {
                     CancerType.save({name: dideaseName, summary: diseaseSummary}).then(function (newCancer) {
                         Gene_Cancer.save({gene: $scope.geneId, cancer: newCancer._id}).then(function (newGeneCancer) {
