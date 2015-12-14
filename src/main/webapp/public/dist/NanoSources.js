@@ -85,7 +85,7 @@ eng.dataSources["CancerType"] = {
                     errorMessage: "The disease already exists."
                 }
             ]},
-        {name: "summary", title: "DefiniciÃ³n del cáncer", type: "string"},
+        {name: "summary", title: "Definición del cáncer", type: "string"},
         {name: "conceptId", title: "Id", type: "String"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"}
     ]
