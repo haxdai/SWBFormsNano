@@ -20,7 +20,7 @@ eng.dataSources["Gene"] = {
                         var isValid = search.getGeneInfo(value);
                         var jsonObj = JSON.parse(isValid);
                         if (jsonObj.error != null) {
-                            if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
+                            if ("NO_INFO_FOUND".equals(jsonObj.error.error)) {
                                 isValid = null;
                             }
                         }
