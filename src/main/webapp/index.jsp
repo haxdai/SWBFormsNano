@@ -14,7 +14,7 @@
         <!--link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
         <link href="/public/css/nano.css" rel="stylesheet" type="text/css" /-->
         <link href="/public/dist/style.css" rel="stylesheet" type="text/css" />
-        
+
     </head>
     <body ng-app="NanoApp">
         <div class="query-check"></div>
@@ -47,7 +47,7 @@
     </body>    
     <script src="/swbforms/js/eng.js" type="text/javascript"></script>
     <script type="text/javascript">
-               eng.initPlatform("/public/dist/NanoSources.js");
+                eng.initPlatform("/public/dist/NanoSources.js");
     </script>  
     <!--    Lib js     -->
     <script src="/public/libs/jquery/dist/jquery.min.js" ></script>
@@ -58,6 +58,7 @@
     <script src="/public/libs/angular-carousel/dist/angular-carousel.min.js" ></script>
     <script src="/public/libs/angular-animate/angular-animate.min.js" ></script>
     <script src="/public/libs/angular-sanitize/angular-sanitize.min.js" ></script>
+    <script src="/public/libs/bootbox/bootbox.min.js" ></script>
     <!--    Nano js     -->
     <script src="/public/js/app.js"></script>
     <!--    Nano js services     -->
@@ -85,7 +86,7 @@
     <script src="/public/js/controllers/menuConfigController.js"></script>
     <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
     <!--script src="/public/dist/script.js"></script-->
-    
+
     <script type="text/javascript">
                 'use strict';
                 angular.module('userController', [])

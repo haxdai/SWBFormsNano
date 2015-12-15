@@ -2,7 +2,7 @@
 
 angular.module('controller.searchDetail', [])
 
-        .controller('SearchDetailController', function ($scope, $stateParams, Search, Gene, CancerType,Alteration) {
+        .controller('SearchDetailController', function ($scope, $stateParams, Search, Gene, CancerType, Alteration, User ,Role) {
 
             $scope.gene;
             $scope.alt;
@@ -10,6 +10,25 @@ angular.module('controller.searchDetail', [])
             $scope.cancerList;
             $scope.position = 0;
             $scope.search;
+            $scope.user;
+
+            User.getUser().then(function (user) {
+                $scope.user = user;
+                Role.byId($scope.user.role).then(function (role) {
+                    $scope.user.roleName = role.title;
+                })
+
+            }, function (error) {
+
+            });
+
+            $scope.deleteScheme = function () {
+                bootbox.confirm("Are you sure?", function (result) {
+                    if(result){
+                        
+                    }
+                });
+            }
 
             Search.byId($scope.searchId).then(function (search) {
                 $scope.search = search;

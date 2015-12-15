@@ -71,16 +71,19 @@
                         <ol start="{{$index + 1 +(limit*(pag-1))}} ">
                             <li>
                                 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 +(limit*(pag-1))}}">
-                                    <div class="panel-text-title">{{article.article.title}}</div>
-                                    <div class="panel-califica">
-                                        <span class="glyphicon glyphicon-menu-up"></span>
-                                        <span class="glyphicon glyphicon-menu-down"></span>
-                                        <div class="star">
-                                            <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=10 ? 'fa-star': 'fa-star-o'" class="fa"></i>
+                                    <div class="row">
+                                        
+                                        <div class="col-lg-9 panel-text-title">{{article.article.title}}</div>
+                                        <div class="col-lg-3 panel-califica">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                            <span class="glyphicon glyphicon-menu-down"></span>
+                                            <div class="star">
+                                                <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                                <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                                <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                                <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                                <i ng-class="article.artSearch.ranking >=10 ? 'fa-star': 'fa-star-o'" class="fa"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </a>

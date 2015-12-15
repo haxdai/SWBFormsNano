@@ -167,7 +167,10 @@ angular.module('controller.configGen', [])
                         })
                     })
                 }, function (error) {
-
+                    if(error.name){
+                        showMessage("error",error.name);
+                        $scope.cancerDis()
+                    }
                 })
 
             }

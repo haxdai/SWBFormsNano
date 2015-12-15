@@ -318,36 +318,44 @@ eng.dataServices["ConfigService"] = {
 
 eng.dataServices["SearchService"] = {
     dataSources: ["Search"],
-    actions: ["add"],
+    actions: ["add", "remove"],
     service: function (request, response, dataSource, action)
     {
-        if (response.data._id !== null && response.data._id !== "" && response.data.gene !== null &&
-                response.data.gene !== "" && response.data.altMolecular !== null &&
-                response.data.altMolecular !== "") {
-            var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-            var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
-            var altMolecular = this.getDataSource("AlterationMolecular").
-                    fetchObjById(response.data.altMolecular).name;
-            var res = utils.getPublication(response.data.artYearsOld, gene, altMolecular, response.data._id);
-            if (res !== null) {
-                var jsonArt = JSON.parse(res);
-                if (jsonArt.error != null) {
-                    this.getDataSource("Search").removeObjById(response.data._id);
-                    response.status = -2;
-                    if ("COMMUNICATION_PROBLEM".equals(jsonArt.error.error)) {
-                        response.msgError = "A communications error happened, please try again later";
-                    } else if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
-                        response.msgError = "No information was found for your search scheme";
-                    } else if ("EXECUTION_ERROR".equals(jsonArt.error.error)) {
-                        response.msgError = "An execution error happened while gathering information for your search scheme";
+        if (action == "add") {
+            if (response.data._id !== null && response.data._id !== "" && response.data.gene !== null &&
+                    response.data.gene !== "" && response.data.altMolecular !== null &&
+                    response.data.altMolecular !== "") {
+                var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
+                var altMolecular = this.getDataSource("AlterationMolecular").
+                        fetchObjById(response.data.altMolecular).name;
+                var res = utils.getPublication(response.data.artYearsOld, gene, altMolecular, response.data._id);
+                if (res !== null) {
+                    var jsonArt = JSON.parse(res);
+                    if (jsonArt.error != null) {
+                        this.getDataSource("Search").removeObjById(response.data._id);
+                        response.status = -2;
+                        if ("COMMUNICATION_PROBLEM".equals(jsonArt.error.error)) {
+                            response.msgError = "A communications error happened, please try again later";
+                        } else if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
+                            response.msgError = "No information was found for your search scheme";
+                        } else if ("EXECUTION_ERROR".equals(jsonArt.error.error)) {
+                            response.msgError = "An execution error happened while gathering information for your search scheme";
+                        }
+                    } else {
+                        response.data.notification = jsonArt.notification;
+                        response.data.recommended = jsonArt.recommended;
                     }
-                } else {
-                    response.data.notification = jsonArt.notification;
-                    response.data.recommended = jsonArt.recommended;
                 }
             }
+            return request;
+        } else if (action == "remove") {
+            if (request.data._id) {
+                print("Borrando")
+                var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                utils.removeSchemeData(request.data._id);
+            }
         }
-        return request;
     }
 };
 
