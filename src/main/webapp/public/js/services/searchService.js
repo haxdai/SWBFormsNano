@@ -57,7 +57,6 @@ angular.module('service.search', [])
                 })
                 
                 return deferred.promise;
-
             }
 
             this.update = function (search) {
@@ -73,4 +72,18 @@ angular.module('service.search', [])
               
                 return deferred.promise;
             };
+            
+            this.remove = function (searchId) {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("Search");
+                ds.removeObjById(searchId, function (response) {
+                    if (response && response.status == 0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
+                return deferred.promise;
+            };
+            
         })

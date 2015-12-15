@@ -141,9 +141,6 @@ angular.module('controller.results', [])
             }
             
             $scope.filterToogle = function(newReorderToggle,filter){
-                console.log(filter)
-                console.log(newReorderToggle)
-
                 if(newReorderToggle){
                         $scope.isReorderToggle = false;
                         $scope.reorderClass = "glyphicon-sort-by-attributes-alt";

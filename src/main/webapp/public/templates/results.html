@@ -31,10 +31,10 @@
     <div class="row contenido">
         <div class="col-lg-12">
             <div class="row results-options"  >
-                <div class="col-sm-4">
+                <div class="col-sm-12 col-md-3 col-lg-4">
                     <p ng-bind="statuslist[status]"></p>
                 </div>
-                <div  class="col-sm-4">
+                <div  class="col-sm-5 col-md-3 col-lg-4">
                     <ul  ng-if="(totalRowsFinal > 1)" class ="pagination clearfix">
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="firts()" href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
                         
@@ -45,7 +45,7 @@
                     
                     </ul>
                 </div>
-                <div  class="col-sm-4">
+                <div  class="col-sm-7 col-md-6 col-lg-4">
                     <div class="sort">
                         <p>Sort by: 
                             <select ng-model="filterSelected" ng-change="filterChange()">
@@ -68,15 +68,12 @@
             <div class="panel-group" id="panel-results">
                 <div class="panel panel-default animate-repeat" ng-repeat="article in articleList">
                     <div class="panel-heading">
-                        <ol start="{{$index + 1 +(limit*(pag-1))}} ">
-                            <li>
-                                <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 +(limit*(pag-1))}}">
-                                    <div class="row">
-                                        
-                                        <div class="col-lg-9 panel-text-title">{{article.article.title}}</div>
-                                        <div class="col-lg-3 panel-califica">
-                                            <span class="glyphicon glyphicon-menu-up"></span>
-                                            <span class="glyphicon glyphicon-menu-down"></span>
+                       
+                                <a class=" panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 +(limit*(pag-1))}}">
+                                     <div style="margin-right: 10px; float:left;">
+                                {{$index + 1 +(limit*(pag-1))}}.
+                        </div>
+                                        <div class="pull-right panel-califica">
                                             <div class="star">
                                                 <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
                                                 <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
@@ -84,11 +81,12 @@
                                                 <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
                                                 <i ng-class="article.artSearch.ranking >=10 ? 'fa-star': 'fa-star-o'" class="fa"></i>
                                             </div>
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                            <span class="glyphicon glyphicon-menu-down"></span>
+                                            
                                         </div>
-                                    </div>
+                                    <div class="panel-text-title">{{article.article.title}}</div>
                                 </a>
-                            </li>
-                        </ol>
                     </div>
                     <div id="p{{$index + 1 +(limit*(pag-1))}}" class="panel-collapse collapse">
 

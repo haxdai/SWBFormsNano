@@ -15,7 +15,6 @@ angular.module('controller.galery', ['angular-carousel'])
                 {src: "/public/img/imagen-03.jpg", text: "Descripcion de la imagen", title:"Titulo" ,link: "www.google.com"}
             ]*/
             $timeout(function(){
-                console.log("Carrusel")
                $('#c').carousel({
                     interval: 3000
                 })

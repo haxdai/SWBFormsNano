@@ -2,7 +2,7 @@
 
 angular.module('controller.searchDetail', [])
 
-        .controller('SearchDetailController', function ($scope, $stateParams, Search, Gene, CancerType, Alteration, User ,Role) {
+        .controller('SearchDetailController', function ($scope, $stateParams,$state, Search, Gene, CancerType, Alteration, User ,Role) {
 
             $scope.gene;
             $scope.alt;
@@ -11,21 +11,21 @@ angular.module('controller.searchDetail', [])
             $scope.position = 0;
             $scope.search;
             $scope.user;
-
             User.getUser().then(function (user) {
                 $scope.user = user;
                 Role.byId($scope.user.role).then(function (role) {
                     $scope.user.roleName = role.title;
                 })
-
             }, function (error) {
-
+                 console.log(error)
             });
 
             $scope.deleteScheme = function () {
-                bootbox.confirm("Are you sure?", function (result) {
+                bootbox.confirm("<h3>This search schema will be deleted permanently. All classification work you did will be erased.\n Do you want to continue?</h3>", function (result) {
                     if(result){
-                        
+                        Search.remove( $scope.searchId).then(function(data){
+                            $state.go('index');
+                        })
                     }
                 });
             }
