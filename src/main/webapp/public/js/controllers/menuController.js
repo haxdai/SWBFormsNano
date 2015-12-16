@@ -1,24 +1,29 @@
 'use strict';
 
 angular.module('controller.menu', [])
-        .controller('MenuController', function ($scope, $state, $rootScope, $stateParams, Search, Gene, Alteration, Config,Art_Search) {
+        .controller('MenuController', function ($scope, $state, $rootScope, $stateParams, Search, Gene, Alteration, Config, Art_Search, User, Role) {
             $scope.searchList = [];
             $scope.searchId = $stateParams.id;
             $scope.geneList;
             $scope.altList;
             $scope.datesList = Config.publicationDates();
+            $scope.user;
+
             var MSG_SCHEME_LOOKING = "Aurora is searching information about this schema of search. This process may take several minutes, please wait.";
             var MSG_SCHEME_ADDED = "The search schema has been added correctly"
-            
-            $scope.schemeSelected = function (scheme){
+          
+
+            $scope.schemeSelected = function (scheme) {
                 $scope.searchId = scheme;
             }
-            
+
+
+
             $scope.searchListFunction = function (list) {
                 var filterList = $scope.filterPattern || "";
                 return list.filter(function (e) {
                     return filterList.split(",").every(function (f) {
-                        var s = e.geneSymbol + " ; " + e.alteName + " ; " + e.artYearsOld+"Y";
+                        var s = e.geneSymbol + " ; " + e.alteName + " ; " + e.artYearsOld + "Y";
                         return new RegExp(f.toLowerCase().trim()).test(s.toLowerCase());
                     })
                 });
@@ -33,7 +38,7 @@ angular.module('controller.menu', [])
 
                 })
             });
-            $rootScope.$on('articleRecommended', function (event, searchId,val ) {         
+            $rootScope.$on('articleRecommended', function (event, searchId, val) {
                 $scope.searchList.forEach(function (search, i) {
                     if (search._id === searchId) {
                         $scope.searchList[i].recommended += val;
@@ -43,24 +48,34 @@ angular.module('controller.menu', [])
                 })
             });
 
+            User.getUser().then(function (user) {
+                $scope.user = user;
+                Role.byId($scope.user.role).then(function (role) {
+                    $scope.user.roleName = role.title;
+                    
+                    Search.list({user: $scope.user._id}).then(function (searchList) {
+                        searchList.forEach(function (search, i) {
+                            $scope.searchList.push(search);
+                            Art_Search.listbyStatusSearchId(search._id).then(function (artSearchList) {
+                                $scope.searchList[i].noArts = artSearchList.length;
+                            })
+                            Gene.byId(search.gene).then(function (gene) {
+                                $scope.searchList[i].geneSymbol = gene.symbol;
+                            });
+                            Alteration.byId(search.altMolecular).then(function (alte) {
+                                $scope.searchList[i].alteName = alte.name;
+                            });
+                        });
 
-            Search.list().then(function (searchList) {
-                searchList.forEach(function (search, i) {
-                    $scope.searchList.push(search);
-                    Art_Search.listbyStatusSearchId(search._id).then(function(artSearchList){
-                        $scope.searchList[i].noArts = artSearchList.length;
-                    })
-                    Gene.byId(search.gene).then(function (gene) {
-                        $scope.searchList[i].geneSymbol = gene.symbol;
-                    });
-                    Alteration.byId(search.altMolecular).then(function (alte) {
-                        $scope.searchList[i].alteName = alte.name;
-                    });
-                });
+                    }, function (error) {
 
+                    });
+
+                })
             }, function (error) {
-
+                console.log(error)
             });
+
 
             Gene.list().then(function (geneList) {
                 $scope.geneList = geneList;
@@ -76,9 +91,9 @@ angular.module('controller.menu', [])
 
 
             $scope.addSearch = function (geneSelected, altSelected, dateSelected) {
-                
-                var q = {gene: geneSelected._id, altMolecular: altSelected._id, artYearsOld: dateSelected.year};
-                showMessage("msg",MSG_SCHEME_LOOKING)
+
+                var q = {gene: geneSelected._id, altMolecular: altSelected._id, artYearsOld: dateSelected.year, user: $scope.user._id};
+                showMessage("msg", MSG_SCHEME_LOOKING)
                 Search.validate(q).then(function () {
                     Search.add(q).then(function (search) {
                         removeMessage("msg")
@@ -93,19 +108,19 @@ angular.module('controller.menu', [])
                             $scope.searchList[i - 1].alteName = alte.name;
                         });
                         $scope.newSearch = false;
-                    },function(error){
+                    }, function (error) {
                         removeMessage("msg")
-                        showMessage("error",error)
+                        showMessage("error", error)
                         //console.log(error);
                         $('#panel-element-busca').collapse("hide");
-                         $scope.schemeForm.$setPristine();
-                         $scope.geneSelected = null;
-                         $scope.altSelected = null;
-                         $scope.dateSelected = null;
+                        $scope.schemeForm.$setPristine();
+                        $scope.geneSelected = null;
+                        $scope.altSelected = null;
+                        $scope.dateSelected = null;
                     });
-                }, function (error){
+                }, function (error) {
                     removeMessage("msg")
-                    showMessage("error",error.gene)
+                    showMessage("error", error.gene)
                     //console.log(error);
                 })
 

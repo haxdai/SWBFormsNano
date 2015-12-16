@@ -30,10 +30,11 @@ angular.module('service.search', [])
                 return deferred.promise;
             };
 
-            this.list = function () {
+            this.list = function (data) {
+                data = data != null ? data:{}; 
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Search");
-                ds.fetch({}, function (result) {
+                ds.fetchObj(data, function (result) {
                     if (result && result.status == 0) {
                         deferred.resolve(result.data);
                     } else {

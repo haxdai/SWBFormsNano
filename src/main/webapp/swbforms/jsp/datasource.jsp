@@ -75,10 +75,14 @@
         }else
         {
             SWBDataSource ds=engine.getDataSource(dataSource);
-            //System.out.println("ds:"+dataSource+" "+ds);        
+            //System.out.println("ds:"+dataSource);        
 
             if(ds!=null)
             {
+                if(dataSource.equals("Search")){
+                    json.getDataObject("data").put("user", ((DataObject) session.getAttribute("_USER_")).getString("_id") );
+                }
+                //System.out.println("json: "+json);       
                 if (SWBDataSource.ACTION_FETCH.equals(operationType))
                 {
                     

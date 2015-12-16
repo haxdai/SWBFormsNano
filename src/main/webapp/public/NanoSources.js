@@ -125,20 +125,23 @@ eng.dataSources["Search"] = {
                         var StringArrayType = Java.type("java.lang.String[]");
                         var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                         var IntegerArrayType = Java.type("int[]");
-                        var a = new StringArrayType(2);
-                        var b = new StringArrayType(2);
+                        var a = new StringArrayType(3);
+                        var b = new StringArrayType(3);
                         a[0] = "gene";
                         a[1] = "altMolecular";
+                        a[2] = "user";
+                        
+                        b[0] = request.data.gene; //idGene;
+                        b[1] = request.data.altMolecular; //idAltMolecular;
+                        b[2] = request.data.user; //idAltMolecular;
+                        
                         var c = new StringArrayType(1);
                         var d = new IntegerArrayType(1);
                         c[0] = "artYearsOld";
                         d[0] = request.data.artYearsOld;
                         //var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
                         //var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteraciÃ³n molecular
-                        b[0] = request.data.gene; //idGene;
-                        print(request.data.gene);
-                        print(request.data.altMolecular);
-                        b[1] = request.data.altMolecular; //idAltMolecular;
+                        
                         var isValid = utils.isValidObject("Search", a, b, c, d);
                         if (isValid)
                             return true;
@@ -151,7 +154,8 @@ eng.dataSources["Search"] = {
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "notification", title: "Número de notificaciones", type: "int"},
-        {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
+        {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/,
+        {name: "user", title: "Usuario", stype: "select", dataSource: "User"}
     ]
 };
 eng.dataSources["Art_Search"] = {

@@ -3,7 +3,7 @@
 angular.module('controller.searchDetail', [])
 
         .controller('SearchDetailController', function ($scope, $stateParams,$state, Search, Gene, CancerType, Alteration, User ,Role) {
-
+            var ERROR_SCHEME_NOT_FOUND = "This scheme of search was not found"
             $scope.gene;
             $scope.alt;
             $scope.searchId = $stateParams.id;
@@ -17,6 +17,7 @@ angular.module('controller.searchDetail', [])
                     $scope.user.roleName = role.title;
                 })
             }, function (error) {
+                 $scope.search = undefined;
                  console.log(error)
             });
 
@@ -42,6 +43,8 @@ angular.module('controller.searchDetail', [])
                     $scope.alt = alte;
                 });
             }, function (error) {
+                  $scope.search = undefined;
+                 showMessage("error",ERROR_SCHEME_NOT_FOUND);
                 console.log(error)
             })
 

@@ -120,24 +120,27 @@ eng.dataSources["Search"] = {
     fields: [
         {name: "gene", title: "Gen", stype: "select", dataSource: "Gene", validators: [{
                     type: "serverCustom", //serverCustom del lado del servidor
-                    serverCondition: function (name, value, request) {
+                                       serverCondition: function (name, value, request) {
                         var StringArrayType = Java.type("java.lang.String[]");
                         var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                         var IntegerArrayType = Java.type("int[]");
-                        var a = new StringArrayType(2);
-                        var b = new StringArrayType(2);
+                        var a = new StringArrayType(3);
+                        var b = new StringArrayType(3);
                         a[0] = "gene";
                         a[1] = "altMolecular";
+                        a[2] = "user";
+                        
+                        b[0] = request.data.gene; //idGene;
+                        b[1] = request.data.altMolecular; //idAltMolecular;
+                        b[2] = request.data.user; //idAltMolecular;
+                        
                         var c = new StringArrayType(1);
                         var d = new IntegerArrayType(1);
                         c[0] = "artYearsOld";
                         d[0] = request.data.artYearsOld;
                         //var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
                         //var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteraciÃ³n molecular
-                        b[0] = request.data.gene; //idGene;
-                        print(request.data.gene);
-                        print(request.data.altMolecular);
-                        b[1] = request.data.altMolecular; //idAltMolecular;
+                        
                         var isValid = utils.isValidObject("Search", a, b, c, d);
                         if (isValid)
                             return true;
@@ -150,7 +153,8 @@ eng.dataSources["Search"] = {
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "notification", title: "Número de notificaciones", type: "int"},
-        {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
+        {name: "recommended", title: "Recomendados", type: "int"}, /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
+        {name: "user", title: "Usuario", stype: "select", dataSource: "User"}
     ]
 };
 eng.dataSources["Art_Search"] = {
@@ -324,7 +328,7 @@ eng.dataServices["SearchService"] = {
         if (action == "add") {
             if (response.data._id !== null && response.data._id !== "" && response.data.gene !== null &&
                     response.data.gene !== "" && response.data.altMolecular !== null &&
-                    response.data.altMolecular !== "") {
+                    response.data.altMolecular !== ""  ) {
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                 var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
                 var altMolecular = this.getDataSource("AlterationMolecular").

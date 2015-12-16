@@ -14,6 +14,7 @@ angular.module('controller.report', ['angular-carousel'])
             var MSG_REPORT_SAVED = "The report document has been saved correctly";
             var MSG_REPORT_UPDATED = "The report document has been updated correctly";
             var ERROR_REPORT_EMPTY = "A report without interpretation or without reference documents can not being printed, please provide an interpretation and check if there are documents in accepted documents folder.";
+            var ERROR_SCHEME_NOT_FOUND = "This scheme of search was not found"
             
             $scope.print = function () {
                 if( ! $scope.report.hasOwnProperty("comment") || $scope.articleList.length == 0 ){
@@ -33,6 +34,8 @@ angular.module('controller.report', ['angular-carousel'])
                     $scope.alt = alt;
                 })
             }, function (error) {
+                 $scope.search = undefined;
+                  showMessage("error",ERROR_SCHEME_NOT_FOUND);
                 console.log(error)
             })
 

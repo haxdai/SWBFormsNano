@@ -5,6 +5,7 @@ angular.module('controller.results', [])
             $scope.searchId = $stateParams.id;
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
+            var ERROR_SCHEME_NOT_FOUND = "This scheme of search was not found"
             var status = parseInt($stateParams.status);
             if ($stateParams.status >= 0 && $stateParams.status <= 4) {
                 $scope.status = status;
@@ -38,6 +39,8 @@ angular.module('controller.results', [])
                 });
                 
             }, function (error) {
+                $scope.search = undefined;
+                 showMessage("error",ERROR_SCHEME_NOT_FOUND);
                 console.log(error)
             })
 
