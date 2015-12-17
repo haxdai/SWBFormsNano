@@ -80,47 +80,63 @@ public class SchedulerTrigger implements ServletContextListener {
                 dataUser.add(query);
             }
             //Images
-            DataList src;
-            DataObject dataSrc;
+            DataList imageSrc;
+            DataObject dataImageSrc;
 
-            //
-            query = new DataObject();
-            src = new DataList();
-            dataSrc = new DataObject();
-            data = new DataObject();
-            dataSrc.put("size", 59316);
-            dataSrc.put("name", "imagen-02.jpg");
-            dataSrc.put("id", "o_1a5ddf33j1sue14tipce1pgjs48c");
-            dataSrc.put("type", "image/jpeg");
-            src.add(dataSrc);
-            data.put("title", "Nanopharmacia");
-            data.put("text", "Nanopharmacia");
-            data.put("link", "nanopharmacia.com/");
-            data.put("src", src);
-            query.put("data", data);
+            //Si la instancia es nueva y no hay imagenes para el carrusel, se agregan
             obj = dataImages.fetch(query);
             if (obj.getDataObject("response").getInt("totalRows") == 0) {
+                query = new DataObject();
+                imageSrc = new DataList();
+                dataImageSrc = new DataObject();
+                data = new DataObject();
+                dataImageSrc.put("size", 59316);
+                dataImageSrc.put("name", "aurora-carrusel-vertical.jpg");
+                dataImageSrc.put("id", "o_1a6ocpot0jpmfki1p46b9o1v7ec");
+                dataImageSrc.put("type", "image/jpeg");
+                imageSrc.add(dataImageSrc);
+                data.put("title", "");
+                data.put("text", "");
+                data.put("link", "");
+                data.put("src", imageSrc);
+                query.put("data", data);
+                obj = dataImages.add(query);
+                
+                query = null;
+                query = new DataObject();
+                imageSrc = new DataList();
+                dataImageSrc = new DataObject();
+                data = new DataObject();
+                dataImageSrc.put("size", 57439);
+                dataImageSrc.put("name", "aurora-carrusel-horizontal.jpg");
+                dataImageSrc.put("id", "o_1a6ocrqnvs81clhj95keok09h");
+                dataImageSrc.put("type", "image/jpeg");
+                imageSrc.add(dataImageSrc);
+                data.put("title", "Nanopharma");
+                data.put("text", "");
+                data.put("link", "nanopharmacia.com/");
+                data.put("src", imageSrc);
+                query.put("data", data);
+                obj = dataImages.add(query);
+                
+                query = null;
+                query = new DataObject();
+                imageSrc = new DataList();
+                dataImageSrc = new DataObject();
+                data = new DataObject();
+                dataImageSrc.put("size", 177210);
+                dataImageSrc.put("name", "NanopharmaAzul.jpg");//cadena ADN
+                dataImageSrc.put("id", "o_1a5d7gttb9ba16sotcr5b81goa7");
+                dataImageSrc.put("type", "image/jpeg");
+                imageSrc.add(dataImageSrc);
+                data.put("title", "");
+                data.put("text", "");
+                data.put("link", "");
+                data.put("src", imageSrc);
+                query.put("data", data);
                 obj = dataImages.add(query);
             }
 
-            query = new DataObject();
-            src = new DataList();
-            dataSrc = new DataObject();
-            data = new DataObject();
-            dataSrc.put("size", 177210);
-            dataSrc.put("name", "imagen-01.jpg");
-            dataSrc.put("id", "o_1a5d7gttb9ba16sotcr5b81goa7");
-            dataSrc.put("type", "image/jpeg");
-            src.add(dataSrc);
-            data.put("title", "");
-            data.put("text", "");
-            data.put("link", "");
-            data.put("src", src);
-            query.put("data", data);
-            obj = dataImages.fetch(query);
-            if (obj.getDataObject("response").getInt("totalRows") == 0) {
-                obj = dataImages.add(query);
-            }
             //
             /*query = new DataObject();
              src = new DataList();
