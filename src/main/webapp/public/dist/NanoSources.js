@@ -310,6 +310,18 @@ eng.dataServices["GeneService"] = {
     }
 };
 
+eng.dataServices["UserService"] = {
+    dataSources: ["User"],
+    actions: ["remove"],
+    service: function (request, response, dataSource, action)
+    {
+        var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+        if (request.data._id){
+            utils.removeUserData(request.data._id);
+        }
+    }
+};
+
 eng.dataServices["ConfigService"] = {
     dataSources: ["Configuration"],
     actions: ["update"],

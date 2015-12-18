@@ -45,7 +45,7 @@
                 </div>
                 <div class="panel-buttons">
                     <button ng-disabled="reportform.textreport.$invalid"  ng-click="save(report)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
-                    <button  ng-click="print()"  type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+                    <button ng-disabled="reportform.textreport.$invalid"   ng-click="print()"  type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
                 </div>
             </form>
             <div class="visible-print">
@@ -53,25 +53,25 @@
             </div>
             <div class="panel-group" id="panel-results">
                 <div class="panel panel-default" ng-repeat="article in articleList">
-                    <div class="panel-heading">
-                        <ol start="{{$index + 1}}">
-                            <li>
-                                <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-00{{$index + 1}}">
-                                    <div class="panel-text-title">{{article.article.title}}</div>
-                                    <div class="panel-califica">
-                                        <span class="glyphicon glyphicon-menu-up"></span>
-                                        <span class="glyphicon glyphicon-menu-down"></span>
-                                        <div class="star">
-                                            <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                            <i ng-class="article.artSearch.ranking >=10 ? 'fa-star' :'fa-star-o'" class="fa"></i>
+                     <div class="panel-heading">
+                                <a class=" panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 +(limit*(pag-1))}}">
+                                     <div style="margin-right: 10px; float:left;">
+                                {{$index+1}}.
+                        </div>
+                                        <div class="pull-right panel-califica">
+                                            <div class="star">
+                                                <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                                <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                                <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                                <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                                <i ng-class="article.artSearch.ranking >=10 ? 'fa-star': 'fa-star-o'" class="fa"></i>
+                                            </div>
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                            <span class="glyphicon glyphicon-menu-down"></span>
+                                            
                                         </div>
-                                    </div>
+                                    <div class="panel-text-title">{{article.article.title}}</div>
                                 </a>
-                            </li>
-                        </ol>
                     </div>
                     <div id="panel-element-00{{$index + 1}}" class="panel-collapse collapse">
                         <div class="panel-body">
