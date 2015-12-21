@@ -109,7 +109,9 @@ eng.dataSources["Article"] = {
         {name: "prognosis", title: "Pronóstico", type: "int"},
         {name: "prediction", title: "Predicción", type: "int"},
         {name: "treatment", title: "Tratamiento", type: "int"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "date"}
+        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
+        {name: "publicationMonth", title: "Mes de publicación", type: "date"},
+        {name: "publicationYear", title: "Año de publicación", type: "date"}
     ]
 };
 eng.dataSources["Search"] = {
