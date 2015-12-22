@@ -156,7 +156,9 @@ eng.dataSources["Search"] = {
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "notification", title: "Número de notificaciones", type: "int"},
         {name: "recommended", title: "Recomendados", type: "int"}, /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
-        {name: "user", title: "Usuario", stype: "select", dataSource: "User"}
+        {name: "user", title: "Usuario", stype: "select", dataSource: "User"},
+        {name: "created", title: "Fecha de creación", type: "date"},
+        {name: "monthYearOld", title: "Longevidad del último año (en meses)", type: "int"}
     ]
 };
 eng.dataSources["Art_Search"] = {
@@ -284,14 +286,6 @@ eng.dataProcessors["GeneProcessor"] = {
         }
         return request; //
     }
-};
-eng.dataSources["Configuration"] = {
-    scls: "Configuration",
-    modelid: "NanoPharmacy",
-    dataStore: "mongodb",
-    fields: [
-        {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "string"}
-    ]
 };
 eng.dataServices["GeneService"] = {
     dataSources: ["Gene"],
