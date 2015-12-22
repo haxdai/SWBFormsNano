@@ -347,7 +347,7 @@ eng.dataServices["SearchService"] = {
                 var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
                 var altMolecular = this.getDataSource("AlterationMolecular").
                         fetchObjById(response.data.altMolecular).name;
-                var res = utils.getPublication(response.data.artYearsOld, gene, altMolecular, response.data._id);
+                var res = utils.getPublication(response.data.artYearsOld, gene, altMolecular, response.data._id,response.data.gene,response.data.altMolecular);
                 if (res !== null) {
                     var jsonArt = JSON.parse(res);
                     if (jsonArt.error != null) {
