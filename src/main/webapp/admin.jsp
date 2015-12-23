@@ -30,11 +30,11 @@
                     canRemove: true,
                     canAdd: true,
                     canPrint: false,
-                    removeData: function (grid, record, other, other2) {
+                    removeData: function (record, p1, p2, p3) {
                         isc.ask("Remove this user?", function (value) {
                             if (value) {
                                 var obj = eng.findObject("usersGrid");
-                                obj.removeSelectedData(grid);
+                                obj.removeSelectedData(record);
                                 return true;
                             }
                         })
@@ -70,11 +70,11 @@
                         {name: "src"},
                         {name: "link"},
                     ],
-                    removeData: function (grid, record, other, other2) {
+                    removeData: function (record, p1, p2, p3) {
                         isc.ask("Remove this image?", function (value) {
                             if (value) {
                                 var obj = eng.findObject("imgsGrid");
-                                obj.removeSelectedData(grid);
+                                obj.removeSelectedData(record);
                                 return true;
                             }
                         })
