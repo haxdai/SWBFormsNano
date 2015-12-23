@@ -21,46 +21,64 @@
         <div class="container">
             <h2>User's administration</h2>
             <script type="text/javascript">
-                  eng.initPlatform("/public/dist/NanoSources.js");
+                eng.initPlatform("/public/dist/NanoSources.js");
                 eng.createGrid({
+                    ID: "usersGrid",
                     width: "97%",
                     height: "200px",
                     canEdit: true,
                     canRemove: true,
                     canAdd: true,
                     canPrint: false,
+                    removeData: function (grid, record, other, other2) {
+                        isc.ask("Remove this user?", function (value) {
+                            if (value) {
+                                var obj = eng.findObject("usersGrid");
+                                obj.removeSelectedData(grid);
+                                return true;
+                            }
+                        })
+                    }
                 }, "User");
             </script>
             <h2>Image's administration</h2>
             <script type="text/javascript">
-               eng.initPlatform("/public/dist/NanoSources.js");
-               var imageForm = eng.createForm({
+                eng.initPlatform("/public/dist/NanoSources.js");
+                var imageForm = eng.createForm({
+                    ID: "formImages",
                     width: "97%",
                     height: "100px",
                     showTabs: false,
-                    winEdit:false,
-//                    canPrint:false,
-//                    winPrint: false,
+                    winEdit: false,
                     fields: [
                         {name: "title"},
                         {name: "text"},
-                         {name: "link"},
+                        {name: "link"},
                         {name: "src"},
                     ],
-                }, "","Images");
+                }, "", "Images");
                 var images = eng.createGrid({
+                    ID: "imgsGrid",
                     width: "97%",
                     height: "200px",
                     canEdit: true,
                     canPrint: false,
-                    //canAdd:true,
                     canRemove: true,
                     fields: [
                         {name: "title"},
                         {name: "text"},
                         {name: "src"},
                         {name: "link"},
-                    ]
+                    ],
+                    removeData: function (grid, record, other, other2) {
+                        isc.ask("Remove this image?", function (value) {
+                            if (value) {
+                                var obj = eng.findObject("imgsGrid");
+                                obj.removeSelectedData(grid);
+                                return true;
+                            }
+                        })
+                    }
                 }, "Images");
             </script>
         </div>

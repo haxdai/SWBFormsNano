@@ -95,7 +95,6 @@ var eng =  {
     },
     getSubmitList: function (form, arr)
     {
-        arr.push(form);
         if (form.formGrids)
         {
             for (var i = form.formGrids.length; i--; )

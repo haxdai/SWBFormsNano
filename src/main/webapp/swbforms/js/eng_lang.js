@@ -548,9 +548,9 @@ isc.GridEditorItem.addProperties({
             groupStartOpen:this.groupStartOpen,
             groupByField:this.groupByField,     
             canRemoveRecords:canEdit && this.canRemove!==false,
-            
             recordDoubleClick: function(viewer, record, recordNum, field, fieldNum, value, rawValue)
             {
+//                console.log("DoubleClick");
                 if (this.canvasItem.winEdit)
                 {
                     var field=this.canvasItem;
@@ -579,7 +579,12 @@ isc.GridEditorItem.addProperties({
                 } else {
                     totalsLabel.setContents(" ");
                 }
-            }            
+            },
+//            removeData:function(viewer, record, recordNum, field, fieldNum, value, rawValue) {
+//                console.log("viewer: " + viewer);
+//                console.log("record: " + record);
+//                console.log("recordNum: " + recordNum);
+//            }
             
         });
         grid.form=this.form;
@@ -757,6 +762,8 @@ isc.FileUpload.addProperties({
     {
         if (this.canvas == null)
             return;    
+
+        var objFind = eng.findObject(p1);
         
         var content="";
         if(dataValue)
@@ -770,7 +777,9 @@ isc.FileUpload.addProperties({
                     
                     content += "        <span><a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\"/public/img/" + dataValue[i].id + "\">" + dataValue[i].name + "</a>";
                     if(p<100)content+=" ("+p+")";
-                    if(this.isEditable())content += "<img style=\"margin-left: 2px; cursor: pointer; vertical-align: middle;\" onClick=\"" + this.ID + ".remove('"+dataValue[i].id+"');\" src=\"/isomorphic/skins/Enterprise/images/actions/close.png\"/>";
+                    if(objFind  != null && objFind.ID == "formImages") {
+                        if(this.isEditable())content += "<img style=\"margin-left: 2px; cursor: pointer; vertical-align: middle;\" onClick=\"" + this.ID + ".remove('"+dataValue[i].id+"');\" src=\"/isomorphic/skins/Enterprise/images/actions/close.png\"/>";
+                    }
                     if(i<dataValue.length-1)content+=",";
                     content += "        </span>";
                     
@@ -789,7 +798,9 @@ isc.FileUpload.addProperties({
             }
         }
         
-        if(this.isEditable())content="<button onclick=\""+this.ID+"_button.click()\">Cargar Archivo</button>"+content;
+        if(objFind  != null && objFind.ID == "formImages") {
+            if(this.isEditable())content="<button onclick=\""+this.ID+"_button.click()\">Cargar Archivo</button>"+content;
+        }
         content = "<div style=\"width:100%; height:18px; overflow:hidden;\">"+content+"</div>";
         this.canvas.setContents(content);
         
