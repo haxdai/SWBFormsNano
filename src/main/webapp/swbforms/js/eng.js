@@ -95,6 +95,7 @@ var eng =  {
     },
     getSubmitList: function (form, arr)
     {
+        arr.push(form);
         if (form.formGrids)
         {
             for (var i = form.formGrids.length; i--; )
@@ -281,7 +282,7 @@ var eng =  {
         form.saveData(function ()
         {
             //console.log("form.saveData:"+form.ID);
-            form.rememberValues();
+            //form.rememberValues();
             if (form.linkFromForms)
             {
                 for (var i = form.linkFromForms.length; i--; )
@@ -356,6 +357,7 @@ var eng =  {
             }
 
             eng.submitList(farr, callback, --findex);
+            form.reset();
         });
     },
     //Valida la forma dada            
