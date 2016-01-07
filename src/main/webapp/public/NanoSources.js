@@ -18,13 +18,13 @@ eng.dataSources["Gene"] = {
                         var search = new esearch();
                         //var isValid = search.hasGeneBD(value);
                         var isValid = search.getGeneInfo(value);
-                        var jsonObj = JSON.parse(isValid);
-                        if (jsonObj.error != null) {
-                            if ("NO_INFO_FOUND".equals(jsonArt.error.error)) {
+                        var jsonResp = JSON.parse(isValid);print(jsonResp);
+                        if (jsonResp.error != null) {
+                            if ("NO_INFO_FOUND".equals(jsonResp.error.error)) {
                                 isValid = null;
                             }
                         }
-                        if (isValid === null)
+                        if (isValid == null)
                             return false;
                     },
                     errorMessage: "The gene was not found on NCBI data bases, please check the spelling."

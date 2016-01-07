@@ -43,7 +43,7 @@ public class SearchTask extends TimerTask {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSz");
         DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("------------- Ejecutando Tarea Programada: " + format.format(now));
-        SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/NanoSources.js", null, false);
+        SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/dist/NanoSources.js", null, false);
         SWBDataSource dsSearch = engine.getDataSource("Search");
         SWBDataSource dsGene = engine.getDataSource("Gene");
         SWBDataSource dsMA = engine.getDataSource("AlterationMolecular");
@@ -97,9 +97,9 @@ public class SearchTask extends TimerTask {
                         geneSymbol = geneInDB.getString("symbol");
                     }
                     
-                    System.out.println("\n---Solicitar informacion de NCBI para:\n   gen: " +
-                            geneSymbol + "\n   alteracion: " + molAlteration +
-                            "\n   fecha: " + since + "\n   num. dias: " + daysFromLastUpdate);
+//                    System.out.println("\n---Solicitar informacion de NCBI para:\n   gen: " +
+//                            geneSymbol + "\n   alteracion: " + molAlteration +
+//                            "\n   fecha: " + since + "\n   num. dias: " + daysFromLastUpdate);
                     ESearchImpl entrez = new ESearchImpl();
                     if (geneSymbol != null && molAlteration != null) {
                         try {

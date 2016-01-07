@@ -24,6 +24,20 @@ angular.module('service.config', [])
 
                 return deferred.promise;
             }
+            
+            this.getSearchCreationMode = function () {
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("Configuration");
+                ds.fetchObj({}, function (response) {
+                    if (response && response.data.length > 0) {
+                        deferred.resolve(response.data[0]);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                });
+                return deferred.promise;
+            };
+            
             this.saveRateUpdate = function (rate) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Configuration");

@@ -31,7 +31,7 @@ angular.module('service.search', [])
             };
 
             this.list = function (data) {
-                data = data != null ? data:{}; 
+                data = data != null ? data : {}; 
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Search");
                 ds.fetchObj(data, function (result) {

@@ -120,43 +120,49 @@ eng.dataSources["Search"] = {
     dataStore: "mongodb",
     displayField: "gene",
     fields: [
-        {name: "gene", title: "Gen", stype: "select", dataSource: "Gene", validators: [{
-                    type: "serverCustom", //serverCustom del lado del servidor
-                                       serverCondition: function (name, value, request) {
-                        var StringArrayType = Java.type("java.lang.String[]");
-                        var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
-                        var IntegerArrayType = Java.type("int[]");
-                        var a = new StringArrayType(3);
-                        var b = new StringArrayType(3);
-                        a[0] = "gene";
-                        a[1] = "altMolecular";
-                        a[2] = "user";
-                        
-                        b[0] = request.data.gene; //idGene;
-                        b[1] = request.data.altMolecular; //idAltMolecular;
-                        b[2] = request.data.user; //idAltMolecular;
-                        
-                        var c = new StringArrayType(1);
-                        var d = new IntegerArrayType(1);
-                        c[0] = "artYearsOld";
-                        d[0] = request.data.artYearsOld;
-                        //var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
-                        //var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteraciÃ³n molecular
-                        
-                        var isValid = utils.isValidObject("Search", a, b, c, d);
-                        if (isValid)
-                            return true;
-                        else
-                            return false;
-                    },
-                    errorMessage: "This search schema already exists. Please change gene, molecular alteration or Publication dates parameter and try it again. "
-                }]},
+        {
+            name: "gene", title: "Gen", stype: "select", dataSource: "Gene",
+            validators: [{
+                type: "serverCustom", //serverCustom del lado del servidor
+                serverCondition: function (name, value, request) {
+                    var StringArrayType = Java.type("java.lang.String[]");
+                    var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                    var IntegerArrayType = Java.type("int[]");
+                    var a = new StringArrayType(3);
+                    var b = new StringArrayType(3);
+                    a[0] = "gene";
+                    a[1] = "altMolecular";
+                    a[2] = "user";
+                    
+                    if (request.data.creationMode == "general") {
+                        request.data.user = "all";
+                    }
+                    
+                    b[0] = request.data.gene; //idGene;
+                    b[1] = request.data.altMolecular; //idAltMolecular;
+                    b[2] = request.data.user; //idUser;
+                    var c = new StringArrayType(1);
+                    var d = new IntegerArrayType(1);
+                    c[0] = "artYearsOld";
+                    d[0] = request.data.artYearsOld;
+                    //var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
+                    //var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteraciÃ³n molecular
+                    
+                    var isValid = utils.isValidObject("Search", a, b, c, d);
+                    if (isValid)
+                        return true;
+                    else
+                        return false;
+                },
+                errorMessage: "This search schema already exists. Please change gene, molecular alteration or Publication dates parameter and try it again. "
+            }]
+        },
         {name: "altMolecular", title: "Alteración Molecular", stype: "select", dataSource: "AlterationMolecular"},
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "notification", title: "Número de notificaciones", type: "int"},
         {name: "recommended", title: "Recomendados", type: "int"}, /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
-        {name: "user", title: "Usuario", stype: "select", dataSource: "User"},
+        {name: "user", title: "Usuario", type: "string"}, //, dataSource: "User"
         {name: "created", title: "Fecha de creación", type: "date"},
         {name: "monthYearOld", title: "Longevidad del último año (en meses)", type: "int"}
     ]
@@ -200,7 +206,8 @@ eng.dataSources["Configuration"] = {
     modelid: "NanoPharmacy",
     dataStore: "mongodb",
     fields: [
-        {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "int"}
+        {name: "rateUpdPubl", title: "Periodicidad para actualizar publicaciones", type: "int"},
+        {name: "searchCreationMode", title: "Modo de creacion de busquedas", type: "string"}
     ]
 };
 eng.dataSources["Role"] = {
@@ -341,7 +348,8 @@ eng.dataServices["SearchService"] = {
                 var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
                 var altMolecular = this.getDataSource("AlterationMolecular").
                         fetchObjById(response.data.altMolecular).name;
-                var res = utils.getPublication(response.data.artYearsOld, gene, altMolecular, response.data._id,response.data.gene,response.data.altMolecular);
+                var res = utils.getPublication(response.data.artYearsOld, gene, altMolecular, 
+                                               response.data._id, response.data.gene, response.data.altMolecular);
                 if (res !== null) {
                     var jsonArt = JSON.parse(res);
                     if (jsonArt.error != null) {

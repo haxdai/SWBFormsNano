@@ -1,6 +1,8 @@
 package org.nanopharmacy.listener;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
@@ -22,9 +24,19 @@ import org.semanticwb.datamanager.SWBScriptEngine;
 @WebListener
 public class SchedulerTrigger implements ServletContextListener {
 
+    
     /** Instancia del objeto para escribir en bitacora de la aplicacion */
     private static final Logger LOG = Logger.getLogger(SchedulerTrigger.class.getName());
 
+    /** Especifica el archivo de propiedades de la aplicacion */
+    private final String propsFile = "/WEB-INF/app.properties";
+    
+    /** Modo por defecto para crear esquemas de busqueda */
+    public static final String MODE_BY_USER = "byuser";
+    
+    /** Modo opcional para crear esquemas de busqueda */
+    public static final String MODE_GENERAL = "general";
+    
     /**
      * Prepara la instancia de la aplicacion para su correcto funcionamiento. Solicita la ejecucion
      * de la programacion de la tarea que actualizara periodicamente las busquedas y crea en base de datos
@@ -35,17 +47,65 @@ public class SchedulerTrigger implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         
+        DataObject query = new DataObject();
+        DataObject data = new DataObject();
+        
+        Properties props = new Properties();
+        try (FileInputStream stream = new FileInputStream(sce.getServletContext().getRealPath(this.propsFile))) {
+            props.load(stream);
+        } catch (IOException ioe) {
+            throw new NoValidConfigurationError("Cannot read properties file app.properties");
+        }
+        String key = "searchCreationMode";
+        String searchCreateMode = null;
+        
         try {
+            SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/dist/NanoSources.js", null, false);
+            SWBDataSource dataSourceConf = engine.getDataSource("Configuration");
+            DataObject configData = dataSourceConf.fetch();
+            if (props.containsKey(key)) {
+                searchCreateMode = props.getProperty(key);
+                if (searchCreateMode.equalsIgnoreCase(this.MODE_BY_USER) ||
+                        searchCreateMode.equalsIgnoreCase(this.MODE_GENERAL)) {
+                    //si no hay registros en configuracion (instancia nueva de app), crear uno
+                    if (configData.getDataObject("response").getInt("totalRows") == 0) {
+                        data.put("rateUpdPubl", "30");
+                        data.put("searchCreationMode", searchCreateMode);
+                        query.put("data", data);
+                        dataSourceConf.add(query);
+                    } else {
+                        String creationMode = configData.getDataObject("response").getDataList(
+                                "data").getDataObject(0).getString("searchCreationMode");
+                        if (creationMode != null && (creationMode.equalsIgnoreCase(this.MODE_BY_USER) ||
+                                creationMode.equalsIgnoreCase(this.MODE_GENERAL))) {
+                            //mantener el valor a nivel aplicacion para leerlo posteriormente
+                            sce.getServletContext().setAttribute("searchCreationMode", creationMode);
+                        } else if (creationMode == null || creationMode.isEmpty()) {
+                            String id = configData.getDataObject("response").getDataList(
+                                "data").getDataObject(0).getString("_id");
+                            data.put("_id", id);
+                            data.put("searchCreationMode", searchCreateMode);
+                            query.put("data", data);
+                            dataSourceConf.update(query);
+                        } else {
+                            throw new NoValidConfigurationError("Not valid value in configuration property searchCreationMode");
+                        }
+                    }
+                } else {
+                    throw new NoValidConfigurationError("Not valid value in configuration property searchCreationMode");
+                }
+            } else {
+                throw new NoValidConfigurationError("Property searchCreationMode not found in file app.properties");
+            }
+            
             Scheduler scheduler = Scheduler.getInstance();
             scheduler.programTask();
-            SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/NanoSources.js", null, false);
             SWBDataSource dataUser = engine.getDataSource("User");
             SWBDataSource dataRole = engine.getDataSource("Role");
             SWBDataSource dataImages = engine.getDataSource("Images");
-            DataObject query = new DataObject();
-            DataObject data = new DataObject();
             //Add default roles
             //admin
+            data = new DataObject();
             data.put("title", "admin");
             query.put("data", data);
             String idRoleAdmin = "";
@@ -65,7 +125,7 @@ public class SchedulerTrigger implements ServletContextListener {
             if (objRoleUser.getDataObject("response").getInt("totalRows") == 0) {
                 dataRole.add(query);
             }
-
+            
             query = new DataObject();
             data = new DataObject();
             query.put("data", data);
@@ -82,9 +142,9 @@ public class SchedulerTrigger implements ServletContextListener {
             //Images
             DataList imageSrc;
             DataObject dataImageSrc;
-
+            
             //Si la instancia es nueva y no hay imagenes para el carrusel, se agregan
-            obj = dataImages.fetch(query);
+            obj = dataImages.fetch();
             if (obj.getDataObject("response").getInt("totalRows") == 0) {
                 query = new DataObject();
                 imageSrc = new DataList();
@@ -136,7 +196,6 @@ public class SchedulerTrigger implements ServletContextListener {
                 query.put("data", data);
                 obj = dataImages.add(query);
             }
-
             //
             /*query = new DataObject();
              src = new DataList();
@@ -156,7 +215,7 @@ public class SchedulerTrigger implements ServletContextListener {
              if(obj.getDataObject("response").getInt("totalRows")==0){
              obj = dataImages.add(query);
              }*/
-
+            
         } catch (IOException ex) {
             SchedulerTrigger.LOG.log(Level.SEVERE, null, ex);
         }
@@ -169,9 +228,10 @@ public class SchedulerTrigger implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
 
-        System.out.println("Cancelando ejecucion de tareas programas ...");
         Scheduler scheduler = Scheduler.getInstance();
         scheduler.cancel();
-        scheduler.purge();
+        scheduler = null;
+        System.out.println("Cancelando ejecucion de tareas programadas ...");
+        //scheduler.purge();
     }
 }

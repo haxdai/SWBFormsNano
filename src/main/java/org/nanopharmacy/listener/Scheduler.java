@@ -25,6 +25,8 @@ public class Scheduler extends Timer {
     /** Referencia a la instancia unica de esta clase */
     private static Scheduler uniqueInstance;
     
+    private SearchTask task2Schedule;
+    
     /** Constructor por defecto para la generacion de la instancia de esta clase */
     private Scheduler() {
     }
@@ -52,7 +54,7 @@ public class Scheduler extends Timer {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSz");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String defaultInterval = "15";
-        System.out.println("\n   --- Ejecutando Tarea Programada: " + format.format(now));
+        System.out.println("\n ---Ejecutando programacion de tarea ...");
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(now);
         //int am_pm = calendar.get(Calendar.AM_PM); //AM = 0; PM = 1
@@ -62,10 +64,8 @@ public class Scheduler extends Timer {
         int missingHours = 24 - hour;  //la hora de ejecucion de la tarea es la 1:00 am
         int missingMinutes = 60 - minutes;
         int missingSeconds = 60 - seconds;
-        System.out.println("Para la 1:00 am faltan:\n" + missingHours + " horas\n" + missingMinutes + " minutos\n" + missingSeconds + " segundos\n");
-        //TODO: Buscar fecha de ultima actualizacion para programar la siguiente
-        //      y la de periodicidad de actualizacion de las busquedas para compararlas
-        SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/NanoSources.js", null, false);
+
+        SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/dist/NanoSources.js", null, false);
         SWBDataSource dataSearch = engine.getDataSource("Search");
         SWBDataSource dataConf = engine.getDataSource("Configuration");
         DataObject query = new DataObject();
@@ -82,7 +82,6 @@ public class Scheduler extends Timer {
             if (rows > 0) {
                 rateUpdate = resultSet.getDataObject("response").getDataList(
                         "data").getDataObject(0).getString("rateUpdPubl");
-                System.out.println("\nrateUpdate: " + rateUpdate);
             } else {
                 rateUpdate = defaultInterval;
             }
@@ -92,7 +91,6 @@ public class Scheduler extends Timer {
             if (rows > 0) {
                 lastUpdate = resultSet.getDataObject("response").getDataList(
                         "data").getDataObject(0).getString("lastUpdate");
-                System.out.println("\nlastUpdate: " + lastUpdate);
             } else {
                 lastUpdate = df.format(now);
             }
@@ -112,12 +110,14 @@ public class Scheduler extends Timer {
             if (lastUpdateDay != null) {
                 daysDifference = this.dateDiff(lastUpdateDay, now);
                 int daysToWait = (daysInterval - daysDifference) < 0 ? 0 : daysInterval - daysDifference;
-                System.out.println("Dias a esperar por ejecucion: " + daysToWait);
-                long delay = missingSeconds * 1000 + missingMinutes * 60000 + missingHours * 3600000; //en milisegundos
-                delay += (daysToWait * 86400000); //dias * milisegundos en un dia
-                long period = daysInterval * 86400000;
-                System.out.println("delay: " + delay + "\nperiod: " + period);
-                this.scheduleAtFixedRate(new SearchTask(), delay, period);
+                //System.out.println("Para la 1:00 am faltan:\n" + (missingHours * 3600000) + " horas\n" + (missingMinutes * 60000) + " minutos\n" + (missingSeconds * 1000) + " segundos\n");
+                long delay = (missingSeconds * 1000) + (missingMinutes * 60000) + (missingHours * 3600000); //en milisegundos
+                delay += (daysToWait * 86400000L); //dias * milisegundos en un dia
+                long period = daysInterval * 86400000L;
+                if (this.task2Schedule == null) {
+                    this.task2Schedule = new SearchTask();
+                }
+                this.scheduleAtFixedRate(this.task2Schedule, delay, period);
                 //this.schedule(new SearchTask(), 10000, 3600000); //TODO: quitar comentario a esta linea para pruebas
             }
         } else {
@@ -153,4 +153,9 @@ public class Scheduler extends Timer {
         return ((int) dias);
     }
     
+    public void reprogramTask() {
+        this.task2Schedule.cancel();
+        this.task2Schedule = null;
+        this.programTask();
+    }
 }

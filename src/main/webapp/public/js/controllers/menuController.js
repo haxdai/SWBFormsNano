@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('controller.menu', [])
-        .controller('MenuController', function ($scope, $state, $rootScope, $stateParams, Search, Gene, Alteration, Config, Art_Search, User, Role) {
+        .controller('MenuController', function ($scope, $state, $rootScope, $stateParams, Search, 
+                                                Gene, Alteration, Config, Art_Search, User, Role) {
             $scope.searchList = [];
             $scope.searchId = $stateParams.id;
             $scope.geneList;
             $scope.altList;
             $scope.datesList = Config.publicationDates();
             $scope.user;
+            $scope.creationMode;
 
             var MSG_SCHEME_LOOKING = "Aurora is searching information about this schema of search. This process may take several minutes, please wait.";
             var MSG_SCHEME_ADDED = "The search schema has been added correctly"
@@ -17,6 +19,10 @@ angular.module('controller.menu', [])
                 $scope.searchId = scheme;
             }
 
+            Config.getSearchCreationMode().then(function (configObj) {
+                console.log(configObj.searchCreationMode)
+                $scope.creationMode = configObj.searchCreationMode;
+            });
 
 
             $scope.searchListFunction = function (list) {
@@ -52,8 +58,11 @@ angular.module('controller.menu', [])
                 $scope.user = user;
                 Role.byId($scope.user.role).then(function (role) {
                     $scope.user.roleName = role.title;
-                    
-                    Search.list({user: $scope.user._id}).then(function (searchList) {
+                    var userByMode = $scope.user._id;
+                    if ($scope.creationMode == "general") {
+                        userByMode = "all";
+                    }
+                    Search.list({user: userByMode}).then(function (searchList) {
                         searchList.forEach(function (search, i) {
                             $scope.searchList.push(search);
                             Art_Search.listbyStatusSearchId(search._id).then(function (artSearchList) {
@@ -87,10 +96,18 @@ angular.module('controller.menu', [])
                 })
             }
 
-
             $scope.addSearch = function (geneSelected, altSelected, dateSelected) {
-
-                var q = {gene: geneSelected._id, altMolecular: altSelected._id, artYearsOld: dateSelected.year, user: $scope.user._id};
+                var creationMode = $scope.creationMode;
+                var q;
+                if (creationMode === "byuser") {
+                    q = {gene: geneSelected._id, altMolecular: altSelected._id,
+                         artYearsOld: dateSelected.year, user: $scope.user._id, creationMode: creationMode};
+                    console.log("Con usuario - " + creationMode);
+                } else {
+                    q = {gene: geneSelected._id, altMolecular: altSelected._id,
+                         artYearsOld: dateSelected.year, user: "all", creationMode: creationMode};
+                    console.log("Sin usuario - " + creationMode);
+                }
                 showMessage("msg", MSG_SCHEME_LOOKING)
                 Search.validate(q).then(function () {
                     Search.add(q).then(function (search) {

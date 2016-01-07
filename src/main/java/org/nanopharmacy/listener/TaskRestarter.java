@@ -15,9 +15,7 @@ public class TaskRestarter {
     public static void reprogramAutoUpdate() {
         
         Scheduler scheduler = Scheduler.getInstance();
-        scheduler.cancel();
-        scheduler.purge();
-        scheduler.programTask();
+        scheduler.reprogramTask();
     }
 
     
