@@ -3,15 +3,12 @@
 angular.module('controller.configUpdatingTime', ['angular-carousel'])
         .controller('ConfigUpdatingTimeController', function ($scope, Config) {
             $scope.rates = Config.rateUpdate();
-            console.log($scope.rates )
             var MSG_CONFIG_UPDATED = "Configuration settings have been updated correctly"
 
             Config.getRateUpdate().then(function (rate) {
-                console.log(rate)
                 $scope.optionValue = rate;
             }, function (error) {
                 Config.saveRateUpdate({rateUpdPubl: {day:$scope.rates[0].day,text: $scope.rates[0].text} } ).then(function (rate) {
-                    console.log(rate)
                     $scope.optionValue = rate;
                 })
             })
@@ -23,7 +20,6 @@ angular.module('controller.configUpdatingTime', ['angular-carousel'])
                     showMessage("ok", MSG_CONFIG_UPDATED)
                     $scope.optionValue = rate;
                 },function(error){
-                    console.log(error)
                 })
             }
 

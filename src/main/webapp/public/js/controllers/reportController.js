@@ -26,7 +26,6 @@ angular.module('controller.report', ['angular-carousel'])
             
             Search.byId($scope.searchId).then(function (search) {
                 $scope.search = search;
-                 console.log(search)
                 Gene.byId(search.gene).then(function (gene) {
                     $scope.gene = gene;
                 })
@@ -36,11 +35,9 @@ angular.module('controller.report', ['angular-carousel'])
             }, function (error) {
                  $scope.search = undefined;
                   showMessage("error",ERROR_SCHEME_NOT_FOUND);
-                console.log(error)
             })
 
             $scope.save = function (report) {
-                console.log(report)
                 report.comment = report.comment.replace(new RegExp("\n", 'g'), '<br>');
                 if ($scope.report.hasOwnProperty("_id")) {
                     Report.update(report).then(function(){
@@ -80,7 +77,6 @@ angular.module('controller.report', ['angular-carousel'])
                 $scope.report = report;
                 $scope.report.comment = $filter('formatReport')($scope.report.comment)
             }, function (error) {
-                console.log(error)
             });
 
 

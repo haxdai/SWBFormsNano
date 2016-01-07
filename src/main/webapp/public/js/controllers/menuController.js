@@ -73,7 +73,6 @@ angular.module('controller.menu', [])
 
                 })
             }, function (error) {
-                console.log(error)
             });
 
 
@@ -83,7 +82,6 @@ angular.module('controller.menu', [])
             })
 
             $scope.geneChange = function (gene) {
-                //console.log(gene)
                 Alteration.list(gene._id).then(function (altList) {
                     $scope.altList = altList;
                 })
@@ -111,7 +109,6 @@ angular.module('controller.menu', [])
                     }, function (error) {
                         removeMessage("msg")
                         showMessage("error", error)
-                        //console.log(error);
                         $('#panel-element-busca').collapse("hide");
                         $scope.schemeForm.$setPristine();
                         $scope.geneSelected = null;
@@ -121,7 +118,6 @@ angular.module('controller.menu', [])
                 }, function (error) {
                     removeMessage("msg")
                     showMessage("error", error.gene)
-                    //console.log(error);
                 })
 
             }

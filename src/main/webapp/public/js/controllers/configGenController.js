@@ -62,6 +62,8 @@ angular.module('controller.configGen', [])
                         Alteration.remove(alt._id).then(function(){
                              $scope.altList.splice(i, 1);
                              showMessage("ok", MSG_ALT_DELETED)
+                        },function(error){
+                            showMessage("error", error)
                         });
                     }
                 })
@@ -115,11 +117,9 @@ angular.module('controller.configGen', [])
                     }, function (error) {
                         removeMessage("msg")
                         showMessage("error", error)
-                        console.log(error)
                     })
                 }, function (error) {
                     removeMessage("msg")
-                    console.log(error)
                     showMessage("error", error.symbol)
                     $scope.cancelGen()
                 });
@@ -134,10 +134,8 @@ angular.module('controller.configGen', [])
                         showMessage("ok", MSG_ALT_ADDED)
                         $scope.cancelAlt()
                     }, function (error) {
-                        console.log(error);
                     })
                 }, function (error) {
-                    console.log(error);
                     showMessage("error", error.name)
                     $scope.cancelAlt()
                 });
@@ -152,7 +150,6 @@ angular.module('controller.configGen', [])
                     $scope.cancelAlt();
                     showMessage("ok", MSG_ALT_EDITED)
                 }, function (error) {
-                    console.log(error);
                 })
             }
 
@@ -194,19 +191,15 @@ angular.module('controller.configGen', [])
                 Alteration.list($scope.geneId).then(function (altList) {
                     $scope.altList = altList;
                 }, function (error) {
-                    console.log(error)
                 })
                 CancerType.listByGenId($scope.geneId).then(function (cancerList) {
                     $scope.cancerList = cancerList;
-                    //console.log($scope.cancerList);
                 }, function (error) {
-                    console.log(error)
                 })
             }
 
             Gene.list().then(function (geneList) {
                 $scope.geneList = geneList;
-                //console.log($scope.geneList)
             })
             $("#menu-toggle").click(function (e) {
                 $("#menu-toggle").removeClass("menu-toggle-off-fixed");

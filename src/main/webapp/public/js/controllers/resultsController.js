@@ -41,7 +41,6 @@ angular.module('controller.results', [])
             }, function (error) {
                 $scope.search = undefined;
                  showMessage("error",ERROR_SCHEME_NOT_FOUND);
-                console.log(error)
             })
 
             $scope.prev = function () {
@@ -106,7 +105,6 @@ angular.module('controller.results', [])
             }
 
             $scope.accept = function (art_search, i,index) {
-                console.log(i);
                 var statusPrev = art_search.status;
                 art_search.status = 2;
                 Art_Search.update(art_search).then(function () {

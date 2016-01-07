@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('service.alteration', [])
-        .service('Alteration', function ($http, $q) {
+        .service('Alteration', function ($http, $q, Search) {
 
             this.validate = function (query) {
                 var deferred = $q.defer();
@@ -76,18 +76,25 @@ angular.module('service.alteration', [])
 
                 return deferred.promise;
             };
-            
+
             this.remove = function (altId) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("AlterationMolecular");
-                ds.removeObjById(altId, function (response) {
-                    if (response && response.status == 0) {
-                        deferred.resolve(response.data);
+                Search.list({altMolecular: altId}).then(function (data) {
+                    if (data.length > 0) {
+                        deferred.reject("Cannot delete this molecular alteration, because is part of a Search");
                     } else {
-                        deferred.reject("No data");
+                        ds.removeObjById(altId, function (response) {
+                            if (response && response.status == 0) {
+                                deferred.resolve(response.data);
+                            } else {
+                                deferred.reject("No data");
+                            }
+                        });
                     }
-                });
+                }, function () {
 
+                });
                 return deferred.promise;
             };
 

@@ -18,7 +18,6 @@ angular.module('controller.searchDetail', [])
                 })
             }, function (error) {
                  $scope.search = undefined;
-                 console.log(error)
             });
 
             $scope.deleteScheme = function () {
@@ -45,7 +44,6 @@ angular.module('controller.searchDetail', [])
             }, function (error) {
                   $scope.search = undefined;
                  showMessage("error",ERROR_SCHEME_NOT_FOUND);
-                console.log(error)
             })
 
 

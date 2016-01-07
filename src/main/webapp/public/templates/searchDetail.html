@@ -2,7 +2,7 @@
 <div ng-if="search" class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <button ng-hide="user.roleName !== 'admin'" class="btn pull-right" ng-click="deleteScheme()"><span class="glyphicon glyphicon-trash"></span></button>   
+            <button class="btn pull-right" ng-click="deleteScheme()"><span class="glyphicon glyphicon-trash"></span></button>   
             <h3>Search results of the gene: {{gene.symbol}}, molecular alteration:  {{alt.name}} and publication dates for {{search.artYearsOld}} year{{search.artYearsOld>1?"s":""}}</h3>
             <h3>{{gene.symbol}} - {{gene.officialName}}</h3>
            

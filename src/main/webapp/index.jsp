@@ -32,6 +32,7 @@
         </div>
         <div  class="noprint" id="message-box">
             <div  style="display:none;" class="alert alert-danger text-center">
+              
             </div>
             <div style="display:none;" class="alert alert-success text-center">
             </div> 
@@ -121,8 +122,8 @@
                 $("#message-box > .alert-success").fadeIn().delay(3500).fadeOut();
 
             } else if (type === "error") {
-                $("#message-box > .alert-danger").text(msg);
-                $("#message-box > .alert-danger").fadeIn().delay(3500).fadeOut();
+                $("#message-box > .alert-danger").html("<a onclick='removeMessage(\"error\")' href='#' class='close' aria-label='close'>&times;</a>"+msg);
+                $("#message-box > .alert-danger").fadeIn();
             } else if (type === "msg") {
                 $("#message-box > .alert-info").html("<span  class='throbber-loader'></span><br>" + msg);
                 $("#message-box > .alert-info").fadeIn();
@@ -131,11 +132,11 @@
 
         function removeMessage(type) {
             if (type === "ok") {
-                $("#message-box > .alert-success").hide();
+                $("#message-box > .alert-success").fadeOut();
             } else if (type === "error") {
-                $("#message-box > .alert-danger").hide();
+                $("#message-box > .alert-danger").fadeOut();
             } else if (type === "msg") {
-                $("#message-box > .alert-info").hide();
+                $("#message-box > .alert-info").fadeOut();
             }
         }
 
