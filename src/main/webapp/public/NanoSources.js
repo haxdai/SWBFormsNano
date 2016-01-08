@@ -73,8 +73,7 @@ eng.dataSources["CancerType"] = {
     dataStore: "mongodb",
     displayField: "name",
     fields: [
-        {name: "name", title: "Nombre del tipo de cáncer", type: "string", 
-            validators: [
+        {name: "name", title: "Nombre del tipo de cáncer", type: "string", validators: [
                 {
                     type: "serverCustom", //serverCustom del lado del servidor
                     serverCondition: function (name, value, request) {
@@ -110,9 +109,9 @@ eng.dataSources["Article"] = {
         {name: "prognosis", title: "Pronóstico", type: "int"},
         {name: "prediction", title: "Predicción", type: "int"},
         {name: "treatment", title: "Tratamiento", type: "int"},
-        {name: "lastUpdate", title: "Ultima actualización", type: "int"},
+        {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "publicationMonth", title: "Mes de publicación", type: "int"},
-        {name: "publicationYear", title: "Año de publicación", type: "date"}
+        {name: "publicationYear", title: "Año de publicación", type: "int"}
     ]
 };
 eng.dataSources["Search"] = {
@@ -123,7 +122,7 @@ eng.dataSources["Search"] = {
     fields: [
         {name: "gene", title: "Gen", stype: "select", dataSource: "Gene", validators: [{
                     type: "serverCustom", //serverCustom del lado del servidor
-                    serverCondition: function (name, value, request) {
+                                       serverCondition: function (name, value, request) {
                         var StringArrayType = Java.type("java.lang.String[]");
                         var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                         var IntegerArrayType = Java.type("int[]");
@@ -156,7 +155,7 @@ eng.dataSources["Search"] = {
         {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "notification", title: "Número de notificaciones", type: "int"},
-        {name: "recommended", title: "Recomendados", type: "int"} /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/,
+        {name: "recommended", title: "Recomendados", type: "int"}, /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
         {name: "user", title: "Usuario", stype: "select", dataSource: "User"},
         {name: "created", title: "Fecha de creación", type: "date"},
         {name: "monthYearOld", title: "Longevidad del último año (en meses)", type: "int"}
@@ -303,7 +302,7 @@ eng.dataServices["GeneService"] = {
                 //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:56453514d501e2ac6ccea32c");
             }
         }
-
+        
     }
 };
 
@@ -318,6 +317,7 @@ eng.dataServices["UserService"] = {
         }
     }
 };
+
 eng.dataServices["ConfigService"] = {
     dataSources: ["Configuration"],
     actions: ["update"],
@@ -330,13 +330,13 @@ eng.dataServices["ConfigService"] = {
 
 eng.dataServices["SearchService"] = {
     dataSources: ["Search"],
-    actions: ["add"],
+    actions: ["add", "remove"],
     service: function (request, response, dataSource, action)
-        {
+    {
         if (action == "add") {
             if (response.data._id !== null && response.data._id !== "" && response.data.gene !== null &&
                     response.data.gene !== "" && response.data.altMolecular !== null &&
-                    response.data.altMolecular !== "") {
+                    response.data.altMolecular !== ""  ) {
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                 var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
                 var altMolecular = this.getDataSource("AlterationMolecular").
@@ -382,5 +382,39 @@ eng.dataSources["Images"] = {
         {name: "src", title: "Url", multiple: false, stype: "file", required: true},
         {name: "link", title: "Link", type: "string"},
     ]
+};
+
+eng.dataProcessors["ImagesProcessor"] = {
+    dataSources: ["Images"],
+    actions: ["remove"],
+    request: function (request, dataSource, action)
+    {
+        var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+        if (request.data._id){
+            utils.removeImages(request.data._id);
+        }
+    }
+};
+eng.dataSources["Analize"] = {
+    scls: "Analize",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",
+    displayField: "key",
+    fields: [
+        {name: "search", title: "Search", stype: "select", dataSource: "Search"},
+        {name: "key", title: "Key", type: "string"},
+        {name: "frequency", title: "Frequency", type: "int"},
+        {name: "threshold", title:"", type:"int"}
+    ]
+};
+eng.dataServices["Art_SearchService"] = {
+    dataSources: ["Art_Search"],
+    actions: ["update"],
+    service: function (request, response, dataSource, action)
+    {
+        
+        var utils = Java.type("org.nanopharmacy.utils.Analizer");
+        utils.analizer(request.data.search,request.data.article);
+    }
 };
 eng.validators["email"] = {type: "regexp", expression: "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$", errorMessage: "No es un correo electrÃ³nico vÃ¡lido"};

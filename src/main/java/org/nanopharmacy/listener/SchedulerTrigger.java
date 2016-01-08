@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import org.nanopharmacy.utils.Utils;
 import org.semanticwb.datamanager.DataList;
 import org.semanticwb.datamanager.DataMgr;
 import org.semanticwb.datamanager.DataObject;
@@ -51,6 +52,8 @@ public class SchedulerTrigger implements ServletContextListener {
         DataObject data = new DataObject();
         
         Properties props = new Properties();
+        String imgContextPath = sce.getServletContext().getRealPath("/public/img");
+        Utils.setContextPath(imgContextPath);
         try (FileInputStream stream = new FileInputStream(sce.getServletContext().getRealPath(this.propsFile))) {
             props.load(stream);
         } catch (IOException ioe) {

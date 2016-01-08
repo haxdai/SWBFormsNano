@@ -309,7 +309,7 @@ eng.dataServices["GeneService"] = {
                 //utils.setUpdateDisease(defDiseases, "_suri:NanoPharmacy:Gene:56453514d501e2ac6ccea32c");
             }
         }
-
+        
     }
 };
 
@@ -390,5 +390,40 @@ eng.dataSources["Images"] = {
         {name: "src", title: "Url", multiple: false, stype: "file", required: true},
         {name: "link", title: "Link", type: "string"},
     ]
+};
+
+eng.dataProcessors["ImagesProcessor"] = {
+    dataSources: ["Images"],
+    actions: ["remove"],
+    request: function (request, dataSource, action)
+    {
+        var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+        if (request.data._id){
+            utils.removeImages(request.data._id);
+        }
+    }
+};
+eng.dataSources["Analize"] = {
+    scls: "Analize",
+    modelid: "NanoPharmacy",
+    dataStore: "mongodb",
+    displayField: "key",
+    fields: [
+        {name: "search", title: "Search", stype: "select", dataSource: "Search"},
+        {name: "key", title: "Key", type: "string"},
+        {name: "frequency", title: "Frequency", type: "int"},
+        {name: "threshold", title:"", type:"int"}
+    ]
+};
+eng.dataServices["Art_SearchService"] = {
+    dataSources: ["Art_Search"],
+    actions: ["update"],
+    service: function (request, response, dataSource, action)
+    {
+        if(request.data.status == 2){
+        var utils = Java.type("org.nanopharmacy.utils.Analizer");
+        utils.analizer(request.data.search,request.data.article);
+        }
+    }
 };
 eng.validators["email"] = {type: "regexp", expression: "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$", errorMessage: "No es un correo electrÃ³nico vÃ¡lido"};
