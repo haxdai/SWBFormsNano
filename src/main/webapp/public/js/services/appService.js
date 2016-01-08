@@ -12,7 +12,8 @@ angular.module('services',
             'service.config',
             'service.images',
             'service.user',
-            'service.role'
+            'service.role',
+            'service.glossary'
         ])
         .filter("sanitize", ['$sce', function ($sce) {
                 return function (htmlCode) {

@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('controller.results', [])
-        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene,Alteration) {
+        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene, Alteration,Glossary) {
             $scope.searchId = $stateParams.id;
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var ERROR_SCHEME_NOT_FOUND = "This scheme of search was not found"
+            var KEYWORD_ADDED = "The keyword has been added correctly";
             var status = parseInt($stateParams.status);
             if ($stateParams.status >= 0 && $stateParams.status <= 4) {
                 $scope.status = status;
@@ -25,22 +26,22 @@ angular.module('controller.results', [])
             $scope.alt;
             $scope.search;
             $scope.reorderClass = "glyphicon-sort-by-attributes";
-             $scope.isReorderToggle = false;
+            $scope.isReorderToggle = false;
             $scope.articleList = [];
             $scope.filterSelected = "ranking"
 
             Search.byId($scope.searchId).then(function (search) {
-                 $scope.search = search ;
+                $scope.search = search;
                 Gene.byId(search.gene).then(function (gene) {
                     $scope.gene = gene;
                 })
                 Alteration.byId(search.altMolecular).then(function (alte) {
                     $scope.alt = alte;
                 });
-                
+
             }, function (error) {
                 $scope.search = undefined;
-                 showMessage("error",ERROR_SCHEME_NOT_FOUND);
+                showMessage("error", ERROR_SCHEME_NOT_FOUND);
             })
 
             $scope.prev = function () {
@@ -54,12 +55,12 @@ angular.module('controller.results', [])
             }
             $scope.firts = function () {
                 $scope.pag = 1;
-                
+
                 $scope.articleList = [];
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
             }
             $scope.last = function () {
-                $scope.pag = $scope.maxPage; 
+                $scope.pag = $scope.maxPage;
                 $scope.articleList = [];
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
             }
@@ -74,11 +75,11 @@ angular.module('controller.results', [])
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.status != 1 ? $scope.pag : 1);
             }
 
-            $scope.discard = function (art_search, i,index) {
+            $scope.discard = function (art_search, i, index) {
                 var statusPrev = art_search.status;
                 art_search.status = 3;
                 Art_Search.update(art_search).then(function () {
-                    $('#p' + (i )).on('hidden.bs.collapse', function () {
+                    $('#p' + (i)).on('hidden.bs.collapse', function () {
                         $('#p' + (i)).off('hidden.bs.collapse')
                         $scope.articleList.splice(index, 1);
                         $scope.$digest()
@@ -91,7 +92,7 @@ angular.module('controller.results', [])
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
                     if (statusPrev == 1) {
-                        
+
                         $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);
                     } else {
                         if ($scope.maxPage < $scope.pag) {
@@ -104,11 +105,11 @@ angular.module('controller.results', [])
                 })
             }
 
-            $scope.accept = function (art_search, i,index) {
+            $scope.accept = function (art_search, i, index) {
                 var statusPrev = art_search.status;
                 art_search.status = 2;
                 Art_Search.update(art_search).then(function () {
-                    $('#p' + (i )).on('hidden.bs.collapse', function () {
+                    $('#p' + (i)).on('hidden.bs.collapse', function () {
                         $('#p' + (i)).off('hidden.bs.collapse')
                         $scope.articleList.splice(index, 1);
                         $scope.$digest()
@@ -133,39 +134,39 @@ angular.module('controller.results', [])
                     }
                 })
             }
-            
+
             $scope.statusChange = function (status) {
                 $scope.articleList = [];
                 $scope.pag = 1;
                 $scope.status = parseInt(status);
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             }
-            
-            $scope.filterToogle = function(newReorderToggle,filter){
-                if(newReorderToggle){
-                        $scope.isReorderToggle = false;
-                        $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
-                }else{
+
+            $scope.filterToogle = function (newReorderToggle, filter) {
+                if (newReorderToggle) {
+                    $scope.isReorderToggle = false;
+                    $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
+                } else {
                     $scope.isReorderToggle = true;
-                      $scope.reorderClass = "glyphicon-sort-by-attributes";
-                
+                    $scope.reorderClass = "glyphicon-sort-by-attributes";
+
                 }
-                if($scope.isReorderToggle){
-                    filter = "-"+filter
+                if ($scope.isReorderToggle) {
+                    filter = "-" + filter
                 }
                 $scope.articleList = [];
                 $scope.pag = 1;
                 $scope.sortBy = filter;
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             }
-            
+
             $scope.filterChange = function () {
-                if($scope.filterSelected == "titleSort" ||$scope.filterSelected == "autorSort" ){
-                     $scope.filterToogle(true, $scope.filterSelected)
-                }else{
-                     $scope.filterToogle(false, $scope.filterSelected)
+                if ($scope.filterSelected == "titleSort" || $scope.filterSelected == "autorSort") {
+                    $scope.filterToogle(true, $scope.filterSelected)
+                } else {
+                    $scope.filterToogle(false, $scope.filterSelected)
                 }
-                
+
             }
 
 
@@ -177,8 +178,8 @@ angular.module('controller.results', [])
                     }
                 }
                 Article.listBySearchId(searchId, status, orderBy, pag, ele).then(function (artSearchList) {
-                    
-                    $scope.totalRowsFinal =  $scope.totalRows = artSearchList.totalRows;
+
+                    $scope.totalRowsFinal = $scope.totalRows = artSearchList.totalRows;
                     $scope.limit = artSearchList.limit;
                     $scope.maxPage = Math.ceil($scope.totalRows / $scope.limit);
                     artSearchList.data.forEach(function (art) {
@@ -213,5 +214,40 @@ angular.module('controller.results', [])
                 $("#wrapper").toggleClass("toggled");
                 $(this).toggleClass("menu-toggle-off");
             });
-            checkRezise()
+
+            $(document).ready(function () {
+                context.init({
+                    fadeSpeed: 100,
+                    filter: function ($obj) {
+                    },
+                    above: 'auto',
+                    preventDoubleContext: false,
+                    compress: false
+                });
+                context.attach('.article-abstact', [{
+                        text: "Add to glosary",
+                        action: function (e) {
+                            var key = window.getSelection().getRangeAt(0).toString();
+                            console.log(key);
+                            e.preventDefault();
+                            var q = {key: key};
+                            Glossary.validate(q).then(function () {
+                                Glossary.save(q).then(function (newKey) {
+                                    showMessage("ok", KEYWORD_ADDED)
+                                }, function (error) {
+                                    showMessage("error", error)
+                                })
+                            }, function (error) {
+                                    showMessage("error", error.key)
+                            });
+
+                           
+                            
+                        }
+                    }]);
+            });
+
+
+
+            checkRezise();
         })

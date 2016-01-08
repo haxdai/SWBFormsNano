@@ -60,6 +60,8 @@
     <script src="/public/libs/angular-animate/angular-animate.min.js" ></script>
     <script src="/public/libs/angular-sanitize/angular-sanitize.min.js" ></script>
     <script src="/public/libs/bootbox/bootbox.min.js" ></script>
+    <script src="/public/libs/contextjs/context.js" ></script>
+    
     <!--    Nano js     -->
     <script src="/public/js/app.js"></script>
     <!--    Nano js services     -->
@@ -76,6 +78,7 @@
     <script src="/public/js/services/imagesService.js"></script>
     <script src="/public/js/services/userService.js"></script>
     <script src="/public/js/services/roleService.js"></script>
+    <script src="/public/js/services/glossaryService.js"></script>
     <!--    Nano js controllers     -->
     <script src="/public/js/controllers/appController.js"></script>
     <script src="/public/js/controllers/menuController.js"></script>

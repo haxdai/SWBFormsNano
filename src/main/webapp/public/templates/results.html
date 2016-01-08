@@ -37,12 +37,12 @@
                 <div  class="col-sm-5 col-md-3 col-lg-4">
                     <ul  ng-if="(totalRowsFinal > 1)" class ="pagination clearfix">
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="firts()" href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
-                        
+
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
                         <li><a ng-style="pag > 0 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" href="#">{{pag}} / {{maxPage}}</a></li>
                         <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
                         <li ><a ng-style="pag < ((maxPage)) && status!=1 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="last()" href="#"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></a></li>
-                    
+
                     </ul>
                 </div>
                 <div  class="col-sm-7 col-md-6 col-lg-4">
@@ -57,7 +57,7 @@
                                 <option value="treatment">Treatment</option>
                                 <option value="ranking">Best rated</option>
                             </select>
-                            <button ng-click="filterToogle(isReorderToggle,filterSelected)" type="button" class="btn "><span   ng-class="reorderClass" class="glyphicon"></span></button>
+                            <button ng-click="filterToogle(isReorderToggle, filterSelected)" type="button" class="btn "><span   ng-class="reorderClass" class="glyphicon"></span></button>
 
                         </p>
                     </div>
@@ -68,30 +68,30 @@
             <div class="panel-group" id="panel-results">
                 <div class="panel panel-default animate-repeat" ng-repeat="article in articleList">
                     <div class="panel-heading">
-                       
-                                <a class=" panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 +(limit*(pag-1))}}">
-                                     <div style="margin-right: 10px; float:left;">
-                                {{$index + 1 +(limit*(pag-1))}}.
-                        </div>
-                                        <div class="pull-right panel-califica">
-                                            <div class="star">
-                                                <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                                <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                                <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                                <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                                <i ng-class="article.artSearch.ranking >=10 ? 'fa-star': 'fa-star-o'" class="fa"></i>
-                                            </div>
-                                            <span class="glyphicon glyphicon-menu-up"></span>
-                                            <span class="glyphicon glyphicon-menu-down"></span>
-                                            
-                                        </div>
-                                    <div class="panel-text-title">{{article.article.title}}</div>
-                                </a>
+
+                        <a class=" panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 + (limit * (pag - 1))}}">
+                            <div style="margin-right: 10px; float:left;">
+                                {{$index + 1 + (limit * (pag - 1))}}.
+                            </div>
+                            <div class="pull-right panel-califica">
+                                <div class="star">
+                                    <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking >=10 ? 'fa-star': 'fa-star-o'" class="fa"></i>
+                                </div>
+                                <span class="glyphicon glyphicon-menu-up"></span>
+                                <span class="glyphicon glyphicon-menu-down"></span>
+
+                            </div>
+                            <div class="panel-text-title">{{article.article.title}}</div>
+                        </a>
                     </div>
-                    <div id="p{{$index + 1 +(limit*(pag-1))}}" class="panel-collapse collapse">
+                    <div id="p{{$index + 1 + (limit * (pag - 1))}}" class="panel-collapse collapse">
 
                         <div class="panel-body">
-                            <p class="text-justify" ng-bind-html="article.article.abstract | sanitize"></p>
+                            <p class="article-abstact text-justify" ng-bind-html="article.article.abstract | sanitize"></p>
                             <p class="text-justify reference"><strong>Reference:</strong>{{article.article.reference}}</p>
                         </div>
                         <div class="panel-pie clearfix">
@@ -99,17 +99,17 @@
                                 <span class="glyphicon glyphicon-link" aria-hidden="true"></span> More
                             </a>
 
-                            <a  ng-if="status != 2" ng-click="accept(article.artSearch, $index + 1 +(limit*(pag-1)),$index)" href="" class="panel-pie-ok"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-                            <a  ng-if="status != 3"  ng-click="discard(article.artSearch, $index + 1 +(limit*(pag-1)),$index)"  href="" class="panel-pie-remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            <a  ng-if="status != 2" ng-click="accept(article.artSearch, $index + 1 + (limit * (pag - 1)), $index)" href="" class="panel-pie-ok"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                            <a  ng-if="status != 3"  ng-click="discard(article.artSearch, $index + 1 + (limit * (pag - 1)), $index)"  href="" class="panel-pie-remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div ng-if="articleList.length >0" class="text-center">
+            <div ng-if="articleList.length > 0" class="text-center">
                 <h3>
-                {{((pag-1)*limit)+1}}-{{ pag*limit < totalRows ? pag*limit : totalRowsFinal }} / {{totalRowsFinal  }}
+                    {{((pag - 1) * limit) + 1}}-{{ pag*limit < totalRows ? pag*limit : totalRowsFinal }} / {{totalRowsFinal}}
                 </h3>
             </div>
 
@@ -120,5 +120,5 @@
     </div>
 </div>
 <div class="container-fluid">
-    
+
 </div>

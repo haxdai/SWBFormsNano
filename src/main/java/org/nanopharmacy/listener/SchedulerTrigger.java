@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import org.nanopharmacy.utils.Analizer;
 import org.nanopharmacy.utils.Utils;
 import org.semanticwb.datamanager.DataList;
 import org.semanticwb.datamanager.DataMgr;
@@ -106,6 +107,8 @@ public class SchedulerTrigger implements ServletContextListener {
             SWBDataSource dataUser = engine.getDataSource("User");
             SWBDataSource dataRole = engine.getDataSource("Role");
             SWBDataSource dataImages = engine.getDataSource("Images");
+            SWBDataSource dataGlossary = engine.getDataSource("Glossary");
+
             //Add default roles
             //admin
             data = new DataObject();
@@ -199,26 +202,13 @@ public class SchedulerTrigger implements ServletContextListener {
                 query.put("data", data);
                 obj = dataImages.add(query);
             }
-            //
-            /*query = new DataObject();
-             src = new DataList();
-             dataSrc = new DataObject();
-             data = new DataObject();
-             dataSrc.put("size", 177210);
-             dataSrc.put("name","imagen-01.jpg" );
-             dataSrc.put("id", "o_1a5d7gttb9ba16sotcr5b81goa7");
-             dataSrc.put("type", "image/jpeg");
-             src.add(dataSrc);
-             data.put("title","Nanopharmacia");
-             data.put("text","Nanopharmacia");
-             data.put("link","");
-             data.put("src", src);
-             query.put("data", data);
-             obj  = dataImages.fetch(query);
-             if(obj.getDataObject("response").getInt("totalRows")==0){
-             obj = dataImages.add(query);
-             }*/
-            
+
+            obj = dataGlossary.fetch();
+            if (obj.getDataObject("response").getInt("totalRows") == 0) {
+                System.out.println("Loading Glossary");
+                Analizer.loadGlossary(sce.getServletContext().getRealPath("/WEB-INF/glossary.txt"));
+            }
+
         } catch (IOException ex) {
             SchedulerTrigger.LOG.log(Level.SEVERE, null, ex);
         }
