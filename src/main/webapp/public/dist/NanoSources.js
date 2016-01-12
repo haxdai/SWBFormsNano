@@ -414,10 +414,12 @@ eng.dataServices["Art_SearchService"] = {
     actions: ["update"],
     service: function (request, response, dataSource, action)
     {
+        var newRecommended = 0;
         if (request.data.status == 2) {
             var utils = Java.type("org.nanopharmacy.utils.Analizer");
-            utils.analizer(request.data.search, request.data.article);
+            newRecommended = utils.analizer(request.data.search, request.data.article);
         }
+        response.data.newRecommended = newRecommended;
     }
 };
 eng.dataSources["Glossary"] = {

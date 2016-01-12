@@ -75,11 +75,11 @@
                             </div>
                             <div class="pull-right panel-califica">
                                 <div class="star">
-                                    <i ng-class="article.artSearch.ranking >=2 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                    <i ng-class="article.artSearch.ranking >=4 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                    <i ng-class="article.artSearch.ranking >=6 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                    <i ng-class="article.artSearch.ranking >=8 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
-                                    <i ng-class="article.artSearch.ranking >=10 ? 'fa-star': 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 1 ? 'fa-star-half-o' : article.artSearch.ranking >1 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 3 ? 'fa-star-half-o' : article.artSearch.ranking >3 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 5 ? 'fa-star-half-o' : article.artSearch.ranking >5 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 7 ? 'fa-star-half-o' : article.artSearch.ranking >7 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 9 ? 'fa-star-half-o' : article.artSearch.ranking >9 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
                                 </div>
                                 <span class="glyphicon glyphicon-menu-up"></span>
                                 <span class="glyphicon glyphicon-menu-down"></span>

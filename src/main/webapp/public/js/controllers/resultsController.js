@@ -88,10 +88,10 @@ angular.module('controller.results', [])
 
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     $scope.totalRowsFinal--;
-                    if (art_search.ranking > 5) {
+                    if (art_search.ranking > 5 ) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
-                    if (statusPrev == 1) {
+                    if (statusPrev == 1 &&  $scope.status == 1) {
 
                         $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);
                     } else {
@@ -108,7 +108,11 @@ angular.module('controller.results', [])
             $scope.accept = function (art_search, i, index) {
                 var statusPrev = art_search.status;
                 art_search.status = 2;
-                Art_Search.update(art_search).then(function () {
+                Art_Search.update(art_search).then(function (data) {
+                    console.log(data)
+                     if (data.data.newRecommended > 0) {
+                        $rootScope.$emit('articleRecommended', $scope.searchId, data.data.newRecommended);
+                    }
                     $('#p' + (i)).on('hidden.bs.collapse', function () {
                         $('#p' + (i)).off('hidden.bs.collapse')
                         $scope.articleList.splice(index, 1);
@@ -120,7 +124,7 @@ angular.module('controller.results', [])
                     if (art_search.ranking > 5) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
-                    if (statusPrev == 1) {
+                    if (statusPrev == 1 &&  $scope.status == 1) {
                         $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);
                     } else {
 
@@ -187,11 +191,12 @@ angular.module('controller.results', [])
                             if (art.artSearch.ranking > 5) {
                                 art.artSearch.status = 4;
                             } else {
+                                  $scope.totalRows--;
                                 art.artSearch.status = 0;
                             }
                             $rootScope.$emit('articleRead', $scope.searchId);
 
-                            $scope.totalRows--;
+                            //$scope.totalRows--;
                             Art_Search.update(art.artSearch)
                             art.artSearch.status = 1;
                         }
