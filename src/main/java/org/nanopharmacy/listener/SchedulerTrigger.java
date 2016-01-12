@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import org.nanopharmacy.utils.Analizer;
+import org.nanopharmacy.ai.Analizer;
 import org.nanopharmacy.utils.Utils;
 import org.semanticwb.datamanager.DataList;
 import org.semanticwb.datamanager.DataMgr;

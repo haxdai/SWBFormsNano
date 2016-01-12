@@ -331,7 +331,7 @@ eng.dataServices["ConfigService"] = {
         taskRestart.reprogramAutoUpdate();
     }
 };
-eng.dataServices["SearchService"] = {
+eng.dataServices["SearchService"] = {//, "update"
     dataSources: ["Search"],
     actions: ["add", "remove"],
     service: function (request, response, dataSource, action)
@@ -371,7 +371,18 @@ eng.dataServices["SearchService"] = {
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                 utils.removeSchemeData(request.data._id);
             }
-        }
+        }/* else if(action == "update") {
+            if (response.data._id !== null && response.data._id !== "" && response.data.gene !== null &&
+                    response.data.gene !== "" && response.data.altMolecular !== null &&
+                    response.data.altMolecular !== "") {
+                var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
+                var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
+                var altMolecular = this.getDataSource("AlterationMolecular").
+                        fetchObjById(response.data.altMolecular).name;
+                utils.testSaveUpdateArticles(gene, altMolecular, response.data._id);
+            }
+            return request;
+        }*/
     }
 };
 eng.dataSources["Images"] = {
@@ -416,8 +427,11 @@ eng.dataServices["Art_SearchService"] = {
     {
         var newRecommended = 0;
         if (request.data.status == 2) {
-            var utils = Java.type("org.nanopharmacy.utils.Analizer");
+            var utils = Java.type("org.nanopharmacy.ai.Analizer");
             newRecommended = utils.analizer(request.data.search, request.data.article);
+        } else if(request.data.status == 3){
+            var utils = Java.type("org.nanopharmacy.ai.Analizer");
+            utils.analyzeRejected(request.data.search, request.data.article);
         }
         response.data.newRecommended = newRecommended;
     }

@@ -81,6 +81,18 @@
                     }
                 }, "Images");
             </script>
+            <!--
+            <script type="text/javascript">
+                eng.initPlatform("/public/dist/NanoSources.js");
+                var search = eng.createGrid({
+                    width: "97%",
+                    height: "200px",
+                    canEdit: true,
+                    canPrint: false,
+                    canRemove: true
+                 }, "Search");
+            </script>
+            -->
         </div>
     </body>    
     <!--    Lib js     -->
