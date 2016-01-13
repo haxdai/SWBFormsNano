@@ -232,8 +232,7 @@ angular.module('controller.results', [])
                 context.attach('.article-abstact', [{
                         text: "Add to glosary",
                         action: function (e) {
-                            var key = window.getSelection().getRangeAt(0).toString();
-                            console.log(key);
+                            var key = window.getSelection().getRangeAt(0).toString().trim();
                             e.preventDefault();
                             var q = {key: key};
                             Glossary.validate(q).then(function () {
