@@ -1,4 +1,7 @@
-﻿A33
+﻿prognosis
+treatment
+prediction
+A33
 A6
 AAP
 abarelix
