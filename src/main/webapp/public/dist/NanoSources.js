@@ -417,9 +417,26 @@ eng.dataSources["Analize"] = {
         {name: "search", title: "Search", stype: "select", dataSource: "Search"},
         {name: "key", title: "Key", type: "string"},
         {name: "frequency", title: "Frequency", type: "int"},
-        {name: "threshold", title: "", type: "int"}
+        {name: "threshold", title: "Threshold", type: "int"},
+        {name: "addByUser", title: "Add by user", type: "int"}
     ]
 };
+
+eng.dataServices["Analize_Service"] = {
+    dataSources: ["Analize"],
+    actions: ["add"],
+    service: function (request, response, dataSource, action)
+    {
+        if(request.data.addByUser == 1) {
+            var newRecommended = 0;
+            var utils = Java.type("org.nanopharmacy.ai.Analizer");
+            newRecommended = utils.userReclassifyArticle(request.data.key, request.data.search);
+            response.data.newRecommended = newRecommended;
+        }
+    }
+};
+
+
 eng.dataServices["Art_SearchService"] = {
     dataSources: ["Art_Search"],
     actions: ["update"],
@@ -436,6 +453,7 @@ eng.dataServices["Art_SearchService"] = {
         response.data.newRecommended = newRecommended;
     }
 };
+
 eng.dataSources["Glossary"] = {
     scls: "Glossary",
     modelid: "NanoPharmacy",

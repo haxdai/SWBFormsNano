@@ -79,6 +79,7 @@
     <script src="/public/js/services/userService.js"></script>
     <script src="/public/js/services/roleService.js"></script>
     <script src="/public/js/services/glossaryService.js"></script>
+    <script src="/public/js/services/analizeService.js"></script>
     <!--    Nano js controllers     -->
     <script src="/public/js/controllers/appController.js"></script>
     <script src="/public/js/controllers/menuController.js"></script>

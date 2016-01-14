@@ -331,9 +331,9 @@ eng.dataServices["ConfigService"] = {
         taskRestart.reprogramAutoUpdate();
     }
 };
-eng.dataServices["SearchService"] = {
+eng.dataServices["SearchService"] = {//, "update"
     dataSources: ["Search"],
-    actions: ["add", "remove"],//,"update"
+    actions: ["add", "remove"],
     service: function (request, response, dataSource, action)
     {
         if (action == "add") {
@@ -371,7 +371,7 @@ eng.dataServices["SearchService"] = {
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                 utils.removeSchemeData(request.data._id);
             }
-        } /*else if(action == "update") {
+        }/* else if(action == "update") {
             if (response.data._id !== null && response.data._id !== "" && response.data.gene !== null &&
                     response.data.gene !== "" && response.data.altMolecular !== null &&
                     response.data.altMolecular !== "") {
@@ -381,6 +381,7 @@ eng.dataServices["SearchService"] = {
                         fetchObjById(response.data.altMolecular).name;
                 utils.testSaveUpdateArticles(gene, altMolecular, response.data._id);
             }
+            return request;
         }*/
     }
 };
@@ -416,9 +417,26 @@ eng.dataSources["Analize"] = {
         {name: "search", title: "Search", stype: "select", dataSource: "Search"},
         {name: "key", title: "Key", type: "string"},
         {name: "frequency", title: "Frequency", type: "int"},
-        {name: "threshold", title: "", type: "int"}
+        {name: "threshold", title: "Threshold", type: "int"},
+        {name: "addByUser", title: "Add by user", type: "int"}
     ]
 };
+
+eng.dataServices["Analize_Service"] = {
+    dataSources: ["Analize"],
+    actions: ["add"],
+    service: function (request, response, dataSource, action)
+    {
+        if(request.data.addByUser == 1) {
+            var newRecommended = 0;
+            var utils = Java.type("org.nanopharmacy.ai.Analizer");
+            newRecommended = utils.userReclassifyArticle(request.data.key, request.data.search);
+            response.data.newRecommended = newRecommended;
+        }
+    }
+};
+
+
 eng.dataServices["Art_SearchService"] = {
     dataSources: ["Art_Search"],
     actions: ["update"],
@@ -435,6 +453,7 @@ eng.dataServices["Art_SearchService"] = {
         response.data.newRecommended = newRecommended;
     }
 };
+
 eng.dataSources["Glossary"] = {
     scls: "Glossary",
     modelid: "NanoPharmacy",

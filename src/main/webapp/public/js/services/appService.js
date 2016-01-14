@@ -13,7 +13,8 @@ angular.module('services',
             'service.images',
             'service.user',
             'service.role',
-            'service.glossary'
+            'service.glossary',
+            'service.analize'
         ])
         .filter("sanitize", ['$sce', function ($sce) {
                 return function (htmlCode) {

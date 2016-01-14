@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('controller.results', [])
-        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene, Alteration,Glossary) {
+        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene, Alteration,Analize) {//Glossary
             $scope.searchId = $stateParams.id;
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
@@ -109,8 +109,7 @@ angular.module('controller.results', [])
                 var statusPrev = art_search.status;
                 art_search.status = 2;
                 Art_Search.update(art_search).then(function (data) {
-                    console.log(data)
-                     if (data.data.newRecommended > 0) {
+                    if (data.data.newRecommended > 0) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, data.data.newRecommended);
                     }
                     $('#p' + (i)).on('hidden.bs.collapse', function () {
@@ -230,12 +229,21 @@ angular.module('controller.results', [])
                     compress: false
                 });
                 context.attach('.article-abstact', [{
-                        text: "Add to glosary",
+                        text: "Add to this search",
                         action: function (e) {
                             var key = window.getSelection().getRangeAt(0).toString().trim();
                             e.preventDefault();
-                            var q = {key: key};
-                            Glossary.validate(q).then(function () {
+                            var q = {key: key,threshold:1, addByUser:1,search: $scope.searchId,frequency:0};
+                             Analize.save(q).then(function (data) {
+                                 console.log(data)
+                                if (data.newRecommended > 0) {
+                                    $rootScope.$emit('articleRecommended', $scope.searchId, data.newRecommended);
+                                }
+                                    //showMessage("ok", KEYWORD_ADDED)
+                                }, function (error) {
+                                    showMessage("error", error)
+                                })
+                           /* Glossary.validate(q).then(function () {
                                 Glossary.save(q).then(function (newKey) {
                                     showMessage("ok", KEYWORD_ADDED)
                                 }, function (error) {
@@ -243,7 +251,7 @@ angular.module('controller.results', [])
                                 })
                             }, function (error) {
                                     showMessage("error", error.key)
-                            });
+                            });*/
 
                            
                             
