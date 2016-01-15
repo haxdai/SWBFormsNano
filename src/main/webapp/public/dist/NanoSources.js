@@ -415,7 +415,13 @@ eng.dataSources["Analize"] = {
     displayField: "key",
     fields: [
         {name: "search", title: "Search", stype: "select", dataSource: "Search"},
-        {name: "key", title: "Key", type: "string"},
+        {name: "key", title: "Key", type: "string",
+            validators: [
+                {
+                    type: "isUnique",
+                    errorMessage: "This keyword is already in search."
+                }
+            ]},
         {name: "frequency", title: "Frequency", type: "int"},
         {name: "threshold", title: "Threshold", type: "int"},
         {name: "addByUser", title: "Add by user", type: "int"}

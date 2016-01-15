@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('controller.results', [])
-        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene, Alteration,Analize) {//Glossary
+        .controller('ResultsController', function ($scope, $rootScope, $stateParams, Art_Search, Article, Search, Gene, Alteration, Analize) {//Glossary
             $scope.searchId = $stateParams.id;
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var ERROR_SCHEME_NOT_FOUND = "This scheme of search was not found"
-            var KEYWORD_ADDED = "The keyword has been added correctly";
+            var RECOMMENDED_FOUND = "New recommended articles";
+            var NO_RECOMMENDED_FOUND = "No match for this search";
             var status = parseInt($stateParams.status);
             if ($stateParams.status >= 0 && $stateParams.status <= 4) {
                 $scope.status = status;
@@ -88,10 +89,10 @@ angular.module('controller.results', [])
 
                     $scope.maxPage = Math.ceil(--$scope.totalRows / $scope.limit);
                     $scope.totalRowsFinal--;
-                    if (art_search.ranking > 5 ) {
+                    if (art_search.ranking > 5) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
-                    if (statusPrev == 1 &&  $scope.status == 1) {
+                    if (statusPrev == 1 && $scope.status == 1) {
 
                         $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);
                     } else {
@@ -123,7 +124,7 @@ angular.module('controller.results', [])
                     if (art_search.ranking > 5) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, -1);
                     }
-                    if (statusPrev == 1 &&  $scope.status == 1) {
+                    if (statusPrev == 1 && $scope.status == 1) {
                         $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, -1);
                     } else {
 
@@ -190,7 +191,7 @@ angular.module('controller.results', [])
                             if (art.artSearch.ranking > 5) {
                                 art.artSearch.status = 4;
                             } else {
-                                  $scope.totalRows--;
+                                $scope.totalRows--;
                                 art.artSearch.status = 0;
                             }
                             $rootScope.$emit('articleRead', $scope.searchId);
@@ -233,28 +234,24 @@ angular.module('controller.results', [])
                         action: function (e) {
                             var key = window.getSelection().getRangeAt(0).toString().trim();
                             e.preventDefault();
-                            var q = {key: key,threshold:1, addByUser:1,search: $scope.searchId,frequency:0};
-                             Analize.save(q).then(function (data) {
-                                 console.log(data)
-                                if (data.newRecommended > 0) {
-                                    $rootScope.$emit('articleRecommended', $scope.searchId, data.newRecommended);
-                                }
-                                    //showMessage("ok", KEYWORD_ADDED)
+                            if (key != "") {
+                                var q = {key: key, threshold: 1, addByUser: 1, search: $scope.searchId, frequency: 0};
+                                Analize.validate(q).then(function () {
+                                    Analize.save(q).then(function (data) {
+                                        console.log(data)
+                                        if (data.newRecommended > 0) {
+                                            $rootScope.$emit('articleRecommended', $scope.searchId, data.newRecommended);
+                                            showMessage("ok", RECOMMENDED_FOUND)
+                                        } else {
+                                            showMessage("ok", NO_RECOMMENDED_FOUND)
+                                        }
+                                    }, function (error) {
+                                        showMessage("error", error)
+                                    })
                                 }, function (error) {
-                                    showMessage("error", error)
-                                })
-                           /* Glossary.validate(q).then(function () {
-                                Glossary.save(q).then(function (newKey) {
-                                    showMessage("ok", KEYWORD_ADDED)
-                                }, function (error) {
-                                    showMessage("error", error)
-                                })
-                            }, function (error) {
                                     showMessage("error", error.key)
-                            });*/
-
-                           
-                            
+                                })
+                            }
                         }
                     }]);
             });
