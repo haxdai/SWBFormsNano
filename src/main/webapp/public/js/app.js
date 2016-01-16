@@ -1,5 +1,5 @@
 'use strict';
-angular.module('NanoApp', ['controllers', 'services', 'ui.router', 'ngAnimate','userController','ngTouch'])
+angular.module('NanoApp', ['hmTouchEvents','controllers', 'services', 'ui.router', 'ngAnimate','userController'])
 
         .run(function () {
 

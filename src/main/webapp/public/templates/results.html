@@ -36,12 +36,12 @@
                 </div>
                 <div  class="col-sm-5 col-md-3 col-lg-4">
                     <ul  ng-if="(totalRowsFinal > 1)" class ="pagination clearfix">
-                        <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="firts()" href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
+                        <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " hm-tap="firts()" href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
 
-                        <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
+                        <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " hm-tap="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
                         <li><a ng-style="pag > 0 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" href="#">{{pag}} / {{maxPage}}</a></li>
-                        <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
-                        <li ><a ng-style="pag < ((maxPage)) && status!=1 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" ng-click="last()" href="#"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></a></li>
+                        <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" hm-tap="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
+                        <li ><a ng-style="pag < ((maxPage)) && status!=1 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" hm-tap="last()" href="#"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></a></li>
 
                     </ul>
                 </div>
@@ -57,7 +57,7 @@
                                 <option value="treatment">Treatment</option>
                                 <option value="ranking">Best rated</option>
                             </select>
-                            <button ng-click="filterToogle(isReorderToggle, filterSelected)" type="button" class="btn "><span   ng-class="reorderClass" class="glyphicon"></span></button>
+                            <button hm-tap="filterToogle(isReorderToggle, filterSelected)" type="button" class="btn "><span   ng-class="reorderClass" class="glyphicon"></span></button>
 
                         </p>
                     </div>
@@ -99,8 +99,8 @@
                                 <span class="glyphicon glyphicon-link" aria-hidden="true"></span> More
                             </a>
 
-                            <a  ng-if="status != 2" ng-click="accept(article.artSearch, $index + 1 + (limit * (pag - 1)), $index)" href="" class="panel-pie-ok"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-                            <a  ng-if="status != 3"  ng-click="discard(article.artSearch, $index + 1 + (limit * (pag - 1)), $index)"  href="" class="panel-pie-remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            <a  ng-if="status != 2" hm-tap="accept(article.artSearch, $index + 1 + (limit * (pag - 1)), $index)" href="" class="panel-pie-ok"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                            <a  ng-if="status != 3"  hm-tap="discard(article.artSearch, $index + 1 + (limit * (pag - 1)), $index)"  href="" class="panel-pie-remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 
                         </div>
                     </div>

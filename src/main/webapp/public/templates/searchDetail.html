@@ -2,7 +2,7 @@
 <div ng-if="search" class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <button class="btn pull-right" ng-click="deleteScheme()"><span class="glyphicon glyphicon-trash"></span></button>   
+            <button class="btn pull-right" hm-tap="deleteScheme()"><span class="glyphicon glyphicon-trash"></span></button>   
             <h3>Search results of the gene: {{gene.symbol}}, molecular alteration:  {{alt.name}} and publication dates for {{search.artYearsOld}} year{{search.artYearsOld>1?"s":""}}</h3>
             <h3>{{gene.symbol}} - {{gene.officialName}}</h3>
            
@@ -45,9 +45,9 @@
                     </div>
                     <div class="tab-pane" id="panel-type">
                         <ul  ng-if="(cancerList.length > 0)" class="pagination clearfix">
-                            <li><a ng-if="position > 0" ng-click="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
+                            <li><a ng-if="position > 0" hm-tap="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
                             <li><a href="#">{{position + 1}} / {{cancerList.length}} </a></li>
-                            <li><a ng-if="(position < ((cancerList.length) - 1))" ng-click="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
+                            <li><a ng-if="(position < ((cancerList.length) - 1))" hm-tap="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
                         </ul>
                         <div class="clearfix "></div>
                         <p><span>Title:</span> {{cancerList[position].name}}</p>

@@ -64,9 +64,11 @@
     </body>
 
     <script src="/public/libs/jquery/dist/jquery.min.js" ></script>
+    <script src="/public/libs/angular-hammer/hammer.min.js" ></script>
     <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js" ></script>
     <script src="/swbforms/js/eng.js" type="text/javascript"></script>
     <script src="/public/libs/angular/angular.min.js" ></script>
+    <script src="/public/libs/angular-hammer/angular.hammer.js" ></script>
     <script src="/public/libs/crypto-js/sha512.js" ></script>
     <script type="text/javascript">
         eng.initPlatform("/public/dist/NanoSources.js");
@@ -74,7 +76,7 @@
     </script> 
     <script type="text/javascript">
         'use strict';
-        angular.module('NanoLogin', [])
+        angular.module('NanoLogin', ['hmTouchEvents'])
                 .controller("loginController", function ($scope, $window) {
                     $scope.loginUsr = function (password, email) {
                         if (password && email) {

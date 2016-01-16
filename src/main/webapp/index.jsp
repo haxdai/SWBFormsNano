@@ -53,7 +53,9 @@
     <!--    Lib js     -->
     <script src="/public/libs/jquery/dist/jquery.min.js" ></script>
     <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js" ></script>
+    <script src="/public/libs/angular-hammer/hammer.min.js" ></script>
     <script src="/public/libs/angular/angular.min.js" ></script>
+    <script src="/public/libs/angular-hammer/angular.hammer.js" ></script>
     <script src="/public/libs/angular-ui-router/release/angular-ui-router.min.js" ></script>
     <script src="/public/libs/angular-touch/angular-touch.min.js" ></script>
     <script src="/public/libs/angular-carousel/dist/angular-carousel.min.js" ></script>
