@@ -18,14 +18,15 @@
             <a href="/" class="top-config"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <span class="config">Home</span></a>
         </div>
         <script src="/swbforms/js/eng.js" type="text/javascript"></script>
-        <div class="container">
+        <div class="">
             <h2>User's administration</h2>
             <script type="text/javascript">
                 eng.initPlatform("/public/dist/NanoSources.js");
                 eng.createGrid({
                     ID: "usersGrid",
-                    width: "97%",
+                    width: "100%",
                     height: "200px",
+                    
                     canEdit: true,
                     canRemove: true,
                     canAdd: true,
@@ -46,20 +47,21 @@
                 eng.initPlatform("/public/dist/NanoSources.js");
                 var imageForm = eng.createForm({
                     ID: "formImages",
-                    width: "97%",
+                    numCols: 2,
+                    width: "100%",
                     height: "100px",
                     showTabs: false,
                     winEdit: false,
                     fields: [
-                        {name: "title"},
-                        {name: "text"},
-                        {name: "link"},
-                        {name: "src"},
+                        {name: "title", width: "100%"},
+                        {name: "text", width: "100%"},
+                        {name: "link", width: "100%"},
+                        {name: "src", width: "100%"},
                     ],
                 }, "", "Images");
                 var images = eng.createGrid({
                     ID: "imgsGrid",
-                    width: "97%",
+                    width: "100%",
                     height: "200px",
                     canEdit: true,
                     canPrint: false,

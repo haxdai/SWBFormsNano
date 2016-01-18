@@ -6,8 +6,9 @@ angular.module('controller.results', [])
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var MSG_ACEPTED_DOCUMENT = "The document has been moved to accepted documents folder";
             var ERROR_SCHEME_NOT_FOUND = "This scheme of search was not found"
-            var RECOMMENDED_FOUND = "New recommended articles";
-            var NO_RECOMMENDED_FOUND = "No match for this search";
+            var RECOMMENDED_FOUND = "Aurora has found documents that match your search. You may find them in recommended results section or by clicking recommended results button.";
+            var RECOMMENDED_AUTO_FOUND = "Aurora has detected documents that match your interests. You may find them in recommended results section or by clicking recommended results button."
+            var NO_RECOMMENDED_FOUND = "Aurora has not found documents that match your search. But it will keep searching.";
             var status = parseInt($stateParams.status);
             if ($stateParams.status >= 0 && $stateParams.status <= 4) {
                 $scope.status = status;
@@ -112,6 +113,9 @@ angular.module('controller.results', [])
                 Art_Search.update(art_search).then(function (data) {
                     if (data.data.newRecommended > 0) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, data.data.newRecommended);
+                          showMessage("ok", RECOMMENDED_AUTO_FOUND)
+                    }else{
+                          showMessage("ok", RECOMMENDED_FOUND)
                     }
                     $('#p' + (i)).on('hidden.bs.collapse', function () {
                         $('#p' + (i)).off('hidden.bs.collapse')
@@ -238,7 +242,6 @@ angular.module('controller.results', [])
                                 var q = {key: key, threshold: 1, addByUser: 1, search: $scope.searchId, frequency: 0};
                                 Analize.validate(q).then(function () {
                                     Analize.save(q).then(function (data) {
-                                        console.log(data)
                                         if (data.newRecommended > 0) {
                                             $rootScope.$emit('articleRecommended', $scope.searchId, data.newRecommended);
                                             showMessage("ok", RECOMMENDED_FOUND)

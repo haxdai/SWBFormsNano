@@ -52,3 +52,11 @@ body{
 .glyphicon-log-out:before {
     content: "\e163";
 }
+@media (max-width:767px){
+
+ .top-config         { font-size:23px; color:#666 !important ; background:none !important; margin-left:10px !important; padding:0 3px 0 5px}
+                          .top-config:hover   { background:#3b6b85 !important; color:#FFF !important;}
+                          .top-config .caret { left:-6px; top:-5px; font-size:140px !important}
+                          .config { display: none;}
+}
+                         

@@ -20,7 +20,7 @@
                         <option style="display:none" value="">Publication dates</option>
                     </select>
                     {{datePublication}}
-                    <button ng-disabled="schemeForm.geneSelected.$invalid || schemeForm.altSelected.$invalid || schemeForm.dateSelected.$invalid " type="button" class="btn" ng-click="addSearch(geneSelected, altSelected, dateSelected)">Search</button>
+                    <button ng-disabled="schemeForm.geneSelected.$invalid || schemeForm.altSelected.$invalid || schemeForm.dateSelected.$invalid " type="button" class="btn" hm-tap="addSearch(geneSelected, altSelected, dateSelected)">Search</button>
                 </form>
             </div>
         </div>
@@ -31,11 +31,11 @@
         <a ng-if="search.notification > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notification}} new items">
             <i class="fa fa-certificate"></i>{{search.notification}}
         </a>
-        <a  ng-if="search.recommended > 0" href="/search/results/{{search._id}}?status=4" class="alert rank" title="{{search.recommended}} recommended items">
+        <a hm-tap="refresh()"  ng-if="search.recommended > 0" href="/search/results/{{search._id}}?status=4&a={{search.recommended}}" class="alert rank" title="{{search.recommended}} recommended items">
             <i class="fa fa-thumbs-up"></i>{{search.recommended}}
         </a>
 
-        <a ng-click="schemeSelected(search._id)" class="gene" href="/search/{{search._id}}" >{{search.geneSymbol}}; {{search.alteName}}; {{search.artYearsOld}}Y</a>
+        <a hm-tap="schemeSelected(search._id)" class="gene" href="/search/{{search._id}}" >{{search.geneSymbol}}; {{search.alteName}}; {{search.artYearsOld}}Y</a>
         
     </li>  
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('controller.menu', [])
-        .controller('MenuController', function ($scope, $state, $rootScope, $stateParams, Search, 
+        .controller('MenuController', function ($scope, $state,$location, $rootScope, $stateParams, Search, 
                                                 Gene, Alteration, Config, Art_Search, User, Role) {
             $scope.searchList = [];
             $scope.searchId = $stateParams.id;
@@ -94,6 +94,12 @@ angular.module('controller.menu', [])
                 Alteration.list(gene._id).then(function (altList) {
                     $scope.altList = altList;
                 })
+            }
+            
+            $scope.refresh = function(){
+                if($location.search().status == 4){
+                    $state.go($state.current, {}, {reload: true})
+                ;}
             }
 
             $scope.addSearch = function (geneSelected, altSelected, dateSelected) {
