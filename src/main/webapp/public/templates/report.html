@@ -54,7 +54,7 @@
             <div class="panel-group" id="panel-results">
                 <div class="panel panel-default" ng-repeat="article in articleList">
                      <div class="panel-heading">
-                                <a class=" panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 +(limit*(pag-1))}}">
+                                <a class=" panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index+1}}">
                                      <div style="margin-right: 10px; float:left;">
                                 {{$index+1}}.
                         </div>
@@ -73,7 +73,7 @@
                                     <div class="panel-text-title">{{article.article.title}}</div>
                                 </a>
                     </div>
-                    <div id="panel-element-00{{$index + 1}}" class="panel-collapse collapse">
+                    <div id="p{{$index + 1}}" class="panel-collapse collapse">
                         <div class="panel-body">
                             <p class="noprint" ng-bind-html="article.article.abstract | sanitize"></p>
                             <p class="noprint"><strong>Reference:</strong>{{article.article.reference}}</p>

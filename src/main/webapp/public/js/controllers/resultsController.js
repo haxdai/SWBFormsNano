@@ -114,8 +114,6 @@ angular.module('controller.results', [])
                     if (data.data.newRecommended > 0) {
                         $rootScope.$emit('articleRecommended', $scope.searchId, data.data.newRecommended);
                           showMessage("ok", RECOMMENDED_AUTO_FOUND)
-                    }else{
-                          showMessage("ok", RECOMMENDED_FOUND)
                     }
                     $('#p' + (i)).on('hidden.bs.collapse', function () {
                         $('#p' + (i)).off('hidden.bs.collapse')

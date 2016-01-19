@@ -43,12 +43,12 @@ eng.routes["global"]={
     loginFallback: "login",
     routeList:[
         { routePath: "login", forwardTo: "/login.jsp", isRestricted: "false", zindex:1 },
-        /*{ routePath: "imgcarousel", forwardTo: "/imgcarousel.jsp", isRestricted: "true", zindex:1,hasRole:"admin" },*/
         { routePath: "admin", forwardTo:"/admin.jsp", isRestricted:"true", hasRole:"admin"},
-        { routePath: "register", forwardTo: "/work/config/register.jsp", isRestricted: "false" },
+        /*{ routePath: "register", forwardTo: "/work/config/register.jsp", isRestricted: "false" },*/
         { routePath: "work", isRestricted: "true"},
         { routePath: "work/*", jspMapTo: "/work/jsp/", isRestricted: "true" },
         { routePath: "public/libs/*", jspMapTo: "/public/libs/", isRestricted: "false" },
+        { routePath: "/swbforms/js/*", jspMapTo: "/swbforms/js/", isRestricted: "false" },
         { routePath: "public/*", jspMapTo: "/public/", isRestricted: "true" },
         { routePath: "ds", forwardTo: "/swbforms/jsp/datasource.jsp", isRestricted: "true" },
         { routePath: "dslogin", forwardTo: "/swbforms/jsp/dataSourceLogin.jsp", isRestricted: "false" },
