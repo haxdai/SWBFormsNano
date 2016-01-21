@@ -29,9 +29,7 @@
 
     DataObject getOperation(DataObject json, SWBScriptEngine engine, String dataSource, HttpSession session) throws IOException {
         DataObject ret = null;
-        System.out.println("Get operation");    
-        System.out.println(json);
-        System.out.println(dataSource);
+
 
         String operationType = json.getString("operationType");
 
@@ -79,7 +77,6 @@
 <%
     
     DataObject user = (DataObject) session.getAttribute("_USER_");
-    System.out.println("Data source login");
     //init SWBPlatform
     if (DataMgr.getApplicationPath() == null) {
         String apppath = config.getServletContext().getRealPath("/");
@@ -117,7 +114,6 @@
                 ret.add(r);
             }
             out.print(ret);
-            System.out.println("out:"+ret);
         } else {
             DataObject ret = getOperation(json, engine, ds, session);
             if (ret != null) {

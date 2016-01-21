@@ -37,7 +37,6 @@
                 <div  class="col-sm-5 col-md-3 col-lg-4">
                     <ul  ng-if="(totalRowsFinal > 1)" class ="pagination clearfix">
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " hm-tap="firts()" href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
-
                         <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " hm-tap="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
                         <li><a ng-style="pag > 0 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" href="#">{{pag}} / {{maxPage}}</a></li>
                         <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" hm-tap="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>

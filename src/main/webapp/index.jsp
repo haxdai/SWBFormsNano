@@ -4,12 +4,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>Nanopharmacia Diagnóstica</title>
         <!--    Lib css     -->
-        <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css"  rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link href="/public/libs/font-awesome/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
-        <link href="/public/libs/css-spinners/css/spinners.css" rel="stylesheet" type="text/css" />
+        <link href="/public/libs/css-spinners/css/spinner/throbber.css" rel="stylesheet" type="text/css" />
         <!--    Nano css     -->
         <!--link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
         <link href="/public/css/nano.css" rel="stylesheet" type="text/css" /-->
@@ -32,7 +32,7 @@
         </div>
         <div  class="noprint" id="message-box">
             <div  style="display:none;" class="alert alert-danger text-center">
-              
+
             </div>
             <div style="display:none;" class="alert alert-success text-center">
             </div> 
@@ -51,10 +51,10 @@
                 eng.initPlatform("/public/dist/NanoSources.js");
     </script>  
     <!--    Lib js     -->
-    <script src="/public/libs/jquery/dist/jquery.min.js" ></script>
-    <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="/public/libs/angular-hammer/hammer.min.js" ></script>
-    <script src="/public/libs/angular/angular.min.js" ></script>
     <script src="/public/libs/angular-hammer/angular.hammer.js" ></script>
     <script src="/public/libs/angular-ui-router/release/angular-ui-router.min.js" ></script>
     <script src="/public/libs/angular-touch/angular-touch.min.js" ></script>
@@ -63,7 +63,7 @@
     <script src="/public/libs/angular-sanitize/angular-sanitize.min.js" ></script>
     <script src="/public/libs/bootbox/bootbox.min.js" ></script>
     <script src="/public/libs/contextjs/context.js" ></script>
-    
+
     <!--    Nano js     -->
     <script src="/public/js/app.js"></script>
     <!--    Nano js services     -->
@@ -128,7 +128,7 @@
                 $("#message-box > .alert-success").fadeIn().delay(3500).fadeOut();
 
             } else if (type === "error") {
-                $("#message-box > .alert-danger").html("<a onclick='removeMessage(\"error\")' href='#' class='close' aria-label='close'>&times;</a>"+msg);
+                $("#message-box > .alert-danger").html("<a onclick='removeMessage(\"error\")' href='#' class='close' aria-label='close'>&times;</a>" + msg);
                 $("#message-box > .alert-danger").fadeIn();
             } else if (type === "msg") {
                 $("#message-box > .alert-info").html("<span  class='throbber-loader'></span><br>" + msg);
@@ -145,7 +145,6 @@
                 $("#message-box > .alert-info").fadeOut();
             }
         }
-
 
         $(document).on("ready", function () {
             $("#logoout").on("click", function () {

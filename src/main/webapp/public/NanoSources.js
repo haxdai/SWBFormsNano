@@ -436,7 +436,7 @@ eng.dataServices["Analize_Service"] = {
         if(request.data.addByUser == 1) {
             var newRecommended = 0;
             var utils = Java.type("org.nanopharmacy.ai.Analizer");
-            newRecommended = utils.userReclassifyArticle(request.data.key, request.data.search);
+            newRecommended = utils.userReclassifyArticle(request.data.search);
             response.data.newRecommended = newRecommended;
         }
     }

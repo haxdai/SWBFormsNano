@@ -7,24 +7,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Nanopharmacia Diagnóstica</title>
         <!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"-->
-        <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link  href="/public/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="/public/dist/style.css" rel="stylesheet">
-
     </head>
-    <body ng-controller="loginController" class="login valid-this-is-login-view">
+    <body class="login valid-this-is-login-view">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <img src="/public/img/aurora.png">
-                    <form role="form">
+                    <form method="post" role="form" id="login-form">
                         <div class="form-group">
                             <div class="row clearfix">
                                 <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 loginlabel">
 
                                 </div>
                                 <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
-                                    <div ng-show="alert" class="alert alert-danger" ng-bind="alert"></div>
+                                    <div id ="alert-login" class="alert alert-danger hidden"></div>
                                 </div>
                             </div>
                             <div class="row clearfix">
@@ -32,7 +28,7 @@
                                     <label for="exampleInputEmail1" >Email:</label>
                                 </div>
                                 <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
-                                    <input required type="email" name="email" ng-model="email" class="form-control" placeholder="Email"/>
+                                    <input required type="email" name="email" id="email" class="form-control" placeholder="Email"/>
                                 </div>
                             </div>
                         </div>
@@ -45,7 +41,7 @@
                                     </label>
                                 </div> 
                                 <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
-                                    <input required type="password" name="password" ng-model="password" class="form-control" placeholder="Password"/>
+                                    <input required type="password" name="password" id="password" class="form-control" placeholder="Password"/>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +50,7 @@
                             <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 loginlabel">
                             </div> 
                             <div class="col-xs-9 col-sm-5 col-md-4 col-lg-4 logininput">
-                                <button ng-click="loginUsr(password, email)" class="btn btn-primary btn-block btn-flat">Sign In</button>                     
+                                <input type="submit" value="Sign In"  class="btn btn-primary btn-block btn-flat">                  
                             </div>
                         </div>
                     </form>
@@ -62,34 +58,30 @@
             </div>
         </div>
     </body>
-
-    <script src="/public/libs/jquery/dist/jquery.min.js" ></script>
-    <script src="/public/libs/angular-hammer/hammer.min.js" ></script>
-    <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js" ></script>
-    <script src="/swbforms/js/eng.js" type="text/javascript"></script>
-    <script src="/public/libs/angular/angular.min.js" ></script>
-    <script src="/public/libs/angular-hammer/angular.hammer.js" ></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link  href="/public/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/public/dist/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="/public/libs/crypto-js/sha512.js" ></script>
     <script type="text/javascript">
-        eng.initPlatform("/public/dist/NanoSources.js");
-        eng.dataSourceServlet = "/dslogin";
-    </script> 
-    <script type="text/javascript">
-        'use strict';
-        angular.module('NanoLogin', ['hmTouchEvents'])
-                .controller("loginController", function ($scope, $window) {
-                    $scope.loginUsr = function (password, email) {
-                        if (password && email) {
-                            eng.login(email, "[SHA-512]" + CryptoJS.SHA512(password).toString(), function (res) {
-                                if (res.status === -1) {
-                                    $scope.alert = "User or password invalid";
-                                    $scope.$digest()
-                                } else {
-                                    $window.location.href = '/';
-                                }
-                            });
-                        }
-                    }
-                });
+
+        $("#login-form").submit(function (e) {
+            e.preventDefault();
+            var data={username:$("#email").val(),password:"[SHA-512]" + CryptoJS.SHA512( $("#password").val()).toString()};
+            data.operationType="login";
+            data = JSON.stringify(data)
+            $.post("dslogin?dssp=/public/dist/NanoSources.js", data,function (data){
+                                if (data.response.status === -1) {
+                    $("#alert-login").text("User or password invalid");
+                    $("#alert-login").removeClass("hidden")
+                    $("#email").text("");
+                    $("#password").text("");
+                } else {
+                    window.location.href = '/';
+                }
+            },"json")
+
+        });
     </script>
 </html>
