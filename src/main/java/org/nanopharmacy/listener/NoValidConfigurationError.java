@@ -9,6 +9,9 @@ package org.nanopharmacy.listener;
 public class NoValidConfigurationError extends Error {
     
     
+    /**
+     * Indica que se ha encontrado un problema de configuracion en la aplicacion
+     */
     public NoValidConfigurationError() {
         super();
     }

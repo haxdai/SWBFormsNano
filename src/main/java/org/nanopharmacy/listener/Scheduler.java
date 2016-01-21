@@ -25,6 +25,7 @@ public class Scheduler extends Timer {
     /** Referencia a la instancia unica de esta clase */
     private static Scheduler uniqueInstance;
     
+    /** Referencia a la instancia de la tarea de la cual se calendariza su ejecucion */
     private SearchTask task2Schedule;
     
     /** Constructor por defecto para la generacion de la instancia de esta clase */
@@ -153,6 +154,10 @@ public class Scheduler extends Timer {
         return ((int) dias);
     }
     
+    /**
+     * Cancela la tarea programada y vuelve a ejecutar {@link programTask} para
+     * generar de nuevo la calendarizacion
+     */
     public void reprogramTask() {
         this.task2Schedule.cancel();
         this.task2Schedule = null;

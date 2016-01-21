@@ -33,7 +33,7 @@ public class SchedulerTrigger implements ServletContextListener {
     /** Especifica el archivo de propiedades de la aplicacion */
     private final String propsFile = "/WEB-INF/app.properties";
     
-    /** Modo por defecto para crear esquemas de busqueda */
+    /** Modo por defecto para crear esquemas de busqueda.  */
     public static final String MODE_BY_USER = "byuser";
     
     /** Modo opcional para crear esquemas de busqueda */
@@ -77,20 +77,28 @@ public class SchedulerTrigger implements ServletContextListener {
                         data.put("searchCreationMode", searchCreateMode);
                         query.put("data", data);
                         dataSourceConf.add(query);
+                        sce.getServletContext().setAttribute("searchCreationMode", searchCreateMode);
+                        System.out.println("\n********\ncreationMode : --" + searchCreateMode + "-- cuando no existe en BD");
                     } else {
                         String creationMode = configData.getDataObject("response").getDataList(
                                 "data").getDataObject(0).getString("searchCreationMode");
-                        if (creationMode != null && (creationMode.equalsIgnoreCase(this.MODE_BY_USER) ||
-                                creationMode.equalsIgnoreCase(this.MODE_GENERAL))) {
+                        System.out.println("\n********\ncreationMode : --" + creationMode + "--");
+                        if (creationMode != null && (creationMode.equalsIgnoreCase(SchedulerTrigger.MODE_BY_USER) ||
+                                creationMode.equalsIgnoreCase(SchedulerTrigger.MODE_GENERAL))) {
                             //mantener el valor a nivel aplicacion para leerlo posteriormente
                             sce.getServletContext().setAttribute("searchCreationMode", creationMode);
+                        System.out.println("\n********\ncreationMode : --" + searchCreateMode + "-- cuando encuentra TODO");
                         } else if (creationMode == null || creationMode.isEmpty()) {
                             String id = configData.getDataObject("response").getDataList(
                                 "data").getDataObject(0).getString("_id");
+                            creationMode = SchedulerTrigger.MODE_BY_USER;
                             data.put("_id", id);
-                            data.put("searchCreationMode", searchCreateMode);
+                            data.put("searchCreationMode", creationMode);
                             query.put("data", data);
                             dataSourceConf.update(query);
+                            //mantener el valor a nivel aplicacion para leerlo posteriormente
+                            sce.getServletContext().setAttribute("searchCreationMode", creationMode);
+                            System.out.println("\n********\ncreationMode : --" + creationMode + "-- si en properties key = vacio");
                         } else {
                             throw new NoValidConfigurationError("Not valid value in configuration property searchCreationMode");
                         }
