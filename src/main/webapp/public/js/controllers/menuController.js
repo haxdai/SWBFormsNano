@@ -20,7 +20,7 @@ angular.module('controller.menu', [])
             }
 
             Config.getSearchCreationMode().then(function (configObj) {
-                console.log(configObj.searchCreationMode)
+//                console.log(configObj.searchCreationMode)
                 $scope.creationMode = configObj.searchCreationMode;
             });
 
@@ -108,11 +108,11 @@ angular.module('controller.menu', [])
                 if (creationMode === "byuser") {
                     q = {gene: geneSelected._id, altMolecular: altSelected._id,
                          artYearsOld: dateSelected.year, user: $scope.user._id, creationMode: creationMode};
-                    console.log("Con usuario - " + creationMode);
+//                    console.log("Con usuario - " + creationMode);
                 } else {
                     q = {gene: geneSelected._id, altMolecular: altSelected._id,
                          artYearsOld: dateSelected.year, user: "all", creationMode: creationMode};
-                    console.log("Sin usuario - " + creationMode);
+//                    console.log("Sin usuario - " + creationMode);
                 }
                 showMessage("msg", MSG_SCHEME_LOOKING)
                 Search.validate(q).then(function () {

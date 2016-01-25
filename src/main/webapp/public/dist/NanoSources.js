@@ -367,7 +367,7 @@ eng.dataServices["SearchService"] = {//, "update"
             return request;
         } else if (action == "remove") {
             if (request.data._id) {
-                print("Borrando")
+//                print("Borrando")
                 var utils = Java.type("org.nanopharmacy.utils.Utils.ENG");
                 utils.removeSchemeData(request.data._id);
             }
