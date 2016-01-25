@@ -33,19 +33,17 @@ angular.module('service.glossary', [])
             };
 
 
-            this.save = function (gene) {
+            this.save = function (glossary) {
                 var deferred = $q.defer();
                 var ds = eng.getDataSource("Glossary");
-                ds.addObj(gene, function (response) {
+                ds.addObj(glossary, function (response) {
                     if (response && response.status == 0) {
                         deferred.resolve(response.data);
                     } else if (response.status == -2) {
                         deferred.reject(response.msgError);
-
                     } else {
                         deferred.reject("No data");
                     }
-
                 });
                 return deferred.promise;
             };

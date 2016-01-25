@@ -55,7 +55,7 @@ public class Scheduler extends Timer {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSz");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String defaultInterval = "15";
-        System.out.println("\n ---Ejecutando programacion de tarea ...");
+        //System.out.println("\n ---Ejecutando programacion de tarea ...");
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(now);
         //int am_pm = calendar.get(Calendar.AM_PM); //AM = 0; PM = 1

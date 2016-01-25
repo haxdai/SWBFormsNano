@@ -30,7 +30,7 @@ public class SchedulerTrigger implements ServletContextListener {
     /** Instancia del objeto para escribir en bitacora de la aplicacion */
     private static final Logger LOG = Logger.getLogger(SchedulerTrigger.class.getName());
 
-    /** Especifica el archivo de propiedades de la aplicacion */
+    /** Especifica la ruta del archivo de propiedades de la aplicacion */
     private final String propsFile = "/WEB-INF/app.properties";
     
     /** Modo por defecto para crear esquemas de busqueda.  */
@@ -78,16 +78,13 @@ public class SchedulerTrigger implements ServletContextListener {
                         query.put("data", data);
                         dataSourceConf.add(query);
                         sce.getServletContext().setAttribute("searchCreationMode", searchCreateMode);
-                        System.out.println("\n********\ncreationMode : --" + searchCreateMode + "-- cuando no existe en BD");
                     } else {
                         String creationMode = configData.getDataObject("response").getDataList(
                                 "data").getDataObject(0).getString("searchCreationMode");
-                        System.out.println("\n********\ncreationMode : --" + creationMode + "--");
                         if (creationMode != null && (creationMode.equalsIgnoreCase(SchedulerTrigger.MODE_BY_USER) ||
                                 creationMode.equalsIgnoreCase(SchedulerTrigger.MODE_GENERAL))) {
                             //mantener el valor a nivel aplicacion para leerlo posteriormente
                             sce.getServletContext().setAttribute("searchCreationMode", creationMode);
-                        System.out.println("\n********\ncreationMode : --" + searchCreateMode + "-- cuando encuentra TODO");
                         } else if (creationMode == null || creationMode.isEmpty()) {
                             String id = configData.getDataObject("response").getDataList(
                                 "data").getDataObject(0).getString("_id");
@@ -98,7 +95,6 @@ public class SchedulerTrigger implements ServletContextListener {
                             dataSourceConf.update(query);
                             //mantener el valor a nivel aplicacion para leerlo posteriormente
                             sce.getServletContext().setAttribute("searchCreationMode", creationMode);
-                            System.out.println("\n********\ncreationMode : --" + creationMode + "-- si en properties key = vacio");
                         } else {
                             throw new NoValidConfigurationError("Not valid value in configuration property searchCreationMode");
                         }
@@ -213,7 +209,7 @@ public class SchedulerTrigger implements ServletContextListener {
 
             obj = dataGlossary.fetch();
             if (obj.getDataObject("response").getInt("totalRows") == 0) {
-                System.out.println("Loading Glossary");
+                SchedulerTrigger.LOG.log(Level.INFO, "Loading Glossary");
                 Analizer.loadGlossary(sce.getServletContext().getRealPath("/WEB-INF/glossary.txt"));
             }
 
