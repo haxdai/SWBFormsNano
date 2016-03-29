@@ -149,12 +149,13 @@ angular.module('controller.results', [])
             }
 
             $scope.filterToogle = function (newReorderToggle, filter) {
+                 console.log(filter);
                 if (newReorderToggle) {
                     $scope.isReorderToggle = false;
-                    $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
+                    $scope.reorderClass = "glyphicon-sort-by-attributes";
                 } else {
                     $scope.isReorderToggle = true;
-                    $scope.reorderClass = "glyphicon-sort-by-attributes";
+                    $scope.reorderClass = "glyphicon-sort-by-attributes-alt";
 
                 }
                 if ($scope.isReorderToggle) {
@@ -166,11 +167,12 @@ angular.module('controller.results', [])
                 $scope.updateResults($scope.searchId, $scope.status, $scope.sortBy, $scope.pag);
             }
 
-            $scope.filterChange = function () {
-                if ($scope.filterSelected == "titleSort" || $scope.filterSelected == "autorSort") {
-                    $scope.filterToogle(true, $scope.filterSelected)
+            $scope.filterChange = function (filterSelected) {
+                console.log(filterSelected);
+                if (filterSelected == "titleSort" || filterSelected == "autorSort") {
+                    $scope.filterToogle(true, filterSelected)
                 } else {
-                    $scope.filterToogle(false, $scope.filterSelected)
+                    $scope.filterToogle(false, filterSelected)
                 }
 
             }
