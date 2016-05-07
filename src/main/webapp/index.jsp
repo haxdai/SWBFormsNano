@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html >
 <html>
@@ -14,7 +15,7 @@
         <!--link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
         <link href="/public/css/nano.css" rel="stylesheet" type="text/css" /-->
         <link href="/public/dist/style.css" rel="stylesheet" type="text/css" />
-
+        
     </head>
     <body ng-app="NanoApp">
         <div class="query-check"></div>
@@ -22,7 +23,7 @@
             <p ng-bind="user.name" class="user-name"></p>
             <a class="navbar-brand" href="/"><h1>Aurora Nanopharm</h1><img src="/public/img/aurora.png" class="img-responsive" alt="Nanopharmacia Diagnóstica"></a>
             <a href="/login" id="logoout" class="top-config"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span class="config">LogOut</span></a>
-            <a href="/config" class="top-config"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <span class="config">Configure</span></a>
+            <a href="/config" class="top-config"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <span class="config">Start</span></a>
             <a href="/admin" target="_self" ng-hide="user.roleName !== 'admin'"  class="top-config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="config">Admin</span></a>
             <a href="/" class="top-config"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <span class="config">Home</span></a>
         </div>
@@ -32,20 +33,50 @@
         </div>
         <div  class="noprint" id="message-box">
             <div  style="display:none;" class="alert alert-danger text-center">
-
             </div>
             <div style="display:none;" class="alert alert-success text-center">
             </div> 
             <div style="display:none; padding: 8px 0 0 0;" class="alert alert-info text-center">
             </div>
         </div>
-        <div class="container-fluid">
-            <div id="x"></div> 
-            <div class="row clearfix pie">
-                <img src="/public/img/nanopharmacia-blanco.png">
-            </div>
-        </div> 
-    </body>    
+        <div id="container_fluid" class="container-fluid">
+            <div id="x"></div>
+                <div class="row clearfix pie">
+                    <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                        <img src="/public/img/nanopharmacia-blanco.png">
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                        <img src="/public/img/infotec_blanco.png">
+                    </div>
+             </div>
+        </div>
+        <%
+            //TODO: Ajustar las fechas de los dias en que debe ser visible la animacion
+            java.util.Calendar thisDay = new java.util.GregorianCalendar();
+            java.util.Calendar fromDay = new java.util.GregorianCalendar();
+            boolean showPersonalDataForm = false;
+            fromDay.set(Calendar.DATE, 6);
+            fromDay.set(Calendar.MONTH, 4);
+            fromDay.set(Calendar.HOUR_OF_DAY, 0);
+            java.util.Calendar toDay = new java.util.GregorianCalendar();
+            toDay.set(Calendar.DATE, 10);
+            toDay.set(Calendar.MONTH, 5);
+            toDay.set(Calendar.HOUR_OF_DAY, 23);
+            if (thisDay.after(fromDay) && thisDay.before(toDay)) {
+                showPersonalDataForm = true;
+            }
+            if (showPersonalDataForm) {
+        %>
+        <div ng-controller="guestController" style="position: relative; height: 40px;">
+            <a id="modalTrigger" href="#" role="button" class="showModalTrigger toTheLeft" data-toggle="modal" data-target="#modal-comment">Leave a comment</a>
+            <guest-dialog></guest-dialog>
+        </div>
+        <%
+            }
+        %>
+    </body>
     <script src="/swbforms/js/eng.js" type="text/javascript"></script>
     <script type="text/javascript">
                 eng.initPlatform("/public/dist/NanoSources.js");
@@ -95,20 +126,50 @@
     <!--script src="/public/dist/script.js"></script-->
 
     <script type="text/javascript">
-                'use strict';
-                angular.module('userController', [])
-                        .controller("headerController", function ($scope, User, Role) {
-                            $scope.user;
-                            User.getUser().then(function (user) {
-                                $scope.user = user;
-                                Role.byId($scope.user.role).then(function (role) {
-                                    $scope.user.roleName = role.title;
-                                })
-
-                            }, function (error) {
-
-                            });
-                        });
+    'use strict';
+    angular.module('userController', [])
+        .controller("headerController", function ($scope, User, Role) {
+            $scope.user;
+            User.getUser().then(function (user) {
+                $scope.user = user;
+                Role.byId($scope.user.role).then(function (role) {
+                    $scope.user.roleName = role.title;
+                })
+            }, function (error) {
+            });
+    });
+    angular.module('guestDialogController', [])
+        .controller("guestController", function ($scope) {
+            $scope.addGuest = function(guest, form) {
+                
+                var data = {
+                    name: guest.name,
+                    specialty: guest.specialty,
+                    company: guest.company,
+                    email: guest.email,
+                    comment: guest.comment
+                };
+                
+                console.log("Guest info to send: " + JSON.stringify(data))
+                eng.utils.getASynchData('/guestInfo', JSON.stringify(data), "POST", function(response) {
+                    var responseData = response;
+                    console.log("response from addGuest: " + JSON.stringify(response));
+                });
+                guest.name = "";
+                guest.specialty = "";
+                guest.company = "";
+                guest.email = "";
+                guest.comment = "";
+                $scope.guestDataForm.$setPristine(true);
+                $("#modal-comment").modal("toggle");
+            };
+            
+    }).directive("guestDialog", function() {
+        return {
+            restrict: "E",
+            templateUrl: "/public/templates/dialog.html"
+        }
+    });
     </script>
     <script type="text/javascript">
         function checkRezise() {
@@ -145,7 +206,20 @@
                 $("#message-box > .alert-info").fadeOut();
             }
         }
-
+        
+        function fadeInTrigger() {
+            if ($("#modalTrigger").hasClass("toTheLeft")) {
+                $("#modalTrigger").removeClass("toTheLeft");
+                window.setTimeout(fadeOutTrigger, 15000);
+            } else {
+                console.log("No debe hacer nada  :|");
+            }
+        }
+        
+        function fadeOutTrigger() {
+            $("#modalTrigger").addClass("toTheLeft");
+        }
+        
         $(document).on("ready", function () {
             $("#logoout").on("click", function () {
                 eng.logout();
@@ -171,6 +245,9 @@
             $(window).resize(function () {
                 checkRezise()
             })
+<%          if (showPersonalDataForm) { %>
+            window.setInterval(fadeInTrigger, 30000);
+<%          } %>
         })
     </script>
 </html>

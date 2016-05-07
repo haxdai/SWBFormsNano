@@ -1,13 +1,13 @@
 'use strict';
-angular.module('NanoApp', ['hmTouchEvents','controllers', 'services', 'ui.router', 'ngAnimate','userController'])
+angular.module('NanoApp', ['hmTouchEvents','controllers', 'services', 'ui.router', 'ngAnimate','userController', "guestDialogController"])
 
         .run(function () {
 
 
         }).config(function ($urlRouterProvider, $stateProvider, $locationProvider, $httpProvider) {
 
-    $locationProvider.html5Mode({enabled: true, requireBase: false});
-    $stateProvider
+            $locationProvider.html5Mode({enabled: true, requireBase: false});
+            $stateProvider
             .state('index', {
                 url: '/',
                 views: {
@@ -78,6 +78,4 @@ angular.module('NanoApp', ['hmTouchEvents','controllers', 'services', 'ui.router
                 }
             });
     $urlRouterProvider.otherwise("/");
-
-
 }) 

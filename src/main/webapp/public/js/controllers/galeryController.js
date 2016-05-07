@@ -13,9 +13,9 @@ angular.module('controller.galery', ['angular-carousel'])
             
             $timeout(function(){
                $('#c').carousel({
-                    interval: 3000
+                    interval: 10000
                 })
-            },3000)
+            },10000)  //milisegundos para cambiar la imagen mostrada
             
             $("#menu-toggle").click(function (e) {
                   $("#menu-toggle").removeClass("menu-toggle-off-fixed");

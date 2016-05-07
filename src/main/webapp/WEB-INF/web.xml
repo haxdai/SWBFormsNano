@@ -24,15 +24,15 @@
             <param-value>false</param-value> 
         </init-param> 
     </servlet> 
-    <!--servlet>
-        <servlet-name>Servlet SearchResource</servlet-name>
-        <servlet-class>org.nanopharmacy.resources.SearchResource</servlet-class>
+    <servlet>
+        <servlet-name>GuestInfo</servlet-name>
+        <servlet-class>org.nanopharmacy.utils.GuestInfo</servlet-class>
     </servlet>
 	
     <servlet-mapping>
-        <servlet-name>Servlet SearchResource</servlet-name>
-        <url-pattern>/SearchResource</url-pattern>
-    </servlet-mapping-->
+        <servlet-name>GuestInfo</servlet-name>
+        <url-pattern>/guestInfo</url-pattern>
+    </servlet-mapping>
     <servlet> 
         <!-- Override init parameter to avoid nasty --> 
         <!-- file locking issue on windows. --> 

@@ -8,12 +8,12 @@
         <title>Nanopharmacia Diagnóstica</title>
         <!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"-->
     </head>
-    <body class="login valid-this-is-login-view">
+    <body class="login valid-this-is-login-view" onload="document.loginForm.email.focus();">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <img src="/public/img/aurora.png">
-                    <form method="post" role="form" id="login-form">
+                    <form method="post" role="form" id="login-form" name="loginForm">
                         <div class="form-group">
                             <div class="row clearfix">
                                 <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 loginlabel">
