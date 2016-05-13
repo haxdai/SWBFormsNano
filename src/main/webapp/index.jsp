@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link href="/public/libs/font-awesome/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
         <link href="/public/libs/css-spinners/css/spinner/throbber.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/png" href="/public/img/favicon.png">
         <!--    Nano css     -->
         <!--link href="/public/css/nanopharmacia.css" rel="stylesheet" type="text/css" />
         <link href="/public/css/nano.css" rel="stylesheet" type="text/css" /-->

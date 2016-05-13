@@ -6,13 +6,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Nanopharmacia Diagnóstica</title>
+        <link rel="icon" type="image/png" href="/public/img/favicon.png">
         <!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"-->
     </head>
     <body class="login valid-this-is-login-view" onload="document.loginForm.email.focus();">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <img src="/public/img/aurora.png">
+                    <img src="/public/img/aurora1.gif">
                     <form method="post" role="form" id="login-form" name="loginForm">
                         <div class="form-group">
                             <div class="row clearfix">

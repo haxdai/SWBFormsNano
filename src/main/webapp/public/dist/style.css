@@ -60,7 +60,7 @@
 .alertInForm {border-color: red; border-style: solid; margin: 0;}
 .showModalTrigger {
     display: block;
-    z-index:2000;
+    z-index:1000;
     background-color:#AA0000;
     color:lavender !important;
     font-weight:bold;

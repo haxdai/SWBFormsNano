@@ -10,6 +10,7 @@
         <link href="/public/libs/font-awesome/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
         <!--    Nano css     -->
         <link href="/public/dist/styleAdmin.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" type="image/ico" href="/public/img/favicon.ico">
     </head>
     <body ng-app="NanoApp">
         <div class="top-admin">
