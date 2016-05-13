@@ -61,7 +61,7 @@
             fromDay.set(Calendar.MONTH, 4);
             fromDay.set(Calendar.HOUR_OF_DAY, 0);
             java.util.Calendar toDay = new java.util.GregorianCalendar();
-            toDay.set(Calendar.DATE, 10);
+            toDay.set(Calendar.DATE, 30);
             toDay.set(Calendar.MONTH, 5);
             toDay.set(Calendar.HOUR_OF_DAY, 23);
             if (thisDay.after(fromDay) && thisDay.before(toDay)) {

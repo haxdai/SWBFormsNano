@@ -13,7 +13,7 @@ angular.module('controller.galery', ['angular-carousel'])
             
             $timeout(function(){
                $('#c').carousel({
-                    interval: 10000
+                    interval: 18000
                 })
             },10000)  //milisegundos para cambiar la imagen mostrada
             

@@ -18,6 +18,9 @@
             <a href="/" class="top-config"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <span class="config">Home</span></a>
         </div>
         <script src="/swbforms/js/eng.js" type="text/javascript"></script>
+        <div class="fileCommsLink">
+            <a href="/public/files/GuestInfo.csv" target="_blank">Download user's comments</a>
+        </div>
         <div class="">
             <h2>User's administration</h2>
             <script type="text/javascript">

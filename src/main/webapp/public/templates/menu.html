@@ -19,29 +19,31 @@
                     <select name="altSelected" required ng-model="altSelected"  ng-options="alt.name for alt in altList track by alt._id">
                         <option style="display:none" value="">Molecular Alteration</option>
                     </select>
-                    <select name="dateSelected" required ng-model="dateSelected"  ng-options="date.text for date in datesList track by date.year">
+                    <select name="numYearsSelected" required ng-model="numYearsSelected"><!-- Estado original del select: select name="dateSelected" required ng-model="dateSelected" ng-options="date.text for date in datesList track by date.year" temporalmente -->
                         <option style="display:none" value="">Publication dates</option>
+                        <option value="6" label="6 Months">6 Months</option>
+                        <option value="12" label="1 Year">1 Year</option>
+                        <option value="24" label="2 Years">2 Years</option>
+                        <option value="36" label="3 Years" disabled="disabled">3 Years</option>
+                        <option value="60" label="5 Years" disabled="disabled">5 Years</option>
                     </select>
                     {{datePublication}}
-                    <button ng-disabled="schemeForm.geneSelected.$invalid || schemeForm.altSelected.$invalid || schemeForm.dateSelected.$invalid " type="button" class="btn" hm-tap="addSearch(geneSelected, altSelected, dateSelected)">Search</button>
+                    <button ng-disabled="schemeForm.geneSelected.$invalid || schemeForm.altSelected.$invalid || schemeForm.numYearsSelected.$invalid " type="button" class="btn" hm-tap="addSearch(geneSelected, altSelected, numYearsSelected)">Search</button><!-- sustituir dateSelected por numYearsSelected cuando el select regrese a su estado original-->
                 </form>
             </div>
         </div>
     </div>
 </div>
 <ul class="mis-esquemas">
-    <li ng-if="search.noArts!= 0" ng-class="{'scheme-selected':search._id===searchId}"  ng-repeat="search  in searchListFunction(searchList)">
+    <li ng-if="search.noArts!= 0" ng-class="{'scheme-selected':search._id===searchId}" ng-repeat="search in searchListFunction(searchList)">
         <a ng-if="search.notification > 0"  href="/search/results/{{search._id}}?status=1" class="alert new" title="{{search.notification}} new items">
             <i class="fa fa-certificate"></i>{{search.notification}}
         </a>
         <a hm-tap="refresh()"  ng-if="search.recommended > 0" href="/search/results/{{search._id}}?status=4&a={{search.recommended}}" class="alert rank" title="{{search.recommended}} recommended items">
             <i class="fa fa-thumbs-up"></i>{{search.recommended}}
         </a>
-
-        <a hm-tap="schemeSelected(search._id)" class="gene" href="/search/{{search._id}}" >{{search.geneSymbol}}; {{search.alteName}}; {{search.artYearsOld}}Y</a>
-        
+        <a hm-tap="schemeSelected(search._id)" class="gene" href="/search/{{search._id}}">{{search.geneSymbol}}; {{search.alteName}}; {{showSearchPeriod(search.artYearsOld)}}</a>
     </li>  
-
 </ul>
 
 

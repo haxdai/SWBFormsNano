@@ -149,7 +149,7 @@ angular.module('controller.results', [])
             }
 
             $scope.filterToogle = function (newReorderToggle, filter) {
-                 console.log(filter);
+                 //console.log(filter);
                 if (newReorderToggle) {
                     $scope.isReorderToggle = false;
                     $scope.reorderClass = "glyphicon-sort-by-attributes";
@@ -168,7 +168,7 @@ angular.module('controller.results', [])
             }
 
             $scope.filterChange = function (filterSelected) {
-                console.log(filterSelected);
+                //console.log(filterSelected);
                 if (filterSelected == "titleSort" || filterSelected == "autorSort") {
                     $scope.filterToogle(true, filterSelected)
                 } else {

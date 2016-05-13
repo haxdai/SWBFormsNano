@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-lg-12">
             <button class="btn pull-right" hm-tap="deleteScheme()"><span class="glyphicon glyphicon-trash"></span></button>   
-            <h3>Search results of the gene: {{gene.symbol}}, molecular alteration:  {{alt.name}} and publication dates for {{search.artYearsOld}} year{{search.artYearsOld>1?"s":""}}</h3>
+            <h3>Search results of the gene: {{gene.symbol}}, molecular alteration:  {{alt.name}} and publication dates for {{search.artYearsOld === 6 ? search.artYearsOld : (search.artYearsOld/12)}} {{search.artYearsOld === 6 ? "months":"year"}}{{search.artYearsOld>12?"s":""}}</h3>
             <h3>{{gene.symbol}} - {{gene.officialName}}</h3>
            
         </div>       

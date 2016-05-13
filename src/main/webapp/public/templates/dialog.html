@@ -21,15 +21,18 @@
                                 </div>
                                 <div>
                                     <label for="gstEmail">E-mail:</label>
-                                    <input type="text" required="required" ng-model="guest.email" id="gstEmail" name="gstEmail" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">
+                                    <input type="email" required="required" ng-model="guest.email" id="gstEmail" name="gstEmail" class="ng-pristine ng-untouched ng-invalid ng-invalid-required">
                                 </div>
                                 <div>
                                     <label for="gstComment">Comment:</label>
                                     <!--input type="text" ng-model="guest.comment" id="gstComment" name="gstComment" class="ng-pristine ng-untouched ng-valid"-->
-                                    <textarea name="gstComment" id="gstComment" ng-model="guest.comment" ng-maxlength="200" class="ng-pristine ng-untouched ng-valid"></textarea>
+                                    <textarea name="gstComment" id="gstComment" ng-model="guest.comment" ng-maxlength="200" class="ng-pristine ng-untouched ng-valid" placeholder="200 characters maximum" wrap="wrap" cols="60" rows="3"></textarea>
                                 </div>
                                 <div role="alert" class="alertInForm" ng-show="guestDataForm.gstComment.$error.maxlength">
-                                    <span class="error">Comment too long! Up to 200 characters allowed.</span>
+                                    <span class="error">Comment too long! Up to 200 characters allowed!</span>
+                                </div>
+                                <div role="alert" class="alertInForm" ng-show="guestDataForm.gstEmail.$error.email">
+                                    <span class="error">Not a valid e-mail address!</span>
                                 </div>
                                 <button data-toggle="modal" hm-tap="addGuest(guest, this.form)" class="btn" type="submit" ng-disabled="!(guestDataForm.$dirty && !guestDataForm.$invalid)" style="-moz-user-select: none;">Send</button>
                              </form>

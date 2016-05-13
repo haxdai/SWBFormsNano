@@ -64,16 +64,17 @@
     background-color:#AA0000;
     color:lavender !important;
     font-weight:bold;
-    width:150px;
-    height:30px;
+    width:174px;
+    height:40px;
     position:absolute;
     right:0;
     border-radius:5px 0 0 5px;
-    padding: 4px 15px;
+    padding: 9px 18px;
     cursor: pointer;
     transition: 2s;
+    font-size: 16px;
 }
 .toTheLeft {
-    right: 150px;
+    right: 174px;
     opacity: 0;
 }

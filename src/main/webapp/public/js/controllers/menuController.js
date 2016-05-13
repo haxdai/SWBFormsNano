@@ -28,7 +28,7 @@ angular.module('controller.menu', [])
                 var filterList = $scope.filterPattern || "";
                 return list.filter(function (e) {
                     return filterList.split(",").every(function (f) {
-                        var s = e.geneSymbol + " ; " + e.alteName + " ; " + e.artYearsOld + "Y";
+                        var s = e.geneSymbol + " ; " + e.alteName + " ; " + (e.artYearsOld / 12) + "Y";
                         return new RegExp(f.toLowerCase().trim()).test(s.toLowerCase());
                     })
                 });
@@ -101,9 +101,27 @@ angular.module('controller.menu', [])
                 ;}
             }
 
-            $scope.addSearch = function (geneSelected, altSelected, dateSelected) {
+            $scope.showSearchPeriod = function (monthsNumber) {
+                var periodLabel;
+                if (monthsNumber === 6) {
+                    periodLabel = "6M"
+                } else {
+                    periodLabel = (monthsNumber / 12) + "Y";
+                }
+                return periodLabel;
+            }
+            
+            $scope.addSearch = function (geneSelected, altSelected, numYearsSelected) { // sustituir dateSelected por numYearsSelected cuando se quite el bloque de abajo
                 var creationMode = $scope.creationMode;
                 var q;
+                //Este bloque deberia dejar de existir cuando el select regrese a su estado original
+                var dateSelected;
+                for (var i = 0; i < $scope.datesList.length; i++) {
+                    if ($scope.datesList[i].year === parseInt(numYearsSelected)) {
+                        dateSelected = $scope.datesList[i];
+                    }
+                }
+                //Termina el bloque 
                 if (creationMode === "byuser") {
                     q = {gene: geneSelected._id, altMolecular: altSelected._id,
                          artYearsOld: dateSelected.year, user: $scope.user._id, creationMode: creationMode};

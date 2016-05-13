@@ -143,7 +143,7 @@ eng.dataSources["Search"] = {
                         var c = new StringArrayType(1);
                         var d = new IntegerArrayType(1);
                         c[0] = "artYearsOld";
-                        d[0] = request.data.artYearsOld;
+                        d[0] = request.data.artYearsOld; //a partir de 11/05/2016 se manejan meses no años
                         //var idGene = utils.getIdProperty("Gene", "symbol", request.data.gene);//Valida el simbolo del gen
                         //var idAltMolecular = utils.getIdProperty("AlterationMolecular", "name", request.data.altMolecular);//Valida el nombre de la alteraciÃ³n molecular
 
@@ -157,7 +157,7 @@ eng.dataSources["Search"] = {
                 }]
         },
         {name: "altMolecular", title: "Alteración Molecular", stype: "select", dataSource: "AlterationMolecular"},
-        {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},
+        {name: "artYearsOld", title: "Longevidad de pulicaciones", type: "int"},/*11/05/2016 -> se almacena numero de meses no de años*/
         {name: "lastUpdate", title: "Ultima actualización", type: "date"},
         {name: "notification", title: "Número de notificaciones", type: "int"},
         {name: "recommended", title: "Recomendados", type: "int"}, /*Es el ranking = 10, cuando el ranking es igual a 10 se contabilizaPrioridad*/
@@ -344,6 +344,7 @@ eng.dataServices["SearchService"] = {//, "update"
                 var gene = this.getDataSource("Gene").fetchObjById(response.data.gene).symbol;
                 var altMolecular = this.getDataSource("AlterationMolecular").
                         fetchObjById(response.data.altMolecular).name;
+                print("years: " + response.data.artYearsOld);
                 var res = utils.getPublication(response.data.artYearsOld, gene, altMolecular,
                         response.data._id, response.data.gene, response.data.altMolecular);
                 if (res !== null) {
