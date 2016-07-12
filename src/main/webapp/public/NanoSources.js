@@ -476,4 +476,5 @@ eng.dataSources["Glossary"] = {
         {name: "definition", title: "Definicion", type: "string"}
     ]
 };
+/**/
 eng.validators["email"] = {type: "regexp", expression: "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$", errorMessage: "No es un correo electrÃ³nico vÃ¡lido"};
