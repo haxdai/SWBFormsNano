@@ -3,7 +3,7 @@
         <p>Title: {{cancer.name}}</p>
         <p>Definition {{cancer.summary}}</p>
     </div>
-    <span ng-if="position > 0" ng-click="prev()"> < </span>
+    <span ng-if="position > 0" hm-tap="prev()"> < </span>
     <span>{{position + 1}}</span> 
-    <span ng-if="(position < ((cancerList.length) - 1))" ng-click="next()"> > </span>
+    <span ng-if="(position < ((cancerList.length) - 1))" hm-tap="next()"> > </span>
 </div>

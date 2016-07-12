@@ -1,3 +1,4 @@
+<%@page import="org.nanopharmacy.listener.SchedulerTrigger"%>
 <%@page import="com.mongodb.util.JSON"%><%@page import="java.io.*"%><%@page import="java.util.*"%><%@page import="org.semanticwb.datamanager.*"%><%@page contentType="text/xml" pageEncoding="UTF-8"%><%!
 //global
 
@@ -27,6 +28,9 @@
     DataObject getOperation(DataObject json, SWBScriptEngine engine, String dataSource, HttpSession session) throws IOException
     {
         DataObject ret=null;
+        //System.out.println(json);
+        //System.out.println(dataSource);
+        
         String operationType = json.getString("operationType");
         
         if(dataSource==null && operationType!=null)
@@ -36,9 +40,11 @@
                 SWBDataSource users=engine.getDataSource("User");
                 DataObject q=new DataObject();
                 DataObject d=new DataObject();
+                String password = DataUtils.encodeSHA(json.getString("password"));
                 q.put("data", d);
                 d.put("email", json.getString("username"));
-                d.put("password", json.getString("password"));
+                d.put("password", password);
+                //System.out.println(q);
                 DataObject r=users.fetch(q);
                 //TODO:Eliminar response del fetch
                 DataObject resp=(DataObject)r.get("response");
@@ -70,12 +76,21 @@
         }else
         {
             SWBDataSource ds=engine.getDataSource(dataSource);
-            //System.out.println("ds:"+dataSource+" "+ds);        
+            //System.out.println("ds:"+dataSource);        
 
             if(ds!=null)
             {
+                if (dataSource.equals("Search")) {
+                    String creationMode = (String) this.getServletContext().getAttribute("searchCreationMode");
+                    String user = creationMode.equalsIgnoreCase(SchedulerTrigger.MODE_BY_USER)
+                            ? ((DataObject) session.getAttribute("_USER_")).getString("_id")
+                            : "all";
+                    json.getDataObject("data").put("user", user);
+                }
+                //System.out.println("json: "+json);       
                 if (SWBDataSource.ACTION_FETCH.equals(operationType))
                 {
+                    
                     ret=ds.fetch(json);
                 } else if (SWBDataSource.ACTION_UPDATE.equals(operationType))
                 {

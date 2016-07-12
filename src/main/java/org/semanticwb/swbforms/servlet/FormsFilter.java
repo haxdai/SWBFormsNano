@@ -14,9 +14,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.semanticwb.datamanager.DataMgr;
 import org.semanticwb.datamanager.DataObject;
 import org.semanticwb.datamanager.RouteData;
 import org.semanticwb.datamanager.RoutesMgr;
+import org.semanticwb.datamanager.SWBDataSource;
+import org.semanticwb.datamanager.SWBScriptEngine;
 import org.semanticwb.datamanager.script.ScriptObject;
 import org.semanticwb.swbforms.servlet.router.RouteHandler;
 
@@ -57,7 +60,30 @@ public class FormsFilter implements Filter {
         RouteData data = RoutesMgr.getRouteData(getRouterPath(path));
         RouteHandler handler = null;
         if (data != null) {
-            if (!(data.isSecure() && user == null)) {
+            boolean validateRole = data.getScriptObject().containsKey("hasRole");
+            boolean userRoleIsNotValid = true;
+            String userRole = null;
+            String userRoleId = null;
+            
+            if (validateRole) {
+                if (null != user && user.containsKey("role")) {
+                    userRoleId = user.getString("role");
+                    SWBScriptEngine engine = DataMgr.getUserScriptEngine("/public/dist/NanoSources.js", null, false);
+                    SWBDataSource dsRole = engine.getDataSource("Role");
+                    DataObject queryRole = new DataObject();
+                    DataObject dataRole = new DataObject();
+                    dataRole.put("_id", userRoleId);
+                    queryRole.put("data", dataRole);
+                    DataObject resultSetRole = dsRole.fetch(queryRole);
+                    if (resultSetRole.getDataObject("response").getInt("totalRows") > 0) {
+                        DataObject dbRole = resultSetRole.getDataObject("response").getDataList("data").getDataObject(0);
+                        userRole = dbRole.getString("title");
+                    }
+                    userRoleIsNotValid = !data.getScriptObject().getString("hasRole").equalsIgnoreCase(userRole);
+                }
+            }
+            
+            if (!(data.isSecure() && user == null) && (!(validateRole && userRoleIsNotValid))) {
                 handler = (RouteHandler) data.getHandler();
                 if (handler == null) {
                     synchronized (data) {
@@ -114,7 +140,7 @@ public class FormsFilter implements Filter {
 
     private RouteHandler getHandler(RouteData data) {
         ScriptObject path = data.getScriptObject();
-        System.out.println("getHandler:" + path);
+//        System.out.println("getHandler:" + path);
         try {
 //            if ("true".equalsIgnoreCase(path.getString("isRestricted"))) {
 //                securedRoutes.add(path.getString("routePath"));

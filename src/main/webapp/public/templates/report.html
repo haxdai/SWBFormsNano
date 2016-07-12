@@ -1,0 +1,101 @@
+<a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+
+
+<div ng-if="search" class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Search results of the gene: {{gene.symbol}}, molecular alteration:  {{alt.name}} and publication dates for {{search.artYearsOld}} year{{search.artYearsOld>1?"s":""}}</h3>
+            <h3>{{gene.symbol}} - {{gene.officialName}}</h3>
+        </div>
+        <div class="visible-print">
+            <p><strong>Mutation: </strong>{{alt.name}}</p>
+            <p><strong>Other aliases: </strong>{{alt.aliases}} </p>
+            <p class="pstrong"><strong>Interpretation: </strong></p>
+        </div>
+
+
+    </div>      
+
+
+    <div class="btn-group main-tabs">
+        <a href="/search/{{searchId}}" class="btn btn-default " type="button">Gene Info</a>
+
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Results<span class="caret"></span>
+        </button> 
+        <ul class="dropdown-menu">
+            <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
+            <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
+            <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
+            <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
+            <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
+
+        </ul>
+
+        <a href="/search/report/{{searchId}}"class="btn btn-default active" type="button">Report</a> 
+    </div>
+
+    <div class="row contenido">
+        <div class="col-lg-12">
+            <form name="reportform"> 
+                <textarea ng-model="report.comment" required name="textreport"  class="result-notes">Add notes here:</textarea>
+                <div class="visible-print print-border">
+                    <p ng-bind-html="report.comment | formatPrint | sanitize"></p>
+                </div>
+                <div class="panel-buttons">
+                    <button ng-disabled="reportform.textreport.$invalid"  hm-tap="save(report)" type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                    <button ng-disabled="reportform.textreport.$invalid"   hm-tap="print()"  type="button" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+                </div>
+            </form>
+            <div class="visible-print">
+                <strong>References:</strong>
+            </div>
+            <div class="panel-group" id="panel-results">
+                <div class="panel panel-default" ng-repeat="article in articleList">
+                    <div class="panel-heading">
+                        <a class=" panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1}}">
+                            <div style="margin-right: 10px; float:left;">
+                                {{$index + 1}}.
+                            </div>
+                            <div class="pull-right panel-califica">
+                                <div class="star">
+                                    <i ng-class="article.artSearch.ranking == 1 ? 'fa-star-half-o' : article.artSearch.ranking > 1 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 3 ? 'fa-star-half-o' : article.artSearch.ranking > 3 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 5 ? 'fa-star-half-o' : article.artSearch.ranking > 5 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 7 ? 'fa-star-half-o' : article.artSearch.ranking > 7 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 9 ? 'fa-star-half-o' : article.artSearch.ranking > 9 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                </div>
+                                <span class="glyphicon glyphicon-menu-up"></span>
+                                <span class="glyphicon glyphicon-menu-down"></span>
+
+                            </div>
+                            <div class="panel-text-title">{{article.article.title}}</div>
+                        </a>
+                    </div>
+                    <div id="p{{$index + 1}}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p class="noprint" ng-bind-html="article.article.abstract | sanitize"></p>
+                            <p class="noprint"><strong>Reference:</strong>{{article.article.reference}}</p>
+
+                        </div>
+                        <div class="panel-pie clearfix">
+                            <a  target="_blank" href="{{article.article.link}}" class="panel-pie-more">
+                                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> More
+                            </a>
+                        </div>
+                    </div>
+                    <div class="visible-print ">
+                        <p class="reference">[{{$index + 1}}] {{article.article.reference}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+
+</div>

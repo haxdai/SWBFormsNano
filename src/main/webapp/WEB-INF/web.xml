@@ -6,6 +6,9 @@
     <listener>
         <listener-class>org.semanticwb.swbforms.servlet.FormsServletContextListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>org.nanopharmacy.listener.SchedulerTrigger</listener-class>
+    </listener>
     <session-config>
         <session-timeout>
             30
@@ -21,13 +24,22 @@
             <param-value>false</param-value> 
         </init-param> 
     </servlet> 
-    <!--servlet>
-        <servlet-name>Servlet SearchResource</servlet-name>
-        <servlet-class>org.nanopharmacy.resources.SearchResource</servlet-class>
+    <servlet>
+        <servlet-name>GuestInfo</servlet-name>
+        <servlet-class>org.nanopharmacy.utils.GuestInfo</servlet-class>
     </servlet>
 	
     <servlet-mapping>
-        <servlet-name>Servlet SearchResource</servlet-name>
-        <url-pattern>/SearchResource</url-pattern>
-    </servlet-mapping-->
+        <servlet-name>GuestInfo</servlet-name>
+        <url-pattern>/guestInfo</url-pattern>
+    </servlet-mapping>
+    <servlet> 
+        <!-- Override init parameter to avoid nasty --> 
+        <!-- file locking issue on windows. --> 
+        <servlet-name>default</servlet-name> 
+        <init-param> 
+            <param-name>useFileMappedBuffer</param-name> 
+            <param-value>false</param-value> 
+        </init-param> 
+    </servlet> 
 </web-app>

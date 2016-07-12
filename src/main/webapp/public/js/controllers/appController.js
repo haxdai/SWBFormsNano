@@ -4,5 +4,8 @@ angular.module('controllers',
                 'controller.galery',
                 'controller.searchDetail',
                 'controller.results',
-                'controller.newSearch'
+                'controller.report',
+                'controller.menuConfig',
+                'controller.configGen',
+                'controller.configUpdatingTime'
             ])

@@ -1,20 +1,123 @@
-<a href="/{{searchId}}">Gene info</a>
-<a href="/{{searchId}}/results">Results</a>
-<a href="/{{searchId}}/report">Report</a>
+<a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
 
 
-<p>Result</p>
-<div ng-repeat="article in articleList">
-    <p>{{$index+1}}</p>
-    <p>{{article.article.title}}</p>
-    <p>{{article.ranking}}</p>
-    <p>{{article.article.abstract}}</p>
-    <p>{{article.article.reference}}</p>
-    <p>{{article.article.link}}</p>
-    <a ng-click="discard()">Discard</a><a ng-click="accept()">Accept</a>
+<div ng-if="search" class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Search results of the gene: {{gene.symbol}}, molecular alteration:  {{alt.name}} and publication dates for {{search.artYearsOld}} year{{search.artYearsOld>1?"s":""}}</h3>
+            <h3>{{gene.symbol}} - {{gene.officialName}}</h3>
+        </div>      
+    </div>      
+
+    <div class="btn-group main-tabs">
+        <a href="/search/{{searchId}}" class="btn btn-default " type="button">Gene Info</a>
+
+        <button class="btn btn-default dropdown-toggle active" data-toggle="dropdown">
+            Results<span class="caret"></span>
+        </button> 
+        <ul class="dropdown-menu">
+            <li><a href="/search/results/{{searchId}}?status=4">Recommended</a></li>
+            <li><a href="/search/results/{{searchId}}?status=1">New</a></li>
+            <li><a href="/search/results/{{searchId}}?status=2">Accepted</a></li>
+            <li><a href="/search/results/{{searchId}}?status=3">Rejected</a></li>
+            <li><a href="/search/results/{{searchId}}?status=0">Unclassified</a></li>
+        </ul>
+
+        <a href="/search/report/{{searchId}}"class="btn btn-default" type="button">Report</a> 
+    </div>
+
+
+    <div class="row contenido">
+        <div class="col-lg-12">
+            <div class="row results-options"  >
+                <div class="col-sm-12 col-md-3 col-lg-4">
+                    <p ng-bind="statuslist[status]"></p>
+                </div>
+                <div  class="col-sm-5 col-md-3 col-lg-4">
+                    <ul  ng-if="(totalRowsFinal > 1)" class ="pagination clearfix">
+                        <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " hm-tap="firts()" href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a></li>
+                        <li><a ng-style="pag > 1 ? {'visibility': 'visible'} : {'visibility': 'hidden'} " hm-tap="prev()" href="#"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></li>
+                        <li><a ng-style="pag > 0 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" href="#">{{pag}} / {{maxPage}}</a></li>
+                        <li><a ng-style="pag < ((maxPage)) ? {'visibility': 'visible'} : {'visibility': 'hidden'}" hm-tap="next()" href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></li>
+                        <li ><a ng-style="pag < ((maxPage)) && status!=1 ? {'visibility': 'visible'} : {'visibility': 'hidden'}" hm-tap="last()" href="#"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></a></li>
+
+                    </ul>
+                </div>
+                <div  class="col-sm-7 col-md-6 col-lg-4">
+                    <div class="sort">
+                        <p>Sort by: 
+                            <select ng-model="filterSelected" ng-change="filterChange(filterSelected)">
+                                <option style="display:none" value="">Select filter      </option>
+                                <option value="titleSort">Title</option>
+                                <option value="autorSort">Author</option>
+                                <option value="prognosis">Prognosis</option>
+                                <option value="prediction">Prediction</option>
+                                <option value="treatment">Treatment</option>
+                                <option value="ranking">Best rated</option>
+                            </select>
+                            <button hm-tap="filterToogle(isReorderToggle, filterSelected)" type="button" class="btn "><span   ng-class="reorderClass" class="glyphicon"></span></button>
+
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="panel-group" id="panel-results">
+                <div class="panel panel-default animate-repeat" ng-repeat="article in articleList">
+                    <div class="panel-heading">
+
+                        <a class=" panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#p{{$index + 1 + (limit * (pag - 1))}}">
+                            <div style="margin-right: 10px; float:left;">
+                                {{$index + 1 + (limit * (pag - 1))}}.
+                            </div>
+                            <div class="pull-right panel-califica">
+                                <div class="star">
+                                    <i ng-class="article.artSearch.ranking == 1 ? 'fa-star-half-o' : article.artSearch.ranking >1 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 3 ? 'fa-star-half-o' : article.artSearch.ranking >3 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 5 ? 'fa-star-half-o' : article.artSearch.ranking >5 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 7 ? 'fa-star-half-o' : article.artSearch.ranking >7 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                    <i ng-class="article.artSearch.ranking == 9 ? 'fa-star-half-o' : article.artSearch.ranking >9 ? 'fa-star' : 'fa-star-o'" class="fa"></i>
+                                </div>
+                                <span class="glyphicon glyphicon-menu-up"></span>
+                                <span class="glyphicon glyphicon-menu-down"></span>
+
+                            </div>
+                            <div class="panel-text-title">{{article.article.title}}</div>
+                        </a>
+                    </div>
+                    <div id="p{{$index + 1 + (limit * (pag - 1))}}" class="panel-collapse collapse">
+
+                        <div class="panel-body">
+                            <p class="article-abstact text-justify" ng-bind-html="article.article.abstract | sanitize"></p>
+                            <p class="text-justify reference"><strong>Reference:</strong>{{article.article.reference}}</p>
+                        </div>
+                        <div class="panel-pie clearfix">
+                            <a  target="_blank" href="{{article.article.link}}" class="panel-pie-more">
+                                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> More
+                            </a>
+
+                            <a  ng-if="status != 2" hm-tap="accept(article.artSearch, $index + 1 + (limit * (pag - 1)), $index)" href="" class="panel-pie-ok"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                            <a  ng-if="status != 3"  hm-tap="discard(article.artSearch, $index + 1 + (limit * (pag - 1)), $index)"  href="" class="panel-pie-remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div ng-if="articleList.length > 0" class="text-center">
+                <h3>
+                    {{((pag - 1) * limit) + 1}}-{{ pag*limit < totalRows ? pag*limit : totalRowsFinal }} / {{totalRowsFinal}}
+                </h3>
+            </div>
+
+
+
+
+        </div>
+    </div>
 </div>
-<div ng-if="(maxPage> 1)">
-    <span ng-if="pag > 1" ng-click="prev()"> < </span>
-    <span>{{pag}}</span> 
-    <span ng-if="pag < ((maxPage))" ng-click="next()"> > </span>
+<div class="container-fluid">
+
 </div>

@@ -1,3 +1,11 @@
+.ng-animate.ng-enter,.ng-animate.ng-leave { 
+    -webkit-transition: none!important;
+    -moz-transition:none!important;
+    -ms-transition: none!important;
+    -o-transition: none!important;
+    transition: none!important;
+}
+
 ul[rn-carousel] {
     width: 400px;
     height: 300px;
@@ -14,4 +22,159 @@ ul[rn-carousel] {
 .rn-carousel-controls{
     width: 400px;
     position: relative;
+}
+
+.config-gene div.list-group-item{
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.config-list li a{
+    width: 100%;
+    text-decoration: none;
+    cursor:pointer;
+}
+.config-list li a:hover span{
+    color: white;
+}
+.config-list li a span{
+    color:#3b6b85;
+    margin: 5px;
+    display: inline-block;
+}
+
+.contenido input[type=text] {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.menu-toggle-off{
+    webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    left:0px!important;
+}
+
+.menu-toggle-off-fixed{
+    webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: all 0s ease!important;
+    transition: none!important;
+}
+.query-check{
+    height: 0px;
+    width: 1px;
+}
+#message-box{
+    position: fixed;
+    bottom: 36px;
+    width: 100%;
+    z-index: 2000;
+}
+
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave 
+{ 
+    -webkit-transition: 300ms linear all!important;
+    -moz-transition: 300ms linear all!important;
+    -ms-transition: 300ms linear all!important;
+    -o-transition: 300ms linear all!important;
+    transition: 300ms linear all!important;
+    position: relative;
+    display: block;
+    overflow: hidden;
+} 
+
+
+.animate-repeat.ng-leave  {
+    opacity: 1;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    color:red!important;
+}
+
+
+.animate-repeat.ng-leave.ng-leave-active{
+    opacity: 0;
+    left: 50%;
+    right: 50%;
+    width: 0px;
+}
+
+.results-options > div > p, .index-bottom{
+    font-size: 20px;
+    color: #3b6b85;
+}
+
+.results-options > div > ul{
+    text-align: center;
+    width: 230px;
+    margin: 0 auto;
+    display: block;
+}
+.results-options p button{
+    height: 24px;
+    padding: 2px 14px;
+}
+
+.panel-heading{
+    overflow: hidden;
+}
+
+.sort  select {
+    width: 150px;
+}
+
+.scheme-selected{
+    border-radius: 4px;
+    background-color: #3b6b85!important;
+}
+
+.scheme-selected a{
+    color: white!important;
+}
+
+.user-name{
+    padding: 0px;
+    margin: 0px;
+    display: inline-block;
+    position: absolute;
+    right: 12px;
+    top: 2px;
+    color: #3b6b85;
+
+
+}
+
+.top-admin  { width:100%; padding:25px  10px 5px 10px; margin:0px; border-bottom:1px solid #8bbbd5 ;
+  background: -webkit-linear-gradient(#fff ,#e1eaef  ); 
+  background: -o-linear-gradient(#fff ,#e1eaef  );
+  background: -moz-linear-gradient(#fff ,#e1eaef   );
+  background: linear-gradient(#fff ,#e1eaef  );}
+.top-admin * { text-decoration: none !important;}
+
+.carousel-control.left,.carousel-control.right{
+    background-image:none!important;
+}
+
+@media (max-width:767px){
+    .query-check{
+        width: 0px;
+    }
+
+    .results-options{
+        text-align: center!important;
+    }
+
+    .panel-text-title{
+        top:0px;
+        right: 16px;
+    }
+
+    .sort > p {
+        text-align: center;
+        margin-top: 16px;
+    }
 }

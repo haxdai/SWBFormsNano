@@ -1,6 +1,28 @@
-<ul rn-carousel rn-carousel-controls class="image">
-    <li ng-repeat="image in galleryImages">
-        <div ng-style="{'background-image': 'url(' + image.url + ')'}"  class="bgimage">
-        </div>
-    </li>
-</ul>
+<a  class="btn btn-default" id="menu-toggle">
+    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+</a>
+<div class="container-fluid">
+    <div  ng-if="galleryImages.length > 0" class="carousel slide" data-ride="carousel" id="c">
+        <ol class="carousel-indicators">
+            <li ng-repeat="image in galleryImages"data-slide-to="{{$index}}" data-target="#c" ng-class="{active:$index==0}">
+            </li>
+
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div ng-repeat="image in galleryImages" class="item" ng-class="{active:$index==0}">
+                <img class="text-center" ng-src="public/img/{{image.src[0].id}}" />
+                <div style="padding: 1em;" ng-if="image.link || image.text" class="carousel-caption">
+                    <h4>
+                        <a style="color: white!important;"  target="_blank" href="http://{{image.link}}" >{{image.title}}</a>
+                    </h4>
+                    
+                    </div>
+            </div>
+        </div> 
+        <a class="left carousel-control" href="#c" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> 
+        <a class="right carousel-control" href="#c" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
+
+    </div>
+</div>
