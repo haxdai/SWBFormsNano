@@ -2,11 +2,14 @@
 
 angular.module('controller.menu', [])
         .controller('MenuController', function ($scope, $state,$location, $rootScope, $stateParams, Search, 
-                                                Gene, Alteration, Config, Art_Search, User, Role) {
+                                                Gene,CancerType, Alteration, Config, Art_Search, User, Role) {
             $scope.searchList = [];
             $scope.searchId = $stateParams.id;
             $scope.geneList;
+            $scope.cancerTypeList;
+            $scope.geneListCt;
             $scope.altList;
+            $scope.altListCt;
             $scope.datesList = Config.publicationDates();
             $scope.user;
             $scope.creationMode;
@@ -88,6 +91,10 @@ angular.module('controller.menu', [])
                 $scope.geneList = geneList;
 
             })
+            
+            CancerType.list().then(function (cancerTypeList) {
+                $scope.cancerTypeList = cancerTypeList;
+            })            
 
             $scope.geneChange = function (gene) {
                 Alteration.list(gene._id).then(function (altList) {
@@ -95,6 +102,18 @@ angular.module('controller.menu', [])
                 })
             }
             
+            $scope.cancerTypeChange = function (cancerType) {
+                Gene.listbyCancerType(cancerType._id).then(function (geneList) {
+                   $scope.geneListCt = geneList;
+                })
+            }            
+            
+            $scope.geneChangeCt = function (gene) {
+                Alteration.list(gene._id).then(function (altList) {
+                    $scope.altListCt = altList;
+                })
+            }
+
             $scope.refresh = function(){
                 if($location.search().status == 4){
                     $state.go($state.current, {}, {reload: true})
@@ -158,6 +177,10 @@ angular.module('controller.menu', [])
                     showMessage("error", error.gene)
                 })
 
+            }
+            
+            $scope.addSearchCt = function (cancerTypeSelected,geneSelected, altSelected, numYearsSelected) {
+console.log("addSearchCt:"+JSON.stringify(cancerTypeSelected));                
             }
 
         })

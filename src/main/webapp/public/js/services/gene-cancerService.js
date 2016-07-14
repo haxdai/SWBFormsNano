@@ -30,13 +30,19 @@ angular.module('service.gene-cancer', [])
 
                 return deferred.promise;
             };
-            /*
+            
              this.listByCancerId = function (cancerId) {
-             var deferred = $q.defer();
-             var ds = eng.getDataSource("Gene");
-             deferred.resolve(ds.fetch({}));
-             return deferred.promise;
-             };*/
+                var deferred = $q.defer();
+                var ds = eng.getDataSource("Gene_Cancer");
+                ds.fetchObj({cancer:cancerId}, function (response) {
+                    if (response && response.status==0) {
+                        deferred.resolve(response.data);
+                    } else {
+                        deferred.reject("No data");
+                    }
+                })
+                return deferred.promise;
+             };
 
             this.save = function (geneCancer) {
                 var deferred = $q.defer();
