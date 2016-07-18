@@ -124,6 +124,7 @@
     <script src="/public/js/controllers/configGenController.js"></script>
     <script src="/public/js/controllers/menuConfigController.js"></script>
     <script src="/public/js/controllers/configUpdatingTimeController.js"></script>
+    <script src="/public/js/controllers/configCancerTypeController.js"></script>
     <!--script src="/public/dist/script.js"></script-->
 
     <script type="text/javascript">

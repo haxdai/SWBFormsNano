@@ -58,6 +58,7 @@ eng.routes["global"]={
         { routePath: "search/report/*", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "config", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "config-time", forwardTo: "/index.jsp", isRestricted: "true"},
+        { routePath: "config-cancerType", forwardTo: "/index.jsp", isRestricted: "true"},
         { routePath: "", forwardTo: "/index.jsp", isRestricted: "true"}
     ],
 };

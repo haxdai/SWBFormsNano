@@ -76,6 +76,16 @@ angular.module('NanoApp', ['hmTouchEvents','controllers', 'services', 'ui.router
                         controller: 'ReportController'
                     }
                 }
+            }).state('configCancerType', {
+                url: '/config-cancerType',
+                views: {
+                    "menu": {templateUrl: "/public/templates/menuConfig.html",
+                        controller: 'MenuConfigController'
+                    },
+                    "content": {templateUrl: "/public/templates/configCancerType.html",
+                        controller: 'ConfigCancerTypeController'
+                    }
+                }
             });
     $urlRouterProvider.otherwise("/");
 }) 

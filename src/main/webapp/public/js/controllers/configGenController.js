@@ -29,6 +29,7 @@ angular.module('controller.configGen', [])
             $scope.editingDisease = false;
 
             $scope.cancelGen = function () {
+                console.log("Cancel!!!");
                 $scope.addingGen = false;
                 $scope.geneForm.$setPristine();
                 $scope.geneSymbol = ""

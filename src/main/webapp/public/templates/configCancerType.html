@@ -1,0 +1,142 @@
+<a  class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+
+
+<div class="container-fluid config-gene">
+    <div class="row">
+        <!--Gene -->
+        <div class="col-lg-4">
+            <h2>Configure Cancer Type</h2>
+            
+            <div class="row contenido">
+                <div class="col-lg-12">
+                    <form name="cancerTypeForm">   
+                        <a href="#"  ng-hide="addingCancerType" hm-tap="addingCancerType = true">Add cancer type</a>
+                        <div ng-class="{'has-error':cancerTypeForm.cancerType.$invalid && cancerTypeForm.cancerType.$dirty}"   ng-show="addingCancerType" class="form-group ">
+                            <label  class="control-label" >Cancer type</label>
+                            <input name="cancerType" required type="text"  ng-model="cancerType" class="form-control">
+                        </div>
+                        <button ng-disabled="cancerTypeForm.cancerType.$invalid" ng-show="addingCancerType"  hm-tap="addCancerType(cancerType)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                        </button>
+                        <button hm-tap="cancelCancerType()"  ng-show="addingCancerType" class="btn"   href="#">Cancel</button>
+                    </form>
+
+                    <div class="list-group config-list">
+                        <p class="list-group-item">Cancer type list <span class="badge">{{cancerTypeList.length}}</span></p>
+                        <div class="list-group-item">
+                            <ul class="list-group-item-text">
+                                <!--li ng-class="{'scheme-selected':gene._id===geneId}" ng-repeat="cancer in cancerTypeList"><a hm-tap="setCancerType(gene._id)">{{cancer.name}}</a></li-->
+                                <li ng-class="{'scheme-selected':cancer._id===cancerTypeId}" ng-repeat="cancer in cancerTypeList"><a hm-tap="setCancerType(cancer._id)">{{cancer.name}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>   
+            </div> 
+        </div>  
+        <!--Gene -->
+        <div ng-show="cancerTypeSelected" class="col-lg-4">
+            <h2>Configure Gene</h2>
+
+            <div class="row contenido">
+                <div class="col-lg-12">
+                    <!--form name="geneForm">   
+                        <a href="#" ng-hide="addingGene || editingGene" hm-tap="addGene()">Add gene</a>
+                        <div ng-class="{'has-error'geneForm.gene.$invalid && geneForm.gene.$dirty}"  
+                             ng-show="addingGene || editingGene" class="form-group ">
+                            <label  class="control-label" >Gene symbol:</label>
+                            <input  name="gene" type="text"  required="required"  class="form-control" ng-model="gene"/>
+                        </div>
+
+                        <button  ng-disabled="geneForm.gene.$invalid" ng-show="addingGene" hm-tap="addDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                        </button>
+                        <button  ng-disabled="geneForm.gene.$invalid" ng-show="editingGene"  hm-tap="updateDisease(dideaseName, diseaseSummary)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update disease
+                        </button>
+                        <button class="btn" ng-show="addingGene || editingGene" href="#" hm-tap="cancelGene()">Cancel</button>
+                    </form-->
+                    <form name="geneForm">   
+                        <a href="#"  ng-hide="addingGen" hm-tap="addingGen = true">Add gene</a>
+                        <div ng-class="{'has-error':geneForm.geneSymbol.$invalid && geneForm.geneSymbol.$dirty}"   ng-show="addingGen" class="form-group ">
+                            <label  class="control-label" >Gene symbol</label>
+                            <input name="geneSymbol" required type="text"  ng-model="geneSymbol" class="form-control">
+                        </div>
+                        <button ng-disabled="geneForm.geneSymbol.$invalid" ng-show="addingGen"  hm-tap="addGene(geneSymbol)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                        </button>
+                        <button hm-tap="cancelGen()"  ng-show="addingGen" class="btn"   href="#">Cancel</button>
+                    </form>
+
+                    <div class="list-group config-list">
+                        <p class="list-group-item">Gene list <span class="badge">{{geneList.length}}</span></p>
+                        <div class="list-group-item">
+                            <ul class="list-group-item-text">
+                                <li ng-class="{'scheme-selected':gene._id===geneId}" ng-repeat="gene in geneList">
+                                    <a hm-tap="setGeneC(gene._id)">{{gene.symbol}}</a>
+                                </li>
+                            </ul>
+                            <!--ul class="list-group-item-text">
+                                <li ng-repeat="disease  in geneList">
+                                    <a  ng-if="!disease.conceptId"> 
+                                        <span hm-tap="editDisease(disease)"   class="glyphicon glyphicon-pencil"></span>  
+                                        <span hm-tap="removeDisease(disease)"  class="glyphicon glyphicon-trash"></span>  
+                                        {{disease.name}}
+                                    </a>
+                                    <a ng-if="disease.conceptId"> 
+                                       {{disease.name}}
+                                    </a>
+                                </li>
+                            </ul-->
+                        </div>
+                    </div>
+
+                </div>   
+            </div> 
+        </div>  
+        <!--Alteration Molecular -->
+        <div ng-show="geneSelected" class="col-lg-4">
+            <h2>Configure Alteration</h2>
+
+            <div class="row contenido">
+                <div class="col-lg-12">
+                    <form name="altForm">   
+                        <a href="#"  ng-hide="addingAlt || editingAlt" hm-tap="addAlt()">Add molecular alteration</a>
+                        <div ng-class="{'has-error':altForm.alterationName.$invalid && altForm.alterationName.$dirty}"  
+                             ng-show="addingAlt || editingAlt" class="form-group ">
+                            <label  class="control-label" ng-show="addingAlt || editingAlt">Alteration name:</label>
+                            <input required="" class="form-control"   ng-show="addingAlt || editingAlt" type="text" ng-model="alterationName" name="alterationName"/>
+                        </div>
+                        <div  ng-show="addingAlt || editingAlt" class="form-group ">
+                            <label class="control-label"  ng-show="addingAlt || editingAlt" >Aliases: <span title="Enter alias separated by commas"  class="glyphicon glyphicon-question-sign"></span></label>
+                            <textarea  required="" class="form-control"  ng-show="addingAlt || editingAlt" type="text" ng-model="aliase" /></textarea>
+                        </div>
+                        <button ng-disabled="altForm.alterationName.$invalid" ng-show="addingAlt"  hm-tap="addAlteration(alterationName, aliase)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Add to list
+                        </button>
+                        <button ng-disabled="altForm.alterationName.$invalid" ng-show="editingAlt"  hm-tap="updateAlteration(alterationName, aliase)" class="btn btn-default" type="button">
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span> Update molecular alteration
+                        </button>
+                        <button class="btn"  ng-show="addingAlt || editingAlt" href="#" hm-tap="cancelAlt()">Cancel</button>
+                    </form>
+
+                    <div class="list-group config-list">
+                        <p class="list-group-item">Alteration list <span class="badge">{{altList.length}}</span></p>
+                        <div class="list-group-item">
+                            <ul class="list-group-item-text">
+                                <li ng-repeat="alt in  altList"> 
+                                    <a >
+                                        <span hm-tap="editAlt(alt)"  class="glyphicon glyphicon-pencil" ></span>  
+                                        <span hm-tap="removeAlt(alt)"  class="glyphicon glyphicon-trash"></span>  
+                                        {{alt.name}}</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>   
+            </div> 
+        </div>   
+    </div> 
+</div>
